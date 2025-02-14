@@ -13,6 +13,11 @@ export const maruburi = localFont({
             style: 'normal',
         },
         {
+            path: '../public/fonts/MaruBuri/MaruBuri-SemiBold.otf',
+            weight: '600',
+            style: 'normal',
+        },
+        {
             path: '../public/fonts/MaruBuri/MaruBuri-Bold.otf',
             weight: '700',
             style: 'normal',
