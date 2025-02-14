@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        maruburi: ["var(--font-maruburi)" ],
+        nanumHuman: ["var(--font-nanumhuman)"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
