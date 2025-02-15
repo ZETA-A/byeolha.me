@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import NavIcon from './navIcon';
-import NavLinks from './navLinks';
-import ThemePopover from './themePopover';
-import LanguagePopover from './languagePopover';
+import NavIcon from './NavIcon';
+import NavLinks from './NavLinks';
+import ThemePopover from './ThemePopover';
+import LanguagePopover from './LanguagePopover';
 
 export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

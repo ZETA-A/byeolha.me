@@ -1,4 +1,4 @@
-import Popover from '../popover';
+import Popover from '../Popover';
 import { useTheme } from 'next-themes';
 
 export default function ThemePopover() {
@@ -33,7 +33,7 @@ export default function ThemePopover() {
                     onChange={() => setTheme('light')}
                     className="peer hidden"
                 />
-                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center hover:bg-gray-100 peer-checked:bg-gray-200 peer-checked:rounded-md">
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                     주간 모드
                 </span>
             </label>
@@ -45,7 +45,7 @@ export default function ThemePopover() {
                     onChange={() => setTheme('dark')}
                     className="peer hidden"
                 />
-                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center hover:bg-gray-100 peer-checked:bg-gray-200 peer-checked:rounded-md">
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                     야간 모드
                 </span>
             </label>
@@ -57,7 +57,7 @@ export default function ThemePopover() {
                     onChange={() => setTheme('system')}
                     className="peer hidden"
                 />
-                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-gray-200 peer-checked:rounded-md">
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                     기기 설정
                 </span>
             </label>

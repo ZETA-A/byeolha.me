@@ -19,7 +19,7 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
 
             {/* 모바일 메뉴 */}
             <div
-                className={`absolute top-14 mx-auto px-4 sm:px-6 lg:px-8 left-0 w-full z-50 bg-transparent ${
+                className={`absolute top-14 mx-auto px-4 sm:px-6 lg:px-8 left-0 w-full z-50 bg-neutral-900 ${
                     isMenuOpen ? 'block' : 'hidden'
                 }`}
             >
@@ -27,7 +27,7 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
                     <Link
                         key={href}
                         href={href}
-                        className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+                        className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-neutral-700"
                     >
                         {label}
                     </Link>

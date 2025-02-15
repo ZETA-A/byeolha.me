@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Popover from '../popover';
+import Popover from '../Popover';
 
 export default function LanguagePopover() {
     const [language, setLanguage] = useState<'korean' | 'english'>('korean');
@@ -51,7 +51,7 @@ export default function LanguagePopover() {
                     onChange={() => setLanguage('korean')}
                     className="peer hidden"
                 />
-                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-gray-200 hover:bg-gray-100 peer-checked:rounded-md">
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                     한국어
                 </span>
             </label>
@@ -63,7 +63,7 @@ export default function LanguagePopover() {
                     onChange={() => setLanguage('english')}
                     className="peer hidden"
                 />
-                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-gray-200 hover:bg-gray-100 peer-checked:rounded-md">
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                     English
                 </span>
             </label>

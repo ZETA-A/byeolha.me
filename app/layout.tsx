@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navigation from '@/components/navigation/navigation';
+import Navigation from '@/components/navigation/Navigation';
 import { maruburi } from '@/utils/fonts';
 import { ThemeProvider } from 'next-themes';
 
@@ -20,7 +20,7 @@ export default function RootLayout({
             suppressHydrationWarning={true}
             className={`${maruburi.variable}`}
         >
-            <body className="font-maruburi">
+            <body className="font-maruburi bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
                 <ThemeProvider attribute="class">
                     <Navigation />
                     {children}

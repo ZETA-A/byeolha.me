@@ -33,12 +33,16 @@ const Popover: React.FC<PopoverProps> = ({ children, button }) => {
     const togglePopover = () => setIsOpen(!isOpen);
 
     return (
-        <div className={`relative rounded-lg ${isOpen ? 'bg-gray-200' : ''}`}>
+        <div
+            className={`relative rounded-lg ${
+                isOpen ? 'bg-neutral-200 dark:bg-neutral-700' : ''
+            }`}
+        >
             {/* 팝오버를 여는 버튼 */}
             <button
                 onClick={togglePopover}
                 ref={buttonRef}
-                className="hover:bg-gray-100 box-content p-2 rounded-lg"
+                className="hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
             >
                 {button}
             </button>
@@ -47,7 +51,7 @@ const Popover: React.FC<PopoverProps> = ({ children, button }) => {
             {isOpen && (
                 <div
                     ref={popoverRef}
-                    className="absolute mt-2 lg:mt-1 right-0 min-w-[120px] w-fit bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg p-2 flex flex-col"
+                    className="absolute mt-2 lg:mt-1 right-0 min-w-[120px] w-fit bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg p-2 flex flex-col"
                 >
                     {children}
                 </div>
