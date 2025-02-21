@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navigation from '@/components/navigation/Navigation';
+import Navigation from '@/components/layout/navigation/Navigation';
 import { maruburi } from '@/utils/fonts';
 import { ThemeProvider } from 'next-themes';
 

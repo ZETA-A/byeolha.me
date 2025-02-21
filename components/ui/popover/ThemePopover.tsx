@@ -1,4 +1,4 @@
-import Popover from '../Popover';
+import Popover from './Popover';
 import { useTheme } from 'next-themes';
 
 export default function ThemePopover() {

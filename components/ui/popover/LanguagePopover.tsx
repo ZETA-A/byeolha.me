@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Popover from '../Popover';
+import Popover from './Popover';
 
 export default function LanguagePopover() {
     const [language, setLanguage] = useState<'korean' | 'english'>('korean');
