@@ -30,7 +30,7 @@ export default function Navigation() {
                         <LanguagePopover />
                         <ThemePopover />
                         <button
-                            className="md:hidden text-gray-300 hover:text-white focus:outline-none"
+                            className="md:hidden hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
                             <NavIcon isMenuOpen={isMenuOpen} />
