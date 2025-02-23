@@ -1,4 +1,4 @@
-import { navItems } from '@/CONSTS';
+import { navItems } from '@/config';
 import Link from 'next/link';
 
 export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
