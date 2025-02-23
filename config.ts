@@ -1,0 +1,37 @@
+export const siteConfig = {
+    url: 'https://www.byeolha.me/',
+    title: 'byeolha.me',
+    description: '세상을 바꾸기 위해 개발합니다',
+    copyright: 'byeolha © All rights reserved.',
+    since: 2025,
+    googleAnalyticsID: '',
+    author: {
+        name: '김승현',
+        email: 'open120477@icloud.com',
+        github: 'ZETA-A',
+        twitter: '',
+        velog: '',
+        linkedin: '',
+        instagram: '',
+        youtube: '',
+    },
+};
+
+export const navItems = [
+    {
+        label: '일기',
+        href: 'diary',
+    },
+    {
+        label: '노트',
+        href: 'note',
+    },
+    {
+        label: '작품',
+        href: 'project',
+    },
+    {
+        label: '소개',
+        href: 'profile',
+    },
+];
