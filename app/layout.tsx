@@ -21,9 +21,9 @@ export default function RootLayout({
             suppressHydrationWarning={true}
             className={`${maruburi.variable} h-full`}
         >
-            <body className="flex flex-col h-full font-maruburi bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+            <body className="flex flex-col h-full font-maruburi dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
                 <ThemeProvider attribute="class">
-                    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
+                    <div className="w-full max-w-4xl mx-auto px-6 flex flex-col min-h-screen">
                         <Navigation />
                         <main className="flex-1">{children}</main>
                         <Footer />
