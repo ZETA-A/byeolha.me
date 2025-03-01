@@ -23,9 +23,11 @@ export default function RootLayout({
         >
             <body className="flex flex-col h-full font-maruburi dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
                 <ThemeProvider attribute="class">
-                    <div className="w-full max-w-4xl mx-auto px-6 flex flex-col min-h-screen">
+                    <div className="w-full max-w-6xl mx-auto px-8 flex flex-col min-h-screen">
                         <Navigation />
-                        <main className="flex-1">{children}</main>
+                        <main className="flex-1 max-w-2xl w-full mx-auto my-8">
+                            {children}
+                        </main>
                         <Footer />
                     </div>
                 </ThemeProvider>

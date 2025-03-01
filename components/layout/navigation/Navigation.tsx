@@ -11,7 +11,7 @@ export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="realative w-full select-none flex justify-between h-14 items-center">
+        <nav className="realative w-full select-none flex justify-between h-16 items-center">
             {/* 블로그 이름 */}
             <Link href="/">
                 <div className="flex space-x-1 font-bold">

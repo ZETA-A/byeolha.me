@@ -1,4 +1,4 @@
-import { navItems } from '@/config';
+import { navItems } from '@/config/config';
 import Link from 'next/link';
 
 export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
@@ -19,7 +19,7 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
 
             {/* 모바일 메뉴 */}
             <div
-                className={`absolute top-14 mx-auto px-4 left-0 w-full z-50 bg-white dark:bg-neutral-900 ${
+                className={`absolute top-16 mx-auto px-8 left-0 w-full z-50 bg-white dark:bg-neutral-900 ${
                     isMenuOpen ? 'block' : 'hidden'
                 }`}
             >
