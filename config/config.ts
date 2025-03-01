@@ -35,3 +35,21 @@ export const navItems = [
         href: 'profile',
     },
 ];
+
+export const projectItems = [
+    {
+        title: "Monument Browser",
+        lastUpdate: "2025-02-28",
+        status: 'online',
+    },
+    {
+        title: "byeolha.me",
+        lastUpdate: "2025-02-28",
+        status: 'maintenance',
+    },
+    {
+        title: "ZETA-A.github.io",
+        lastUpdate: "2025-02-28",
+        status: 'offline',
+    },
+]
