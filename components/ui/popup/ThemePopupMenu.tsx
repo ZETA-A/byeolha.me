@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import Popover from './Popover';
+import PopupMenu from './PopupMenu';
+import { useTheme } from 'next-themes';
 
-export default function LanguagePopover() {
-    const [language, setLanguage] = useState<'korean' | 'english'>('korean');
+export default function ThemePopover() {
+    const { theme, setTheme } = useTheme();
 
     const button = (
         <svg
@@ -19,56 +19,50 @@ export default function LanguagePopover() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="1.6"
-                d="m13 19 3.5-9 3.5 9m-6.125-2h5.25M3 7h7m0 0h2m-2 0c0 1.63-.793 3.926-2.239 5.655M7.5 6.818V5m.261 7.655C6.79 13.82 5.521 14.725 4 15m3.761-2.345L5 10m2.761 2.655L10.2 15"
+                d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
             />
         </svg>
     );
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem('language');
-
-        // 로컬스토리지에 지정된 언어가 있으면 그대로 설정
-        if (storedLanguage) {
-            setLanguage(storedLanguage as 'korean' | 'english');
-        } else {
-            // 로컬스토리지에 언어가 없으면 'korean'로 설정
-            setLanguage('korean');
-        }
-    }, []);
-
-    const togleLanguage = (newLanguage: 'korean' | 'english') => {
-        setLanguage(newLanguage);
-        localStorage.setItem('language', newLanguage);
-    };
 
     const popoverContent = (
         <div className="flex flex-col space-y-1 p-1">
             <label className="cursor-pointer">
                 <input
                     type="radio"
-                    checked={language === 'korean'}
-                    onClick={() => togleLanguage('korean')}
-                    onChange={() => setLanguage('korean')}
+                    checked={theme === 'light'}
+                    onChange={() => setTheme('light')}
                     className="peer hidden"
                 />
                 <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
-                    한국어
+                    주간 모드
                 </span>
             </label>
+
             <label className="cursor-pointer">
                 <input
                     type="radio"
-                    checked={language === 'english'}
-                    onClick={() => togleLanguage('english')}
-                    onChange={() => setLanguage('english')}
+                    checked={theme === 'dark'}
+                    onChange={() => setTheme('dark')}
                     className="peer hidden"
                 />
                 <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
-                    English
+                    야간 모드
+                </span>
+            </label>
+
+            <label className="cursor-pointer">
+                <input
+                    type="radio"
+                    checked={theme === 'system'}
+                    onChange={() => setTheme('system')}
+                    className="peer hidden"
+                />
+                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
+                    기기 설정
                 </span>
             </label>
         </div>
     );
 
-    return <Popover button={button}>{popoverContent}</Popover>;
+    return <PopupMenu button={button}>{popoverContent}</PopupMenu>;
 }

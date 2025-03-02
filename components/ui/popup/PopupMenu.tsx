@@ -5,7 +5,7 @@ interface PopoverProps {
     button: React.ReactNode; // 팝오버를 여는 버튼
 }
 
-const Popover: React.FC<PopoverProps> = ({ children, button }) => {
+const PopupMenu: React.FC<PopoverProps> = ({ children, button }) => {
     const [isOpen, setIsOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -60,4 +60,4 @@ const Popover: React.FC<PopoverProps> = ({ children, button }) => {
     );
 };
 
-export default Popover;
+export default PopupMenu;
