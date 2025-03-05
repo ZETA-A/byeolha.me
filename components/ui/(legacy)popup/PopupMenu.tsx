@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import usePopupMenuStore, { PopupState } from '@/hooks/popupMenuStore';
+import { useEffect, useRef } from 'react';
 
 interface PopoverProps {
     children: React.ReactNode; // 팝오버의 내용
@@ -6,7 +7,7 @@ interface PopoverProps {
 }
 
 const PopupMenu: React.FC<PopoverProps> = ({ children, button }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const { popupState, setPopupState } = usePopupMenuStore();
     const popoverRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -14,13 +15,13 @@ const PopupMenu: React.FC<PopoverProps> = ({ children, button }) => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
-                isOpen &&
+                popupState &&
                 popoverRef.current &&
                 buttonRef.current &&
                 !popoverRef.current.contains(event.target as Node) &&
                 !buttonRef.current.contains(event.target as Node)
             ) {
-                setIsOpen(false);
+                setPopupState(PopupState.None);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
@@ -28,34 +29,33 @@ const PopupMenu: React.FC<PopoverProps> = ({ children, button }) => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isOpen]);
+    }, [popupState]);
 
-    const togglePopover = () => setIsOpen(!isOpen);
+    const togglePopup = () => setPopupState(PopupState.None);
+    console.log(popupState);
 
     return (
         <div
             className={`relative rounded-lg ${
-                isOpen ? 'bg-neutral-200 dark:bg-neutral-700' : ''
+                popupState ? 'bg-neutral-200 dark:bg-neutral-700' : ''
             }`}
         >
             {/* 팝오버를 여는 버튼 */}
             <button
-                onClick={togglePopover}
                 ref={buttonRef}
                 className="hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
             >
                 {button}
             </button>
 
-            {/* 팝오버 내용 */}
-            {isOpen && (
-                <div
-                    ref={popoverRef}
-                    className="absolute mt-2 lg:mt-1 right-0 min-w-[120px] w-fit bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg p-2 flex flex-col"
-                >
-                    {children}
-                </div>
-            )}
+            {/* 팝오버 내용 
+            원래 popupState있던 부분에 isOpen이 있어서 boolean으로 판별했으나,
+            현재는 popupState(string)으로 들어가기 때문에 일단 이 로직은 망가짐.
+            솔직히 이게 어떻게 지금까지 동작했던건지 모르겠음.
+            아예 뜯어서 재설계해야할 것으로 보임.
+            
+            */}
+            {popupState && <div ref={popoverRef}>{children}</div>}
         </div>
     );
 };

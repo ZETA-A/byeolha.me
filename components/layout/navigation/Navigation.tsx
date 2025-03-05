@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import NavIcon from './NavIcon';
 import NavLinks from './NavLinks';
-import ThemePopover from '../../ui/popover/ThemePopover';
-import LanguagePopover from '../../ui/popover/LanguagePopover';
+import LanguageMenu from '@/components/ui/DropdownMenu/LanguageMenu';
+import ThemeMenu from '@/components/ui/DropdownMenu/ThemeMenu';
 
 export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,8 +25,8 @@ export default function Navigation() {
 
             {/* 언어 및 테마 설정 */}
             <div className="flex space-x-3">
-                <LanguagePopover />
-                <ThemePopover />
+                <LanguageMenu />
+                <ThemeMenu />
                 <button
                     className="md:hidden hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
