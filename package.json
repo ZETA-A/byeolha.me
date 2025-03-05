@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
     "@types/glob": "^8.1.0",
     "dayjs": "^1.11.13",
+    "flowbite-react-icons": "^1.2.0",
     "glob": "^11.0.1",
     "gray-matter": "^4.0.3",
     "next": "15.1.7",
