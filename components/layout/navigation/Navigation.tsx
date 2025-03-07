@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import NavIcon from './NavIcon';
 import NavLinks from './NavLinks';
 import LanguageMenu from '@/components/ui/DropdownMenu/LanguageMenu';
@@ -30,7 +29,7 @@ export default function Navigation() {
             />
 
             {/* 언어 및 테마 설정 */}
-            <div className="flex space-x-3">
+            <div className="flex space-x-1">
                 <LanguageMenu />
                 <ThemeMenu />
                 <button
