@@ -9,6 +9,8 @@ interface DropdownProps {
 
 interface DropdownItems {
     title: string;
+    tooltip?: string;
+    disabled?: boolean;
     href: string;
     select?: boolean;
     onClick?: () => void;
@@ -71,6 +73,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
                             <label
                                 className="cursor-pointer"
                                 key={`${group}-${index}`}
+                                title={item.tooltip}
                             >
                                 <input
                                     type="radio"
@@ -78,6 +81,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
                                     onClick={item.onClick}
                                     onChange={item.onChange}
                                     className="peer hidden"
+                                    disabled={item.disabled}
                                 />
                                 <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
                                     {item.title}

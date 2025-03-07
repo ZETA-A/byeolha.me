@@ -32,6 +32,9 @@ const LanguageMenu = () => {
             title: 'English',
             href: '#',
             select: language === 'english',
+            disabled: true,
+            tooltip:
+                'Still crafting something special, just a little more time to make it perfect.',
             onChange: () => toggleLanguage('english'),
         },
     ];
