@@ -1,7 +1,10 @@
 import { navItems } from '@/config/config';
+import usePopupMenuStore, { PopupMenuState } from '@/hooks/popupMenuStore';
 import Link from 'next/link';
 
 export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
+    const { popupMenuState, setPopupMenuState } = usePopupMenuStore();
+    const toggleNavigation = () => setPopupMenuState(PopupMenuState.None);
     return (
         <div className="font-semibold">
             {/* 데스크탑 메뉴 */}
@@ -27,6 +30,7 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
                     <Link
                         key={href}
                         href={href}
+                        onClick={() => toggleNavigation()}
                         className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-neutral-700"
                     >
                         {label}
