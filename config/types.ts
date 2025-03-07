@@ -10,7 +10,8 @@ export interface Post extends PostMatter {
     url: string;
     slug: string;
     categoryPath: string;
+    seriesPath: string;
     content: string;
     readingMinutes: number;
-    categoryPublicName: string;
+    seriesPublicName: string;
 }
