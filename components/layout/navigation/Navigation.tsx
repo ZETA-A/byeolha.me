@@ -14,7 +14,10 @@ export default function Navigation() {
     return (
         <nav className="realative w-full select-none flex justify-between h-16 items-center">
             {/* 블로그 이름 */}
-            <Link href="/">
+            <Link
+                href="/"
+                onClick={() => setPopupMenuState(PopupMenuState.None)}
+            >
                 <div className="flex space-x-1 font-bold">
                     <h2>김승현</h2>
                     <h2>·</h2>
