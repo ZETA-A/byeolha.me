@@ -27,6 +27,8 @@ export default function LanguagePopupMenu() {
                     <input
                         type="radio"
                         checked={language === 'korean'}
+                        onClick={() => togleLanguage('korean')}
+                        onChange={() => setLanguage('korean')}
                         className="peer hidden"
                     />
                     <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
