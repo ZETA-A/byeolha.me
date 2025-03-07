@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.0",
     "@types/glob": "^8.1.0",
     "dayjs": "^1.11.13",
     "flowbite-react-icons": "^1.2.0",
