@@ -69,20 +69,23 @@ export async function getPostList(category?: string): Promise<Post[]> {
 
 export async function getSortedPostList(category?: string) {
     const postList = await getPostList(category);
+    const sortList = sortPostList(postList);
 
+    // 연도별로 그룹화
     const result = Object.entries(
-        postList.reduce((acc, post) => {
+        sortList.reduce((acc, post) => {
             const year = post.date.getFullYear().toString();
-            if (!acc[year]) {
-                acc[year] = [];
-            }
+            if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
         }, {} as { [key: string]: Post[] })
     );
 
-    // {year, post} 형태로 결과 변환
-    return result.map(([year, post]) => ({
+    // 내림차순 정렬
+    const sortedList = result.sort((a, b) => Number(b[0]) - Number(a[0]));
+
+    // 원하는 형태로 변환
+    return sortedList.map(([year, post]) => ({
         year,
         post,
     }));
