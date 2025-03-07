@@ -1,6 +1,7 @@
 import { Language } from 'flowbite-react-icons/outline';
 import DropdownMenu from './DropdownMenu';
 import { useEffect, useState } from 'react';
+import { PopupMenuState } from '@/hooks/popupMenuStore';
 
 const LanguageMenu = () => {
     const [language, setLanguage] = useState<'korean' | 'english'>('korean');
@@ -16,7 +17,7 @@ const LanguageMenu = () => {
         }
     }, []);
 
-    const togleLanguage = (newLanguage: 'korean' | 'english') => {
+    const toggleLanguage = (newLanguage: 'korean' | 'english') => {
         setLanguage(newLanguage);
         localStorage.setItem('language', newLanguage);
     };
@@ -25,19 +26,23 @@ const LanguageMenu = () => {
             title: '한국어',
             href: '#',
             select: language === 'korean',
-            onClick: () => togleLanguage('korean'),
-            onChange: () => setLanguage('korean'),
+            onChange: () => toggleLanguage('korean'),
         },
         {
             title: 'English',
             href: '#',
             select: language === 'english',
-            onClick: () => togleLanguage('english'),
-            onChange: () => setLanguage('english'),
+            onChange: () => toggleLanguage('english'),
         },
     ];
 
-    return <DropdownMenu label={<Language />} items={items} />;
+    return (
+        <DropdownMenu
+            group={PopupMenuState.Language}
+            label={<Language />}
+            items={items}
+        />
+    );
 };
 
 export default LanguageMenu;
