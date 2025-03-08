@@ -29,9 +29,10 @@ export function parsePostAbstract(postPath: string) {
         .replace(`${BASE_PATH}/`, '')
         .replace('.mdx', '');
     const [categoryPath, seriesPath, slug] = filePath.split('/');
-    const url = `/post/${seriesPath}/${slug}`;
+    const decodedSeriesPath = decodeURIComponent(seriesPath);
+    const decodedSlug = decodeURIComponent(slug);
+    const url = `/post/${categoryPath}/${decodedSeriesPath}/${decodedSlug}`;
     const seriesPublicName = getSeriesPublicName(seriesPath);
-
     return { url, categoryPath, seriesPath, seriesPublicName, slug };
 }
 
@@ -90,3 +91,16 @@ export async function getSortedPostList(category?: string) {
         post,
     }));
 }
+
+// post 상세 페이지 내용 조회
+export const getPostDetail = async (
+    category: string,
+    series: string,
+    slug: string
+) => {
+    const decodedSeries = decodeURIComponent(series);
+    const decodedSlug = decodeURIComponent(slug);
+    const filePath = `${POSTS_PATH}/${category}/${decodedSeries}/${decodedSlug}/content.mdx`;
+    const detail = await parsePost(filePath);
+    return detail;
+};
