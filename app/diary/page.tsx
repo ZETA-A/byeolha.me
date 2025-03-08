@@ -9,9 +9,7 @@ export default function Diary() {
                 catchphrase="매일의 소중한 순간들이 모여 하루를 특별한 이야기로
                     완성합니다."
             />
-            <div>
-                <PostList category="diary" />
-            </div>
+            <PostList category="diary" />
         </div>
     );
 }
