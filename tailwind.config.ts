@@ -42,5 +42,8 @@ export default {
         },
     },
     darkMode: 'class',
+    variants: {
+        typography: ['dark'],
+    },
     plugins: [require('@tailwindcss/typography')],
 } satisfies Config;
