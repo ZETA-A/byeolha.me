@@ -20,36 +20,36 @@ export const siteConfig = {
 export const navItems = [
     {
         label: '일기',
-        href: 'diary',
+        href: '/diary',
     },
     {
         label: '노트',
-        href: 'note',
+        href: '/note',
     },
     {
         label: '작품',
-        href: 'project',
+        href: '/project',
     },
     {
         label: '소개',
-        href: 'profile',
+        href: '/profile',
     },
 ];
 
 export const projectItems = [
     {
-        title: "Monument Browser",
-        lastUpdate: "2025-02-28",
+        title: 'Monument Browser',
+        lastUpdate: '2025-02-28',
         status: 'online',
     },
     {
-        title: "byeolha.me",
-        lastUpdate: "2025-02-28",
+        title: 'byeolha.me',
+        lastUpdate: '2025-02-28',
         status: 'maintenance',
     },
     {
-        title: "ZETA-A.github.io",
-        lastUpdate: "2025-02-28",
+        title: 'ZETA-A.github.io',
+        lastUpdate: '2025-02-28',
         status: 'offline',
     },
-]
+];
