@@ -68,7 +68,15 @@ export async function getPostList(category?: string): Promise<Post[]> {
     return posts;
 }
 
+// 최신글 순서로 정렬
 export async function getSortedPostList(category?: string) {
+    const postList = await getPostList(category);
+    const sortList = sortPostList(postList);
+    return sortList;
+}
+
+// 년도별로 그룹화 하여 최신글 순서로 정렬
+export async function getSortedPostListByYear(category?: string) {
     const postList = await getPostList(category);
     const sortList = sortPostList(postList);
 
