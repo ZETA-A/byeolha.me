@@ -17,7 +17,7 @@ export default function Navigation() {
                 href="/"
                 onClick={() => setPopupMenuState(PopupMenuState.None)}
             >
-                <div className="flex space-x-1 font-bold">
+                <div className="flex space-x-1">
                     <h2>김승현</h2>
                     <h2>·</h2>
                     <h2>byeolha</h2>
@@ -33,7 +33,7 @@ export default function Navigation() {
                 <LanguageMenu />
                 <ThemeMenu />
                 <button
-                    className="md:hidden hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
+                    className="md:hidden hover:bg-selection box-content p-2 rounded-lg transition"
                     onClick={() => toggleNavigation()}
                 >
                     <NavIcon
