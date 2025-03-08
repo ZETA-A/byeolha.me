@@ -30,12 +30,12 @@ export const nanumHuman = localFont({
     src: [
         {
             path: '../public/fonts/NanumHuman/NanumHumanLight.otf',
-            weight: '300',
+            weight: '400',
             style: 'normal',
         },
         {
             path: '../public/fonts/NanumHuman/NanumHumanRegular.otf',
-            weight: '400',
+            weight: '500',
             style: 'normal',
         },
     ],
