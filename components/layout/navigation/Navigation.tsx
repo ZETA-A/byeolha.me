@@ -11,37 +11,39 @@ export default function Navigation() {
     const { popupMenuState, setPopupMenuState } = usePopupMenuStore();
     const toggleNavigation = () => setPopupMenuState(PopupMenuState.Navigation);
     return (
-        <nav className="realative w-full select-none flex justify-between h-16 items-center">
+        <nav className="w-full select-none flex h-16 items-center justify-center">
             {/* 블로그 이름 */}
-            <Link
-                href="/"
-                onClick={() => setPopupMenuState(PopupMenuState.None)}
-            >
-                <div className="flex space-x-1">
-                    <h2>김승현</h2>
-                    <h2>·</h2>
-                    <h2>byeolha</h2>
-                </div>
-            </Link>
-            {/* 네비게이션 버튼 */}
-            <NavLinks
-                isMenuOpen={popupMenuState === PopupMenuState.Navigation}
-            />
-
-            {/* 언어 및 테마 설정 */}
-            <div className="flex space-x-1">
-                <LanguageMenu />
-                <ThemeMenu />
-                <button
-                    className="md:hidden hover:bg-selection box-content p-2 rounded-lg transition"
-                    onClick={() => toggleNavigation()}
+            <div className="flex w-full justify-between items-center">
+                <Link
+                    href="/"
+                    onClick={() => setPopupMenuState(PopupMenuState.None)}
                 >
-                    <NavIcon
-                        isMenuOpen={
-                            popupMenuState === PopupMenuState.Navigation
-                        }
-                    />
-                </button>
+                    <div className="flex space-x-1">
+                        <h2>김승현</h2>
+                        <h2>·</h2>
+                        <h2>byeolha</h2>
+                    </div>
+                </Link>
+                {/* 네비게이션 버튼 */}
+                <NavLinks
+                    isMenuOpen={popupMenuState === PopupMenuState.Navigation}
+                />
+
+                {/* 언어 및 테마 설정 */}
+                <div className="flex space-x-1">
+                    <LanguageMenu />
+                    <ThemeMenu />
+                    <button
+                        className="md:hidden hover:bg-selection box-content p-2 rounded-lg transition"
+                        onClick={() => toggleNavigation()}
+                    >
+                        <NavIcon
+                            isMenuOpen={
+                                popupMenuState === PopupMenuState.Navigation
+                            }
+                        />
+                    </button>
+                </div>
             </div>
         </nav>
     );
