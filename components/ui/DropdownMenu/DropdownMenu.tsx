@@ -49,16 +49,14 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
     return (
         <div
             className={`relative rounded-lg size-[40px] ${
-                popupMenuState === group
-                    ? 'bg-neutral-200 dark:bg-neutral-700'
-                    : ''
+                popupMenuState === group ? 'bg-selection' : ''
             }`}
         >
             {/* Dropdown을 여는 버튼 */}
             <button
                 ref={buttonRef}
                 onClick={() => togglePopup()}
-                className="hover:bg-neutral-100 dark:hover:bg-neutral-700 box-content p-2 rounded-lg"
+                className="hover:bg-selection box-content p-2 rounded-lg transition"
             >
                 {label}
             </button>
@@ -66,7 +64,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
             {popupMenuState === group && (
                 <div
                     ref={popoverRef}
-                    className="absolute mt-2 right-0 min-w-[120px] w-fit bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 shadow-sm rounded-lg p-2 flex flex-col"
+                    className="absolute mt-2 right-0 min-w-[120px] w-fit bg-gray-50 dark:bg-gray-75 border border-gray-25 dark:border-gray-25 shadow-sm rounded-lg p-2 flex flex-col"
                 >
                     <div className="flex flex-col space-y-1 p-1">
                         {items.map((item, index) => (
@@ -83,7 +81,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
                                     className="peer hidden"
                                     disabled={item.disabled}
                                 />
-                                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-neutral-200 dark:peer-checked:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 peer-checked:rounded-md">
+                                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-selection dark:peer-checked:bg-selection hover:bg-selection peer-checked:rounded-md transition">
                                     {item.title}
                                 </span>
                             </label>
