@@ -1,9 +1,9 @@
-import { getSortedPostList } from '@/utils/posts';
+import { getSortedPostListByYear } from '@/utils/posts';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
 export default async function PostList({ category }: { category: string }) {
-    const postList = await getSortedPostList(category);
+    const postList = await getSortedPostListByYear(category);
 
     return (
         <section className="group mt-12 select-none">
