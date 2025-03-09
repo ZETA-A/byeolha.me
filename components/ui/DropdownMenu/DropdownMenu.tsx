@@ -40,7 +40,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [popupMenuState]);
+    }, [popupMenuState, popoverRef, buttonRef, group, setPopupMenuState]);
 
     const togglePopup = () => {
         setPopupMenuState(group);
