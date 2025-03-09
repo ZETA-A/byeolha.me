@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 import { Post, PostMatter } from '@/config/types';
 import readingTime from 'reading-time';
 import dayjs from 'dayjs';
+import { siteConfig } from '@/config/config';
 
 const BASE_PATH = 'posts';
 const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
@@ -112,3 +113,14 @@ export const getPostDetail = async (
     const detail = await parsePost(filePath);
     return detail;
 };
+
+// 사이트맵
+export const getSitemapPostList = async () => {
+    const postList = await getPostList();
+    const baseUrl = siteConfig.url;
+    const sitemapPostList = postList.map(({ url }) => ({
+      lastModified: new Date(),
+      url: `${baseUrl}${url}`,
+    }));
+    return sitemapPostList;
+  };
