@@ -3,6 +3,7 @@ import './globals.css';
 import Navigation from '@/components/layout/navigation/Navigation';
 import { maruburi, nanumHuman } from '@/utils/fonts';
 import { ThemeProvider } from 'next-themes';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/layout/footer/Footer';
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function RootLayout({
                         <Navigation />
                         <main className="flex-1 max-w-2xl w-full mx-auto my-12">
                             {children}
+                            <SpeedInsights />
                         </main>
                         <Footer />
                     </div>
