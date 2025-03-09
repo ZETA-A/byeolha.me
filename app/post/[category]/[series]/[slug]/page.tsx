@@ -10,7 +10,7 @@ import {
 import { Metadata } from 'next';
 
 type Props = {
-    params: { category: string; series: string; slug: string };
+    params: Promise<{ category: string; series: string; slug: string }>;
 };
 
 export const dynamicParams = false;
