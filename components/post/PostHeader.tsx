@@ -1,5 +1,4 @@
 import { Post } from '@/config/types';
-import PageHeader from '../layout/PageHeader';
 
 export default function PostHeader({ post }: { post: Post }) {
     return (

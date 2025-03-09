@@ -3,7 +3,7 @@ import usePopupMenuStore, { PopupMenuState } from '@/hooks/popupMenuStore';
 import Link from 'next/link';
 
 export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
-    const { popupMenuState, setPopupMenuState } = usePopupMenuStore();
+    const { setPopupMenuState } = usePopupMenuStore();
     const toggleNavigation = () => setPopupMenuState(PopupMenuState.None);
     return (
         <div className="font-semibold">

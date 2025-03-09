@@ -1,6 +1,5 @@
 import { Post } from '@/config/types';
 import Link from 'next/link';
-import { title } from 'process';
 
 export const PostFooter = ({
     post,
