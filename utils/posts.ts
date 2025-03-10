@@ -32,7 +32,7 @@ export function parsePostAbstract(postPath: string) {
     const [categoryPath, seriesPath, slug] = filePath.split('/');
     const decodedSeriesPath = decodeURIComponent(seriesPath);
     const decodedSlug = decodeURIComponent(slug);
-    const url = `/post/${categoryPath}/${decodedSeriesPath}/${decodedSlug}`;
+    const url = `/posts/${categoryPath}/${decodedSeriesPath}/${decodedSlug}`;
     const seriesPublicName = getSeriesPublicName(seriesPath);
     return { url, categoryPath, seriesPath, seriesPublicName, slug };
 }

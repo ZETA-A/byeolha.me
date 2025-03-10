@@ -27,7 +27,7 @@ export function generateStaticParams() {
     const postPaths: string[] = getPostPath();
     const paramList = postPaths
         .map((path) => parsePostAbstract(path))
-        .map((item) => ({ series: item.seriesPath, slug: item.slug }));
+        .map((item) => ({ category: item.categoryPath, series: item.seriesPath, slug: item.slug }));
     return paramList;
 }
 
