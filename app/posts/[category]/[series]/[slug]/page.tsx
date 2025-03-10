@@ -27,7 +27,11 @@ export function generateStaticParams() {
     const postPaths: string[] = getPostPath();
     const paramList = postPaths
         .map((path) => parsePostAbstract(path))
-        .map((item) => ({ category: item.categoryPath, series: item.seriesPath, slug: item.slug }));
+        .map((item) => ({
+            category: item.categoryPath,
+            series: item.seriesPath,
+            slug: item.slug,
+        }));
     return paramList;
 }
 
@@ -36,15 +40,15 @@ const PostDetail = async ({ params }: Props) => {
     const post = await getPostDetail(category, series, slug);
     const sortedPost = await getSortedPostList(category);
     return (
-        <div>
+        <article>
             <PostHeader post={post} />
-            <article className="font-nanumHuman">
+            <div className="font-nanumHuman">
                 <div className="prose dark:prose-dark max-w-none">
                     <PostBody post={post} />
                 </div>
                 <PostFooter post={sortedPost} thisPostUrl={post.url} />
-            </article>
-        </div>
+            </div>
+        </article>
     );
 };
 
