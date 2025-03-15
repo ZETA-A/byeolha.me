@@ -43,7 +43,7 @@ const PostDetail = async ({ params }: Props) => {
         <article>
             <PostHeader post={post} />
             <div className="font-nanumHuman">
-                <div className="prose dark:prose-dark max-w-none">
+                <div className="prose dark:prose-dark max-w-none mdx">
                     <PostBody post={post} />
                 </div>
                 <PostFooter post={sortedPost} thisPostUrl={post.url} />
