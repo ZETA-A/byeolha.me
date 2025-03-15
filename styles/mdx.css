@@ -1,0 +1,155 @@
+.mdx > * {
+    @apply mb-7 font-sans;
+}
+
+.mdx > :where(h1, h2, h3, h4) {
+    font-weight: 600;
+    color: var(--text-body);
+    scroll-margin-top: var(--page-top);
+}
+
+.mdx > :where(h1, h2) {
+    margin-top: var(--page-top);
+}
+
+.mdx > :where(h3, h4) {
+    @apply mt-20;
+}
+
+.mdx > :where(h1, h2) + :where(h3, h4) {
+    margin-top: 0px;
+}
+
+.mdx b,
+.mdx strong {
+    font-weight: 550;
+}
+
+.mdx blockquote {
+    position: relative;
+    padding-left: 1rem;
+    margin: 1.75rem 0;
+    font-family: var(--font-serif), sans-serif;
+    font-weight: 400;
+    color: var(--text-second);
+    border-left: 4px solid var(--border);
+}
+
+.mdx > :has(+ :where(ul, ol)) {
+    @apply mb-2;
+}
+
+.mdx > ul,
+.mdx > ul ul {
+    padding-left: 16px;
+    list-style-position: outside;
+    list-style-type: disc;
+}
+
+.mdx > ul li > ul {
+    @apply list-[circle];
+}
+
+.mdx > ul li {
+    @apply list-item leading-7;
+}
+
+.mdx > ul li::marker {
+    color: var(--gray-300);
+}
+
+.mdx > ul li + li,
+.mdx > ul li > ul {
+    @apply mt-[7px];
+}
+
+.mdx > ul li > div,
+.mdx > ul li > p {
+    @apply mb-3;
+}
+
+.mdx ol {
+    --counter-space: 12px;
+    padding: 0;
+    list-style-type: none;
+    counter-reset: basics-ol;
+}
+
+.mdx > ol li {
+    --l: calc(2 * var(--counter-space));
+    padding-left: var(--l);
+    text-indent: calc(-1 * var(--l));
+}
+
+.mdx > ol li:before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: var(--counter-space);
+    margin-right: var(--counter-space);
+    font-feature-settings: 'tnum' 1;
+    line-height: normal;
+    color: var(--gray-300);
+    text-align: right;
+    letter-spacing: -0.05em;
+    content: counter(basics-ol) '. ';
+    counter-increment: basics-ol;
+    user-select: none;
+}
+
+.mdx hr {
+    width: 100%;
+    height: 0;
+    padding: 0;
+    margin: var(--page-top) auto;
+    overflow: visible;
+    text-align: center;
+    border: none;
+}
+
+.mdx hr::after {
+    display: inline-block;
+    margin: -1rem 0 0;
+    font-size: 1.5rem;
+    color: var(--text-disabled);
+    content: '* * *';
+}
+
+.mdx table {
+    empty-cells: hide;
+    @apply md:text-sm;
+}
+
+.mdx th {
+    @apply px-4 pb-1 text-left font-semibold [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+.mdx td {
+    @apply border px-4 py-2 text-left align-text-top [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+.mdx td:first-child {
+    word-break: keep-all;
+}
+
+.mdx img {
+    display: flex;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+/* medium zoom */
+
+.mdx img,
+.medium-zoom-image--opened {
+    filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.1));
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+    z-index: 1000;
+}
+
+.mdx code {
+    @apply font-monospace;
+}
