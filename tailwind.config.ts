@@ -36,8 +36,9 @@ export default {
                 page: 'var(--page-background)',
             },
             fontFamily: {
-                maruburi: ['var(--font-maruburi)'],
-                nanumHuman: ['var(--font-nanumhuman)'],
+                serif: ['var(--font-maruburi)', 'serif'],
+                sans: ['var(--font-nanumhuman)', 'sans-serif'],
+                monospace: ['var(--font-jetbrainsMono)', 'monospace'],
             },
         },
     },
