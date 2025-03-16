@@ -7,8 +7,8 @@ const PageHeader = ({
 }) => {
     return (
         <div>
-            <h1 className="font-bold">{title}</h1>
-            <p className="text-sm">{catchphrase}</p>
+            <h1 className="font-semibold">{title}</h1>
+            <p className="text-sm font-light">{catchphrase}</p>
         </div>
     );
 };
