@@ -41,3 +41,14 @@ export const nanumHuman = localFont({
     ],
     variable: '--font-nanumhuman',
 });
+
+export const jetbrainsMono = localFont({
+    src: [
+        {
+            path: '../public/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2',
+            weight: '400',
+            style: 'normal',
+        },
+    ],
+    variable: '--font-jetbrainsMono',
+});

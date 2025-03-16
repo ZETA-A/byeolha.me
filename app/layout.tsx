@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import '@styles/globals.css';
 import Navigation from '@/components/layout/navigation/Navigation';
 import { maruburi, nanumHuman } from '@/utils/fonts';
 import { ThemeProvider } from 'next-themes';
@@ -20,9 +20,9 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning={true}
-            className={`${maruburi.variable} ${nanumHuman.variable} bg-page`}
+            className={`${nanumHuman.variable} ${maruburi.variable} bg-page`}
         >
-            <body className="flex flex-col font-maruburi">
+            <body className="flex flex-col font-serif">
                 <ThemeProvider attribute="class">
                     <div className="w-full max-w-6xl mx-auto px-6 flex flex-col min-h-screen">
                         <Navigation />

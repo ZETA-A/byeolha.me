@@ -3,9 +3,12 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
-import rehypePrism from 'rehype-prism-plus';
+import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeCodeTitles from 'rehype-code-titles';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeExternalLinks from 'rehype-external-links';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
@@ -13,11 +16,35 @@ const PostBody = ({ post }: { post: Post }) => {
             source={post.content}
             options={{
                 mdxOptions: {
-                    remarkPlugins: [remarkGfm, remarkBreaks],
+                    remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
                     rehypePlugins: [
-                        rehypePrism,
+                        [
+                            rehypePrettyCode,
+                            {
+                                theme: 'one-dark-pro',
+                            },
+                        ],
                         rehypeSlug,
-                        rehypeAutolinkHeadings,
+                        rehypeCodeTitles,
+                        [
+                            rehypeExternalLinks,
+                            {
+                                properties: {
+                                    className: ['external-link'],
+                                },
+                                target: '_blank',
+                                rel: ['noopener noreferrer'],
+                            },
+                        ],
+                        [
+                            rehypeAutolinkHeadings,
+                            {
+                                behavior: 'wrap',
+                                properties: {
+                                    className: ['anchor'],
+                                },
+                            },
+                        ],
                     ],
                 },
             }}

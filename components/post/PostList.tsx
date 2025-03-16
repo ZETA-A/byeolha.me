@@ -6,7 +6,7 @@ export default async function PostList({ category }: { category: string }) {
     const postList = await getSortedPostListByYear(category);
 
     return (
-        <section className="group mt-12 select-none">
+        <section className="group mt-12 select-none font-light">
             {postList.map((item, listIndex) => {
                 return (
                     <div
