@@ -79,6 +79,7 @@
 }
 
 .mdx > :where(h1, h2) {
+    font-size: 1rem;
     margin-top: var(--page-top);
 }
 
@@ -92,7 +93,7 @@
 
 .mdx b,
 .mdx strong {
-    font-weight: 550;
+    font-weight: 500;
 }
 
 .mdx blockquote {
@@ -225,9 +226,4 @@
     font-weight: 400;
     line-height: 20px;
     color: var(--astro-code-token-comment);
-}
-
-.mdx code::before,
-code::after {
-    display: none;
 }

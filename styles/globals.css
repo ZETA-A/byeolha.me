@@ -270,6 +270,7 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
 }
 
 code {
+    @apply font-monospace;
     position: relative;
 }
 
