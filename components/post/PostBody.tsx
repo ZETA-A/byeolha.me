@@ -8,6 +8,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeExternalLinks from 'rehype-external-links';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
@@ -17,10 +18,33 @@ const PostBody = ({ post }: { post: Post }) => {
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
                     rehypePlugins: [
-                        rehypePrettyCode,
+                        [
+                            rehypePrettyCode,
+                            {
+                                theme: 'one-dark-pro',
+                            },
+                        ],
                         rehypeSlug,
                         rehypeCodeTitles,
-                        [rehypeAutolinkHeadings, { className: ['anchor'] }],
+                        [
+                            rehypeExternalLinks,
+                            {
+                                properties: {
+                                    className: ['external-link'],
+                                },
+                                target: '_blank',
+                                rel: ['noopener noreferrer'],
+                            },
+                        ],
+                        [
+                            rehypeAutolinkHeadings,
+                            {
+                                behavior: 'wrap',
+                                properties: {
+                                    className: ['anchor'],
+                                },
+                            },
+                        ],
                     ],
                 },
             }}

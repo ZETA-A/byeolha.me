@@ -40,9 +40,24 @@ export default {
                 sans: ['var(--font-nanumhuman)', 'sans-serif'],
                 monospace: ['var(--font-jetbrainsMono)', 'monospace'],
             },
+            maxWidth: {
+                page: 'var(--page-width)',
+                content: 'var(--content-width)',
+            },
+            width: {
+                page: 'var(--page-width)',
+                content: 'var(--content-width)',
+            },
+            spacing: {
+                page: 'var(--page-top)',
+                'half-page': 'var(--page-half-top)',
+            },
         },
     },
     darkMode: 'class',
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
     variants: {
         typography: ['dark'],
     },

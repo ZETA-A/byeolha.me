@@ -1,3 +1,73 @@
+:root {
+    --vp-c-white: #ffffff;
+    --vp-c-black: #000000;
+    --vp-c-gray-1: #dddde3;
+    --vp-c-gray-2: #e4e4e9;
+    --vp-c-gray-3: #ebebef;
+    --vp-c-gray-soft: rgba(142, 150, 170, 0.14);
+    --vp-c-indigo-1: #3451b2;
+    --vp-c-indigo-2: #3a5ccc;
+    --vp-c-indigo-3: #5672cd;
+    --vp-c-indigo-soft: rgba(100, 108, 255, 0.14);
+    --vp-c-purple-1: #6f42c1;
+    --vp-c-purple-2: #7e4cc9;
+    --vp-c-purple-3: #8e5cd9;
+    --vp-c-purple-soft: rgba(159, 122, 234, 0.14);
+    --vp-c-green-1: #18794e;
+    --vp-c-green-2: #299764;
+    --vp-c-green-3: #30a46c;
+    --vp-c-green-soft: rgba(16, 185, 129, 0.14);
+    --vp-c-yellow-1: #915930;
+    --vp-c-yellow-2: #946300;
+    --vp-c-yellow-3: #9f6a00;
+    --vp-c-yellow-soft: rgba(234, 179, 8, 0.14);
+    --vp-c-red-1: #b8272c;
+    --vp-c-red-2: #d5393e;
+    --vp-c-red-3: #e0575b;
+    --vp-c-red-soft: rgba(244, 63, 94, 0.14);
+}
+
+.dark {
+    --vp-c-gray-1: #515c67;
+    --vp-c-gray-2: #414853;
+    --vp-c-gray-3: #32363f;
+    --vp-c-gray-soft: rgba(101, 117, 133, 0.16);
+    --vp-c-indigo-1: #a8b1ff;
+    --vp-c-indigo-2: #5c73e7;
+    --vp-c-indigo-3: #3e63dd;
+    --vp-c-indigo-soft: rgba(100, 108, 255, 0.16);
+    --vp-c-purple-1: #c8abfa;
+    --vp-c-purple-2: #a879e6;
+    --vp-c-purple-3: #8e5cd9;
+    --vp-c-purple-soft: rgba(159, 122, 234, 0.16);
+    --vp-c-green-1: #3dd68c;
+    --vp-c-green-2: #30a46c;
+    --vp-c-green-3: #298459;
+    --vp-c-green-soft: rgba(16, 185, 129, 0.16);
+    --vp-c-yellow-1: #f9b44e;
+    --vp-c-yellow-2: #da8b17;
+    --vp-c-yellow-3: #a46a0a;
+    --vp-c-yellow-soft: rgba(234, 179, 8, 0.16);
+    --vp-c-red-1: #f66f81;
+    --vp-c-red-2: #f14158;
+    --vp-c-red-3: #b62a3c;
+    --vp-c-red-soft: rgba(244, 63, 94, 0.16);
+}
+
+.mdx {
+    width: 100%;
+    max-width: max-content;
+    font-size: 1rem;
+    font-weight: 350;
+    line-height: 1.75;
+    color: var(--text-second);
+    letter-spacing: 0px;
+}
+
+.mdx > :first-child {
+    margin-top: 0px;
+}
+
 .mdx > * {
     @apply mb-7 font-sans;
 }
@@ -31,11 +101,12 @@
     margin: 1.75rem 0;
     font-family: var(--font-serif), sans-serif;
     font-weight: 400;
+    font-style: normal;
     color: var(--text-second);
     border-left: 4px solid var(--border);
 }
 
-.mdx > :has(+ :where(ul, ol)) {
+.mdx > :has(+ ul, ol) {
     @apply mb-2;
 }
 
@@ -132,24 +203,31 @@
     word-break: keep-all;
 }
 
+.mdx figure {
+    overflow: hidden;
+    border-radius: 6px;
+}
+
 .mdx img {
     display: flex;
     overflow: hidden;
     border-radius: 6px;
 }
 
-/* medium zoom */
-
-.mdx img,
-.medium-zoom-image--opened {
-    filter: drop-shadow(0 25px 20px rgba(0, 0, 0, 0.1));
+.mdx img + em,
+.mdx img + em p,
+.mdx figcaption {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--astro-code-token-comment);
 }
 
-.medium-zoom-overlay,
-.medium-zoom-image--opened {
-    z-index: 1000;
-}
-
-.mdx code {
-    @apply font-monospace;
+.mdx code::before,
+code::after {
+    display: none;
 }
