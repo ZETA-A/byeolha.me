@@ -25,10 +25,10 @@ export default async function PostList({ category }: { category: string }) {
                                             className="w-full group/item transition-opacity hover:!opacity-100 group-hover:opacity-40"
                                         >
                                             <div className="mx-1 justify-between w-full flex rounded-md px-1">
-                                                <p className="p-1 text-sm md:text-base tabular-nums self-end rounded-md peer group-hover/item:bg-selection">
+                                                <p className="p-1 font-normal text-sm md:text-base tabular-nums self-end rounded-md peer group-hover/item:bg-selection">
                                                     {post.title}
                                                 </p>
-                                                <p className="p-1 text-xs md:text-sm tabular-nums font-light rounded-md md:self-end md:mt-0 self-start mt-[4px] group-hover/item:bg-selection">
+                                                <p className="p-1 text-xs md:text-sm tabular-nums rounded-md md:self-end md:mt-0 self-start mt-[4px] group-hover/item:bg-selection">
                                                     {dayjs(post.date).format(
                                                         'MM.DD.'
                                                     )}

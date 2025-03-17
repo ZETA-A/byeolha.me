@@ -7,7 +7,7 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
-import rehypePrettyCode from 'rehype-pretty-code';
+import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeExternalLinks from 'rehype-external-links';
 
 const PostBody = ({ post }: { post: Post }) => {
@@ -18,14 +18,9 @@ const PostBody = ({ post }: { post: Post }) => {
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
                     rehypePlugins: [
-                        [
-                            rehypePrettyCode,
-                            {
-                                theme: 'one-dark-pro',
-                            },
-                        ],
-                        rehypeSlug,
                         rehypeCodeTitles,
+                        rehypePrismPlus,
+                        rehypeSlug,
                         [
                             rehypeExternalLinks,
                             {
