@@ -90,7 +90,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-```js
+```js {2}
 export default {
     data() {
         return {
@@ -100,7 +100,7 @@ export default {
 };
 ```
 
-```tsx line-numbers title="layout.tsx" caption="코드 상하단에 설명 문구를 작성할 수 있습니다." /fontMono/ /fontSans/ /fontSerif/
+```tsx showLineNumbers title="layout.tsx" caption="코드 상하단에 설명 문구를 작성할 수 있습니다." /fontMono/ /fontSans/ /fontSerif/
 import '~/styles/globals.css';
 import type { Metadata } from 'next';
 import { fontMono, fontSans, fontSerif } from '~/libs/fonts';
@@ -135,7 +135,7 @@ export default function RootLayout({
 }
 ```
 
-```ts
+```ts {2}#minus {3}#plus
 // @errors: 2540
 interface Todo {
     title: string;

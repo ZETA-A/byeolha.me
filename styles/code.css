@@ -47,7 +47,7 @@
 }
 
 .mdx code:not(pre code),
-.highlighted-word {
+[data-highlighted-chars] {
     position: relative;
     display: inline;
     padding: 1px 1px;
@@ -69,11 +69,11 @@ pre {
     overflow-x: auto;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--astro-code-color-text);
+    color: var(--astro-code-color-text) !important;
     -moz-tab-size: 2;
     -o-tab-size: 2;
     tab-size: 2;
-    background-color: var(--astro-code-color-background);
+    background-color: var(--astro-code-color-background) !important;
     border-radius: 8px;
 }
 
@@ -83,15 +83,14 @@ pre code {
 
 /* shiki transformer */
 
-.highlighted,
-.diff {
+[data-highlighted-line] {
     display: inline-block;
     width: calc(100% + 2 * var(--astro-code-px));
     padding: 0 var(--astro-code-px);
     margin: 0 calc(-1 * var(--astro-code-px));
     transition: background-color 0.5s;
 }
-.highlighted {
+[data-highlighted-line] {
     background-color: var(--selection);
 }
 .highlighted.error {
@@ -105,69 +104,36 @@ pre code {
     left: -16px;
     user-select: none;
 }
-.diff.remove {
+[data-highlighted-line-id='minus'] {
     background-color: var(--vp-code-line-diff-remove-color);
     opacity: 0.7;
 }
-.diff.remove:before {
+[data-highlighted-line-id='minus']:before {
+    position: absolute;
+    left: -16px;
     color: var(--vp-code-line-diff-remove-symbol-color);
     content: '-';
 }
-.diff.add {
+[data-highlighted-line-id='plus'] {
     background-color: var(--vp-code-line-diff-add-color);
 }
-.diff.add:before {
+[data-highlighted-line-id='plus']:before {
+    position: absolute;
+    left: -16px;
     color: var(--vp-code-line-diff-add-symbol-color);
     content: '+';
 }
 
-.has-focused .line:not(.focused) {
-    filter: blur(0.095rem);
-    opacity: 0.7;
-    transition: filter 0.35s, opacity 0.35s;
-}
-.has-focused:hover .line:not(.has-focus) {
-    filter: blur(0);
-    opacity: 1;
-}
-
-[data-code-fragment] [data-code-title] {
+[data-rehype-pretty-code-title] {
     margin-bottom: 0.25rem;
     font-size: 0.9rem;
-    color: var(--astro-code-token-comment);
+    color: var(--astro-code-token-comment) !important;
 }
 
-[data-code-fragment] [data-code-caption] {
+[data-rehype-pretty-code-caption] {
     margin-top: 0.25rem;
     font-size: 0.9rem;
-    color: var(--astro-code-token-comment);
-}
-
-[data-code-fragment] span.lang {
-    position: absolute;
-    top: 2px;
-    right: 8px;
-    z-index: 2;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--astro-code-token-comment);
-    transition: color 0.4s, opacity 0.4s;
-}
-
-.has-line-numbers {
-    padding-left: calc(var(--astro-code-px) + 2rem);
-}
-.line-numbers {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    display: grid;
-    width: 2rem;
-    padding: var(--astro-code-py) 0;
-    color: #888;
-    text-align: center;
-    border-right: 1px solid var(--border);
+    color: var(--astro-code-token-comment) !important;
 }
 
 /* rehype-autolink-headings */
