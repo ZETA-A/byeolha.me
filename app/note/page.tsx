@@ -6,7 +6,7 @@ export default function Note() {
         <div>
             <PageHeader
                 title="노트"
-                catchphrase="함께 배우고 기록하는 공간으로 초대할게요."
+                catchphrase="함께 배우고 기록하는 공간으로 초대합니다."
             />
             <PostList category="note" />
         </div>
