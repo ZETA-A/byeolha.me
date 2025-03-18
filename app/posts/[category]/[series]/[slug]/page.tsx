@@ -1,3 +1,4 @@
+import Giscus from '@/components/Giscus';
 import PostBody from '@/components/post/PostBody';
 import PostFooter from '@/components/post/PostFooter';
 import PostHeader from '@/components/post/PostHeader';
@@ -46,6 +47,7 @@ const PostDetail = async ({ params }: Props) => {
                 <PostBody post={post} />
             </div>
             <PostFooter post={sortedPost} thisPostUrl={post.url} />
+            <Giscus />
         </article>
     );
 };
