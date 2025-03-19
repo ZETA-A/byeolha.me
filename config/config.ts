@@ -7,12 +7,12 @@ export const siteConfig = {
     googleAnalyticsID: '',
     author: {
         name: '김승현',
-        email: 'open120477@icloud.com',
-        github: 'ZETA-A',
+        email: 'mailto:open120477@icloud.com',
+        github: 'https://github.com/ZETA-A',
         twitter: '',
         velog: '',
         linkedin: '',
-        instagram: '',
+        instagram: 'https://www.instagram.com/s.hyun0307',
         youtube: '',
     },
 };
