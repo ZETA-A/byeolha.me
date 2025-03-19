@@ -7,7 +7,6 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
-import rehypePrismPlus from 'rehype-prism-plus';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeExternalLinks from 'rehype-external-links';
 
