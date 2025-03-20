@@ -1,3 +1,4 @@
+import Giscus from '@/components/Giscus';
 import PostBody from '@/components/post/PostBody';
 import PostFooter from '@/components/post/PostFooter';
 import PostHeader from '@/components/post/PostHeader';
@@ -42,10 +43,11 @@ const PostDetail = async ({ params }: Props) => {
     return (
         <article>
             <PostHeader post={post} />
-            <div className=" max-w-none mdx">
+            <div className="max-w-none mdx">
                 <PostBody post={post} />
             </div>
             <PostFooter post={sortedPost} thisPostUrl={post.url} />
+            <Giscus />
         </article>
     );
 };

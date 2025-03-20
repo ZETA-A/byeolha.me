@@ -1,23 +1,24 @@
 ---
-title: 글은 이렇게 작성합니다(By. bepyan)
-date: 2026-03-15
-desc: 앞으로 어떻게 작성하고 스타일링을 하는지 작성합니다.
+title: 글 예시
+date: 2004-12-04
+desc: 김평안님의 글예시에 답장하듯, 한 번 써봅니다.
 thumbnail: none
 ---
 
-**마크다운**(Markdown)은 일반 텍스트 기반의 경량 마크업 언어입니다. 일반 텍스트로 서식이 있는 문서를 작성하는 데 사용되며, 일반 마크업 언어에 비해 문법이 쉽고 간단한 것이 특징입니다.
+우선 글을 시작하기 전에, 이 블로그의 디자인은 [김평안 님의 블로그](https://bepyan.me/)를 참고하였음을 미리 말씀드립니다.
 
-이 글은 제가 마크다운을 이 블로그에서 어떻게 활용하는지 기록하는 글입니다.
+덕분에 이 블로그를 개발하면서 **명조체**의 아름다움과 여백의 미를 다시금 깨달을 수 있었습니다.
+김평안 님께 다시 한번 감사의 말씀을 드립니다.
 
 ## 미니멀리즘
 
-제가 프론트엔드 개발자이여서 그런지, 레이아웃으로 무언가를 전달해주고 싶습니다.
-**글이 편안하게 다가갔으면 합니다.**
+이것을 깨닫는 데 정말 오랜 시간이 걸렸습니다.
+**중요하지 않은 것은 버리고, 소중한 것만 남기는 것.**
 
-그래서 **여백의 미**를 중요시 여겼습니다.
-페이지에 무언가 꽉 채워져 있으면 글을 읽기 참 싫어집니다. 제목만 조금 훑다가 페이지를 이탈하게 되죠.
+이전에는 모든 물건이 제 눈에 보여야 했고, 비워진 공간을 보면 늘 불안했습니다. 어떻게든 꼭 채워야만 했죠.
+그러다 김평안 님의 블로그와 애플의 디자인 철학을 접하고 생각을 달리하게 되었습니다. 충분한 여백이 있다면 오히려 더 풍부해진다는 사실을요.
 
-숨겨진 레이아웃의 디테일 입니다.
+본 블로그의 레이아웃은 다음과 같이 적용되었습니다.
 
 -   제목과 본문의 **크기가 같습니다.**
     -   글자 간의 이질감이 느껴지지 않아 페이지를 접할 때 차분해집니다.
@@ -34,10 +35,8 @@ thumbnail: none
 ## 제목
 
 이 블로그의 제목은 `h2`와 `h3`만을 사용합니다.
-**[시멘틱(Semantics) HTML](https://developer.mozilla.org/docs/Glossary/Semantics)의 아름다움**을 지키위해서 입니다. ~~(직업병)~~
-
--   `h1`은 `이 페이지에서 최상위 제목` 역할을 수행하는데 이미 하나 있습니다.
--   `h4`는 존재 자체가 `범죄`입니다. 글이 복잡하다는 증거이죠.
+**[시멘틱(Semantics) HTML](https://developer.mozilla.org/docs/Glossary/Semantics)의 아름다움**을 지키기위해서라고 하는데요.
+제 기준으로는 `h3`도 사용할일이 대부분 없었던 것 같습니다.
 
 ## 기본 요소
 
@@ -53,8 +52,8 @@ thumbnail: none
 
 [링크](/)는 은은한 밑줄이 있고 최소한의 `hover`효과를 갖습니다.
 [**굵은 링크**](/)는 더 눈에 띕니다.
-[외부 링크](https://bepyan.me/)는 "새 탭이 열릴 것"을 나타내는 아이콘이 생깁니다.
-https://github.com/bepyan 기본적으로 링크는 자동으로 파싱됩니다.
+[외부 링크](https://beyeolha.me/)는 "새 탭이 열릴 것"을 나타내는 아이콘이 생깁니다.
+https://github.com/ZETA-A 기본적으로 링크는 자동으로 파싱됩니다.
 
 **구분선**은 글의 컨텍스트를 전환하기 위해서 사용됩니다.
 
@@ -81,83 +80,30 @@ https://github.com/bepyan 기본적으로 링크는 자동으로 파싱됩니다
 Plain Text
 ```
 
-```ts twoslash
-import clsx, { type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+```ts title="HelloWorld.tsx"
+console.log('Hello World!');
 ```
 
-```js
-export default {
-    data() {
-        return {
-            msg: 'Focused!', // [!code focus]
-        };
-    },
-};
-```
-
-```tsx line-numbers title="layout.tsx" caption="코드 상하단에 설명 문구를 작성할 수 있습니다." /fontMono/ /fontSans/ /fontSerif/
-import '~/styles/globals.css';
-import type { Metadata } from 'next';
-import { fontMono, fontSans, fontSerif } from '~/libs/fonts';
-import { cn } from '~/libs/utils';
-
-console.log('highlight'); // [!code highlight]
-console.log('goodbye'); // [!code --]
-console.log('hello'); // [!code ++]
-
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+```tsx title="" caption="코드 상하단에 설명 문구를 작성할 수 있습니다." /post/
+export default function PostHeader({ post }: { post: Post }) {
     return (
-        <html lang="ko" suppressHydrationWarning>
-            <body
-                className={cn(
-                    'bg-background min-h-screen font-sans antialiased',
-                    fontSans.variable,
-                    fontSerif.variable,
-                    fontMono.variable
-                )}
-            >
-                <div className="blur" aria-hidden="true"></div>
-                <div className="max-w-page container mx-auto pt-32">
-                    <div className="main-grid">{children}</div>
-                </div>
-            </body>
-        </html>
+        <div className="flex flex-col gap-1 mb-20">
+            <h1 className="font-semibold">{post.title}</h1>
+            <p className="text-sm text-second">
+                {post.dateString} · {post.readingMinutes}min
+            </p>
+            <p className="text-sm text-second">
+                {post.seriesPublicName} 시리즈
+            </p>
+        </div>
     );
 }
 ```
 
-```ts
-// @errors: 2540
-interface Todo {
-    title: string;
-}
-
-const todo: Readonly<Todo> = {
-    title: 'Delete inactive users'.toUpperCase(),
-    // ^?
-};
-
-todo.title = 'Hello';
-
-Number.parseInt('123', 10);
-// ^|
-
-// @log: Custom log message
-const a = 1;
-// @error: Custom error message
-const b = 1;
-// @warn: Custom warning message
-const c = 1;
-// @annotate: Custom annotation message
+```ts {1} {2}#minus {3}#plus
+console.log('하이라이트는 이렇게 사용합니다.');
+console.log('변경되기 전은 이렇게');
+console.log('변경된 후에는 이렇게 나옵니다.');
 ```
 
 ## 테이블

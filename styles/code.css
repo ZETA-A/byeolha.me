@@ -1,0 +1,138 @@
+/* code block */
+:root {
+    --astro-code-color-text: var(--gray-800);
+    --astro-code-color-background: var(--gray-100);
+
+    --astro-code-token-constant: #171717;
+    --astro-code-token-string: #6f6f6f;
+    --astro-code-token-comment: #8f8f8f;
+    --astro-code-token-keyword: #858585;
+    --astro-code-token-parameter: #171717;
+    --astro-code-token-function: #171717;
+    --astro-code-token-string-expression: #6f6f6f;
+    --astro-code-token-punctuation: #8f8f8f;
+    --astro-code-token-link: #171717;
+}
+
+.dark {
+    --astro-code-token-constant: #ededed;
+    --astro-code-token-string: #a0a0a0;
+    --astro-code-token-comment: #707070;
+    --astro-code-token-keyword: #858585;
+    --astro-code-token-parameter: #ededed;
+    --astro-code-token-function: #ededed;
+    --astro-code-token-string-expression: #a0a0a0;
+    --astro-code-token-punctuation: #707070;
+    --astro-code-token-link: #ededed;
+}
+
+:root {
+    --vp-code-line-highlight-color: var(--selection);
+    --vp-code-line-diff-add-color: var(--vp-c-green-soft);
+    --vp-code-line-diff-add-symbol-color: var(--vp-c-green-1);
+    --vp-code-line-diff-remove-color: var(--vp-c-red-soft);
+    --vp-code-line-warning-color: var(--vp-c-yellow-soft);
+    --vp-code-line-diff-remove-symbol-color: var(--vp-c-red-1);
+    --vp-code-line-error-color: var(--vp-c-red-soft);
+
+    --twoslash-popup-bg: var(--astro-code-color-background);
+    --twoslash-popup-color: var(--astro-code-color-text);
+    --twoslash-docs-color: var(--astro-code-color-text);
+    --twoslash-code-size: var(--vp-code-font-size);
+    --twoslash-underline-color: var(--border);
+    --twoslash-border-color: var(--border);
+    --twoslash-cursor-color: var(--astro-code-token-comment);
+    --twoslash-matched-color: var(--astro-code-color-text);
+    --twoslash-unmatched-color: var(--astro-code-token-comment);
+}
+
+.mdx code:not(pre code),
+[data-highlighted-chars] {
+    position: relative;
+    display: inline;
+    padding: 1px 1px;
+    margin: -1px -1px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--astro-code-color-text);
+    background-color: var(--selection);
+    border: 1px solid var(--selection);
+    border-radius: 4px;
+}
+
+pre {
+    --astro-code-px: 24px;
+    --astro-code-py: 20px;
+    position: relative;
+    display: grid;
+    padding: var(--astro-code-py) var(--astro-code-px);
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--astro-code-color-text) !important;
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    tab-size: 2;
+    background-color: var(--astro-code-color-background) !important;
+    border-radius: 8px;
+}
+
+pre code {
+    @apply font-monospace;
+    position: relative;
+}
+
+/* shiki transformer */
+
+[data-highlighted-line] {
+    display: inline-block;
+    width: calc(100% + 2 * var(--astro-code-px));
+    padding: 0 var(--astro-code-px);
+    margin: 0 calc(-1 * var(--astro-code-px));
+    transition: background-color 0.5s;
+}
+[data-highlighted-line] {
+    background-color: var(--selection);
+}
+.highlighted.error {
+    background-color: var(--vp-code-line-error-color);
+}
+.highlighted.warning {
+    background-color: var(--vp-code-line-warning-color);
+}
+.diff:before {
+    position: absolute;
+    left: -16px;
+    user-select: none;
+}
+[data-highlighted-line-id='minus'] {
+    background-color: var(--vp-code-line-diff-remove-color);
+    opacity: 0.7;
+}
+[data-highlighted-line-id='minus']:before {
+    position: absolute;
+    left: -16px;
+    color: var(--vp-code-line-diff-remove-symbol-color);
+    content: '-';
+}
+[data-highlighted-line-id='plus'] {
+    background-color: var(--vp-code-line-diff-add-color);
+}
+[data-highlighted-line-id='plus']:before {
+    position: absolute;
+    left: -16px;
+    color: var(--vp-code-line-diff-add-symbol-color);
+    content: '+';
+}
+
+[data-rehype-pretty-code-title] {
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--astro-code-token-comment) !important;
+}
+
+[data-rehype-pretty-code-caption] {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--astro-code-token-comment) !important;
+}

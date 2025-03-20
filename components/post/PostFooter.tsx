@@ -16,7 +16,7 @@ export const PostFooter = ({
     const nextPost =
         thisPost === 0 ? { url: '#', title: 'none' } : post.at(thisPost - 1);
     return (
-        <div className="mt-16 font-sans">
+        <div className="mt-16 mb-8 font-sans">
             <p className="text-right text-xs pb-2">
                 이 글은 크리에이티브 커먼스 라이선스 4.0을 준수합니다.
             </p>

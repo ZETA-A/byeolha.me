@@ -25,6 +25,11 @@ export default {
                 },
                 selection: 'var(--selection)',
                 border: 'var(--border)',
+                pastel: {
+                    green: 'var(--pastel-green)',
+                    orange: 'var(--pastel-orange)',
+                    gray: 'var(--pastel-gray)',
+                },
             },
             textColor: {
                 heading: 'var(--heading)',

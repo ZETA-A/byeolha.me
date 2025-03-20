@@ -18,14 +18,14 @@ const PostBody = ({ post }: { post: Post }) => {
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
                     rehypePlugins: [
+                        rehypeCodeTitles,
                         [
                             rehypePrettyCode,
                             {
-                                theme: 'one-dark-pro',
+                                theme: 'material-theme-lighter',
                             },
                         ],
                         rehypeSlug,
-                        rehypeCodeTitles,
                         [
                             rehypeExternalLinks,
                             {
