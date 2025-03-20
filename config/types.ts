@@ -15,3 +15,10 @@ export interface Post extends PostMatter {
     readingMinutes: number;
     seriesPublicName: string;
 }
+
+export interface ProjectItems {
+    title: string;
+    lastUpdate: string;
+    status: 'online' | 'maintenance' | 'offline';
+    href: string;
+}

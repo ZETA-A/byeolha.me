@@ -1,3 +1,5 @@
+import { ProjectItems } from './types';
+
 export const siteConfig = {
     url: 'https://www.byeolha.me/',
     title: 'byeolha.me',
@@ -36,20 +38,23 @@ export const navItems = [
     },
 ];
 
-export const projectItems = [
-    {
-        title: 'Monument Browser',
-        lastUpdate: '2025-02-28',
-        status: 'online',
-    },
+export const projectItems: ProjectItems[] = [
     {
         title: 'byeolha.me',
-        lastUpdate: '2025-02-28',
+        lastUpdate: '2025-03-20',
+        status: 'online',
+        href: 'https://byeolha.me/',
+    },
+    {
+        title: 'Monument Browser',
+        lastUpdate: '2025-01-23',
         status: 'maintenance',
+        href: 'https://zeta-a.github.io/Monument-Browser/',
     },
     {
         title: 'ZETA-A.github.io',
-        lastUpdate: '2025-02-28',
+        lastUpdate: '2025-01-08',
         status: 'offline',
+        href: 'https://zeta-a.github.io/',
     },
 ];
