@@ -32,6 +32,10 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
         --text-body: var(--gray-800);
         --text-second: var(--gray-700);
         --text-disabled: var(--gray-500);
+
+        --pastel-green: #7fb77e;
+        --pastel-orange: #e4a76f;
+        --pastel-gray: #b0b0b0;
     }
 
     .dark {
@@ -207,7 +211,6 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
         display: none;
     }
 }
-
 
 /* rehype-autolink-headings */
 
