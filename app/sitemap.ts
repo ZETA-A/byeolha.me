@@ -12,11 +12,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
         },
         {
-            url: `${baseUrl}/about`,
+            url: `${baseUrl}/diary`,
             lastModified: new Date(),
         },
         {
-            url: `${baseUrl}/category`,
+            url: `${baseUrl}/note`,
+            lastModified: new Date(),
+        },
+        {
+            url: `${baseUrl}/project`,
+            lastModified: new Date(),
+        },
+        {
+            url: `${baseUrl}/profile`,
             lastModified: new Date(),
         },
         ...postList,
