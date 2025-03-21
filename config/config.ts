@@ -1,7 +1,7 @@
 import { ProjectItems } from './types';
 
 export const siteConfig = {
-    url: 'https://www.byeolha.me/',
+    url: 'https://www.byeolha.me',
     title: 'byeolha.me',
     description: '세상을 바꾸기 위해 개발합니다',
     copyright: 'byeolha © All rights reserved.',

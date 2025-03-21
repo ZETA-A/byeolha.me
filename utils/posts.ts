@@ -118,9 +118,10 @@ export const getPostDetail = async (
 export const getSitemapPostList = async () => {
     const postList = await getPostList();
     const baseUrl = siteConfig.url;
-    const sitemapPostList = postList.map(({ url }) => ({
-      lastModified: new Date(),
-      url: `${baseUrl}${url}`,
+    const sitemapPostList = postList.map(({ url, dateString }) => ({
+        lastModified: new Date(dateString),
+        url: `${baseUrl}${url}`,
+        changeFrequency: 'daily' as 'daily',
     }));
     return sitemapPostList;
-  };
+};
