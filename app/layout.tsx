@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import '@styles/globals.css';
 import Navigation from '@/components/layout/navigation/Navigation';
 import { maruburi, nanumHuman } from '@/utils/fonts';
@@ -23,6 +24,7 @@ export default function RootLayout({
             className={`${nanumHuman.variable} ${maruburi.variable} bg-page`}
         >
             <body className="flex flex-col font-serif">
+                <GoogleAnalytics gaId={process.env.GA_ID as string} />
                 <ThemeProvider attribute="class">
                     <div className="w-full max-w-6xl mx-auto px-6 flex flex-col min-h-screen">
                         <Navigation />
