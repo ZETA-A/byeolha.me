@@ -6,7 +6,6 @@ export const siteConfig = {
     description: '세상을 바꾸기 위해 개발합니다',
     copyright: 'byeolha © All rights reserved.',
     since: 2025,
-    googleAnalyticsID: '',
     author: {
         name: '김승현',
         email: 'mailto:open120477@icloud.com',

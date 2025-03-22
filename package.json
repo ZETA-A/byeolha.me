@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@next/third-parties": "^15.2.3",
         "@types/glob": "^8.1.0",
         "@vercel/speed-insights": "^1.2.0",
         "dayjs": "^1.11.13",
