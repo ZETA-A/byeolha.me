@@ -33,7 +33,7 @@ export const navItems = [
     },
     {
         label: '소개',
-        href: '/profile',
+        href: '/resume',
     },
 ];
 
