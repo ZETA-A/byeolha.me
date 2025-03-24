@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 export default function Home() {
     return (
         <div>
-            <h1 className="mb-6">김승현</h1>
+            <div className="flex space-x-2 mb-6">
+                <h1>김승현</h1>
+                <h1>·</h1>
+                <h1>byeolha</h1>
+            </div>
             <div className="text-second flex flex-col gap-4">
                 <div>
                     <p>
