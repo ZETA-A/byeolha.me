@@ -1,9 +1,9 @@
-import { projectItems } from '@/config/config';
+import { getProjectItems } from '@/config/config';
 import { ProjectItems } from '@/config/types';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-export default function ProjectList() {
+export default async function ProjectList() {
     const serviceStat = (props: ProjectItems) => {
         if (props.status === 'online')
             return { span: '서비스 중', color: 'bg-pastel-green' };
@@ -12,9 +12,10 @@ export default function ProjectList() {
         if (props.status === 'maintenance')
             return { span: '점검 중', color: 'bg-pastel-orange' };
     };
+    const projects = await getProjectItems();
     return (
         <div className="mt-8 group flex flex-col gap-3">
-            {projectItems.map((props: ProjectItems, index) => {
+            {projects.map((props: ProjectItems, index) => {
                 const date = dayjs(props.lastUpdate);
                 return (
                     <Link
