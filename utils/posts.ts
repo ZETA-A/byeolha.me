@@ -49,16 +49,10 @@ async function parsePostDetail(postPath: string) {
 
 // category folder name을 public name으로 변경 : dir_name -> Dir Name
 export function getSeriesPublicName(dirPath: string) {
-    try {
-        return dirPath
-            .split('_')
-            .map(
-                (token) => token[0].toUpperCase() + token.slice(1, token.length)
-            )
-            .join(' ');
-    } catch (error) {
-        return 'Error: getSeriesPublicName()';
-    }
+    return dirPath
+        .split('_')
+        .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
+        .join(' ');
 }
 
 // post를 날짜 최신 순으로 정렬

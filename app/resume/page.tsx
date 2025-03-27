@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Resume() {
-    const post = await parsePost(`${POSTS_PATH}/resume.mdx`);
+    const post = await parsePost(
+        `${POSTS_PATH}/other/resume/resume/content.mdx`
+    );
     return (
         <div className="mdx">
             <PostBody post={post} />
