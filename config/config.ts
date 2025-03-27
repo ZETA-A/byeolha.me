@@ -1,3 +1,4 @@
+import getLastArticle from '@/utils/getLastArticle';
 import { ProjectItems } from './types';
 
 export const siteConfig = {
@@ -33,27 +34,30 @@ export const navItems = [
     },
     {
         label: '소개',
-        href: '/profile',
+        href: '/resume',
     },
 ];
 
-export const projectItems: ProjectItems[] = [
-    {
-        title: 'byeolha.me',
-        lastUpdate: '2025-03-20',
-        status: 'online',
-        href: 'https://byeolha.me/',
-    },
-    {
-        title: 'Monument Browser',
-        lastUpdate: '2025-01-23',
-        status: 'maintenance',
-        href: 'https://zeta-a.github.io/Monument-Browser/',
-    },
-    {
-        title: 'ZETA-A.github.io',
-        lastUpdate: '2025-01-08',
-        status: 'offline',
-        href: 'https://zeta-a.github.io/',
-    },
-];
+export async function getProjectItems(): Promise<ProjectItems[]> {
+    const lastArticle = await getLastArticle();
+    return [
+        {
+            title: 'byeolha.me',
+            lastUpdate: lastArticle,
+            status: 'online',
+            href: 'https://byeolha.me/',
+        },
+        {
+            title: 'Monument Browser',
+            lastUpdate: '2025-01-23',
+            status: 'maintenance',
+            href: 'https://zeta-a.github.io/Monument-Browser/',
+        },
+        {
+            title: 'ZETA-A.github.io',
+            lastUpdate: '2025-01-08',
+            status: 'offline',
+            href: 'https://zeta-a.github.io/',
+        },
+    ];
+}

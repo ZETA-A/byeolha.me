@@ -7,8 +7,8 @@ import readingTime from 'reading-time';
 import dayjs from 'dayjs';
 import { siteConfig } from '@/config/config';
 
-const BASE_PATH = 'posts';
-const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
+export const BASE_PATH = 'posts';
+export const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
 
 // 모든 MDX 파일 조회
 export function getPostPath(category?: string) {
@@ -17,7 +17,7 @@ export function getPostPath(category?: string) {
     return postPaths;
 }
 
-async function parsePost(postPath: string): Promise<Post> {
+export async function parsePost(postPath: string): Promise<Post> {
     const postAbstract = parsePostAbstract(postPath);
     const postDetail = await parsePostDetail(postPath);
     return { ...postAbstract, ...postDetail };
