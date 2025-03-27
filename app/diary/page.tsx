@@ -1,6 +1,11 @@
 import PageHeader from '@/components/layout/PageHeader';
 import PostList from '@/components/post/PostList';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+    title: '일기',
+    description:
+        '매일의 소중한 순간들이 모여 하루를 특별한 이야기로 완성합니다.',
+};
 export default function Diary() {
     return (
         <div>

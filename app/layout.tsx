@@ -8,7 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/layout/footer/Footer';
 
 export const metadata: Metadata = {
-    title: 'byeolha.me',
+    title: { template: '%s', absolute: 'byeolha.me' },
     description: '세상을 바꾸기 위해 개발합니다',
 };
 
@@ -21,7 +21,7 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning={true}
-            className={`${nanumHuman.variable} ${maruburi.variable} bg-page`}
+            className={`${nanumHuman.variable} ${maruburi.variable} bg-page subpixel-antialiased`}
         >
             <body className="flex flex-col font-serif">
                 <GoogleAnalytics gaId={process.env.GA_ID as string} />
