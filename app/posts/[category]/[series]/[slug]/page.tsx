@@ -2,6 +2,7 @@ import Giscus from '@/components/Giscus';
 import PostBody from '@/components/post/PostBody';
 import PostFooter from '@/components/post/PostFooter';
 import PostHeader from '@/components/post/PostHeader';
+import { siteConfig } from '@/config/config';
 import {
     getPostDetail,
     getPostPath,
@@ -19,9 +20,29 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
+    const thumbnail =
+        post.thumbnail || `${siteConfig.url}${siteConfig.defaultThumbnail}`;
     return {
         title: post.title,
         description: post.description,
+        openGraph: {
+            title: post.title,
+            description: post.description,
+            url: post.url,
+            images: [
+                {
+                    url: `${siteConfig.url}${thumbnail}`,
+                    width: 800,
+                    height: 600,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.description,
+            images: [`${siteConfig.url}${thumbnail}`],
+        },
     };
 }
 
