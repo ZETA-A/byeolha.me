@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             lastModified: new Date(),
         },
         {
-            url: `${baseUrl}/profile`,
+            url: `${baseUrl}/resume`,
             lastModified: new Date(),
         },
         ...postList,

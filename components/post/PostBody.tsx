@@ -9,6 +9,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeFigure from '@microflash/rehype-figure';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
@@ -18,6 +19,7 @@ const PostBody = ({ post }: { post: Post }) => {
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
                     rehypePlugins: [
+                        rehypeFigure,
                         rehypeCodeTitles,
                         [
                             rehypePrettyCode,

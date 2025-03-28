@@ -3,10 +3,31 @@ import { siteConfig } from '@/config/config';
 import { Github, Instagram, MailBox } from 'flowbite-react-icons/solid';
 import Link from 'next/link';
 import { Metadata } from 'next';
+
 export const metadata: Metadata = {
     title: '표지',
     description:
         '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+    openGraph: {
+        title: '표지',
+        description:
+            '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+        url: `${siteConfig.url}`,
+        images: [
+            {
+                url: `${siteConfig.url}${siteConfig.defaultThumbnail}`,
+                width: 800,
+                height: 600,
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: '표지',
+        description:
+            '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+        images: [`${siteConfig.url}${siteConfig.defaultThumbnail}`],
+    },
 };
 export default function Home() {
     return (

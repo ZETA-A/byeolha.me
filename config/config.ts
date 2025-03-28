@@ -6,6 +6,7 @@ export const siteConfig = {
     title: 'byeolha.me',
     description: '세상을 바꾸기 위해 개발합니다',
     copyright: 'byeolha © All rights reserved.',
+    defaultThumbnail: '/assets/image/defaultThumbnail.png',
     since: 2025,
     author: {
         name: '김승현',
