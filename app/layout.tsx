@@ -10,6 +10,11 @@ import Footer from '@/components/layout/footer/Footer';
 export const metadata: Metadata = {
     title: { template: '%s', absolute: 'byeolha.me' },
     description: '세상을 바꾸기 위해 개발합니다',
+    verification: {
+        other: {
+            'naver-site-verification': process.env.NAVER_SITE_VERIFICATION,
+        },
+    },
 };
 
 export default function RootLayout({
@@ -24,7 +29,7 @@ export default function RootLayout({
             className={`${nanumHuman.variable} ${maruburi.variable} bg-page subpixel-antialiased`}
         >
             <body className="flex flex-col font-serif">
-                <GoogleAnalytics gaId={process.env.GA_ID as string} />
+                <GoogleAnalytics gaId={process.env.GA_ID} />
                 <ThemeProvider attribute="class">
                     <div className="w-full max-w-6xl mx-auto px-6 flex flex-col min-h-screen">
                         <Navigation />

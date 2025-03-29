@@ -30,7 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default function Diary() {
-    console.log(`${siteConfig.url}${siteConfig.defaultThumbnail}`);
     return (
         <div>
             <PageHeader
