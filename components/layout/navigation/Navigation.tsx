@@ -33,6 +33,7 @@ export default function Navigation() {
                     <ThemeMenu />
                     <button
                         className="md:hidden hover:bg-selection box-content p-2 rounded-lg transition"
+                        aria-label='모바일 네비게이션'
                         onClick={() => toggleNavigation()}
                     >
                         <NavIcon
