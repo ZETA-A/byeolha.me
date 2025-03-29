@@ -1,28 +1,21 @@
 import PostBody from '@/components/post/PostBody';
 import { parsePost, POSTS_PATH } from '@/utils/posts';
-import { siteConfig } from '@/config/config';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: '소개',
-    description: '당신을 만난 것은 오늘 제게있어 행운이었습니다.',
+    description:
+        '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
     openGraph: {
         title: '소개',
-        description: '당신을 만난 것은 오늘 제게있어 행운이었습니다.',
-        url: `${siteConfig.url}`,
-        images: [
-            {
-                url: `${siteConfig.url}${siteConfig.defaultThumbnail}`,
-                width: 800,
-                height: 600,
-            },
-        ],
+        description:
+            '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
+        url: '/resume',
     },
     twitter: {
-        card: 'summary_large_image',
         title: '소개',
-        description: '당신을 만난 것은 오늘 제게있어 행운이었습니다.',
-        images: [`${siteConfig.url}${siteConfig.defaultThumbnail}`],
+        description:
+            '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
     },
 };
 

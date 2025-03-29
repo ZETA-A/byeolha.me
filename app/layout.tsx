@@ -6,10 +6,32 @@ import { maruburi, nanumHuman } from '@/utils/fonts';
 import { ThemeProvider } from 'next-themes';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/layout/footer/Footer';
+import { siteConfig } from '@/config/config';
 
 export const metadata: Metadata = {
-    title: { template: '%s', absolute: 'byeolha.me' },
+    metadataBase: new URL(siteConfig.url),
+    title: { template: '%s', absolute: siteConfig.title },
     description: '세상을 바꾸기 위해 개발합니다',
+    openGraph: {
+        title: { template: '%s', absolute: siteConfig.title },
+        siteName: siteConfig.title,
+        description: '세상을 바꾸기 위해 개발합니다',
+        url: '/',
+        images: [
+            {
+                url: `${siteConfig.defaultThumbnail}`,
+                width: 800,
+                height: 600,
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: { template: '%s', absolute: siteConfig.title },
+        description: '세상을 바꾸기 위해 개발합니다.',
+        images: [`${siteConfig.defaultThumbnail}`],
+    },
     verification: {
         other: {
             'naver-site-verification': process.env.NAVER_SITE_VERIFICATION,
