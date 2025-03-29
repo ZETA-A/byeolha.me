@@ -10,7 +10,11 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
             {/* 데스크탑 메뉴 */}
             <div className="hidden md:flex space-x-6">
                 {navItems.map(({ label, href }) => (
-                    <Link key={href} href={href} className='hover:text-gray-600 transition'>
+                    <Link
+                        key={href}
+                        href={href}
+                        className="hover:text-gray-600 transition"
+                    >
                         {label}
                     </Link>
                 ))}

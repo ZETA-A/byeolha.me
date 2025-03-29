@@ -5,6 +5,7 @@ interface DropdownProps {
     group: PopupMenuState; // Dropdown의 그룹
     label: React.ReactNode; // 버튼
     items: DropdownItems[]; // 아이템
+    areaLabel: string; // 스크린리더
 }
 
 interface DropdownItems {
@@ -17,7 +18,12 @@ interface DropdownItems {
     onChange?: () => void;
 }
 
-const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
+const DropdownMenu: React.FC<DropdownProps> = ({
+    group,
+    label,
+    items,
+    areaLabel,
+}) => {
     const { popupMenuState, setPopupMenuState } = usePopupMenuStore();
     const popoverRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -55,6 +61,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({ group, label, items }) => {
             {/* Dropdown을 여는 버튼 */}
             <button
                 ref={buttonRef}
+                aria-label={areaLabel}
                 onClick={() => togglePopup()}
                 className="hover:bg-selection box-content p-2 rounded-lg transition"
             >

@@ -42,7 +42,7 @@ export default {
             },
             fontFamily: {
                 serif: ['var(--font-maruburi)', 'serif'],
-                sans: ['var(--font-nanumhuman)', 'sans-serif'],
+                sans: ['var(--font-nanumHuman)', 'sans-serif'],
                 monospace: ['var(--font-jetbrainsMono)', 'monospace'],
             },
             maxWidth: {
