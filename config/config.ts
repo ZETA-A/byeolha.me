@@ -39,26 +39,32 @@ export const navItems = [
     },
 ];
 
-export async function getProjectItems(): Promise<ProjectItems[]> {
-    const lastArticle = await getLastArticle();
-    return [
-        {
-            title: 'byeolha.me',
-            lastUpdate: lastArticle,
-            status: 'online',
-            href: 'https://byeolha.me/',
+export const getProjectItems: ProjectItems[] = [
+    {
+        title: 'byeolha.me',
+        status: 'online',
+        href: 'https://byeolha.me/',
+        git: {
+            owner: 'ZETA-A',
+            repo: 'byeolha.me',
         },
-        {
-            title: 'Monument Browser',
-            lastUpdate: '2025-01-23',
-            status: 'maintenance',
-            href: 'https://zeta-a.github.io/Monument-Browser/',
+    },
+    {
+        title: 'Monument Browser',
+        status: 'maintenance',
+        href: 'https://zeta-a.github.io/Monument-Browser/',
+        git: {
+            owner: 'ZETA-A',
+            repo: 'Monument-Browser',
         },
-        {
-            title: 'ZETA-A.github.io',
-            lastUpdate: '2025-01-08',
-            status: 'offline',
-            href: 'https://zeta-a.github.io/',
+    },
+    {
+        title: 'ZETA-A.github.io',
+        status: 'offline',
+        href: 'https://zeta-a.github.io/',
+        git: {
+            owner: 'ZETA-A',
+            repo: 'ZETA-A.github.io',
         },
-    ];
-}
+    },
+];

@@ -1,5 +1,6 @@
 import { getProjectItems } from '@/config/config';
 import { ProjectItems } from '@/config/types';
+import getLastArticle from '@/utils/getLastArticle';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
@@ -12,11 +13,14 @@ export default async function ProjectList() {
         if (props.status === 'maintenance')
             return { span: '점검 중', color: 'bg-pastel-orange' };
     };
-    const projects = await getProjectItems();
     return (
         <div className="mt-8 group flex flex-col gap-3">
-            {projects.map((props: ProjectItems, index) => {
-                const date = dayjs(props.lastUpdate);
+            {getProjectItems.map(async (props: ProjectItems, index) => {
+                const githubAPIDate = await getLastArticle(
+                    props.git.owner,
+                    props.git.repo
+                );
+                const date = dayjs(githubAPIDate);
                 return (
                     <Link
                         href={props.href}

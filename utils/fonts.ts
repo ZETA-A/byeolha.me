@@ -3,11 +3,6 @@ import localFont from 'next/font/local';
 export const maruburi = localFont({
     src: [
         {
-            path: '../public/fonts/MaruBuri/woff2/MaruBuri-ExtraLight.woff2',
-            weight: '200',
-            style: 'normal',
-        },
-        {
             path: '../public/fonts/MaruBuri/woff2/MaruBuri-Light.woff2',
             weight: '300',
             style: 'normal',
@@ -34,11 +29,6 @@ export const maruburi = localFont({
 export const nanumHuman = localFont({
     src: [
         {
-            path: '../public/fonts/NanumHuman/woff2/NanumHumanEL.woff2',
-            weight: '200',
-            style: 'normal',
-        },
-        {
             path: '../public/fonts/NanumHuman/woff2/NanumHumanLight.woff2',
             weight: '350',
             style: 'normal',
@@ -56,11 +46,6 @@ export const nanumHuman = localFont({
         {
             path: '../public/fonts/NanumHuman/woff2/NanumHumanEB.woff2',
             weight: '600',
-            style: 'normal',
-        },
-        {
-            path: '../public/fonts/NanumHuman/woff2/NanumHumanHeavy.woff2',
-            weight: '900',
             style: 'normal',
         },
     ],

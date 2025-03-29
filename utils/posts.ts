@@ -9,6 +9,7 @@ import { siteConfig } from '@/config/config';
 
 export const BASE_PATH = 'posts';
 export const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
+export const RESUME_PATH = path.join(process.cwd(), 'app/resume/content.mdx');
 
 // 모든 MDX 파일 조회
 export function getPostPath(category?: string) {
@@ -38,7 +39,7 @@ export function parsePostAbstract(postPath: string) {
 }
 
 // MDX 파일의 상세내용 파싱
-async function parsePostDetail(postPath: string) {
+export async function parsePostDetail(postPath: string) {
     const file = fs.readFileSync(postPath, 'utf8');
     const { data, content } = matter(file);
     const grayMatter = data as PostMatter;
