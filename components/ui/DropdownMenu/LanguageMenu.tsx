@@ -44,6 +44,7 @@ const LanguageMenu = () => {
             group={PopupMenuState.Language}
             label={<Language />}
             items={items}
+            areaLabel="Select Language"
         />
     );
 };

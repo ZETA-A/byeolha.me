@@ -26,7 +26,14 @@ const ThemeMenu = () => {
         },
     ];
 
-    return <DropdownMenu group={PopupMenuState.Theme} label={<Sun />} items={items} />;
+    return (
+        <DropdownMenu
+            group={PopupMenuState.Theme}
+            label={<Sun />}
+            items={items}
+            areaLabel="Select Theme"
+        />
+    );
 };
 
 export default ThemeMenu;
