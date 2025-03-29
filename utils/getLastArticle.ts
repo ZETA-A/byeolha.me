@@ -12,7 +12,5 @@ export default async function getLastArticle(
         return '2004-12-04';
     }
 
-    console.log(lastCommitTime);
-
     return lastCommitTime;
 }
