@@ -6,7 +6,7 @@ export default async function PostList({ category }: { category: string }) {
     const postList = await getSortedPostListByYear(category);
 
     return (
-        <section className="group mt-12 select-none font-light">
+        <section className="group mt-12 select-none font-normal">
             {postList.map((item, listIndex) => {
                 return (
                     <div
@@ -25,7 +25,7 @@ export default async function PostList({ category }: { category: string }) {
                                             className="w-full group/item transition-opacity hover:!opacity-100 group-hover:opacity-40"
                                         >
                                             <div className="mx-1 justify-between w-full flex rounded-md px-1">
-                                                <p className="p-1 font-lignt text-sm md:text-base tabular-nums self-end rounded-md peer group-hover/item:bg-selection">
+                                                <p className="p-1 text-sm md:text-base tabular-nums self-end rounded-md peer group-hover/item:bg-selection">
                                                     {post.title}
                                                 </p>
                                                 <p className="p-1 text-xs text-second md:text-sm tabular-nums rounded-md md:self-end md:mt-0 self-start mt-[4px] group-hover/item:bg-selection">

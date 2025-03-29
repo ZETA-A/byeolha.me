@@ -40,7 +40,7 @@ export const nanumHuman = localFont({
         },
         {
             path: '../public/fonts/NanumHuman/woff2/NanumHumanLight.woff2',
-            weight: '300',
+            weight: '350',
             style: 'normal',
         },
         {
@@ -55,7 +55,7 @@ export const nanumHuman = localFont({
         },
         {
             path: '../public/fonts/NanumHuman/woff2/NanumHumanEB.woff2',
-            weight: '700',
+            weight: '600',
             style: 'normal',
         },
         {
