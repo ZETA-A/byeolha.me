@@ -2,14 +2,24 @@ import { Sun, Moon, MobilePhone } from 'flowbite-react-icons/outline';
 import DropdownMenu from './DropdownMenu';
 import { useTheme } from 'next-themes';
 import { PopupMenuState } from '@/hooks/popupMenuStore';
+import { useEffect, useState } from 'react';
 
 const ThemeMenu = () => {
     const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, [mounted]);
+
+    if (!mounted) return null;
+
     const setLabel = (theme: string) => {
         if (theme === 'light') return <Sun />;
         if (theme === 'dark') return <Moon />;
         if (theme === 'system') return <MobilePhone />;
     };
+
     const items = [
         {
             title: '주간 모드',
