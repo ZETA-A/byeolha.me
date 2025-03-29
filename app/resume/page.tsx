@@ -1,6 +1,7 @@
 import PostBody from '@/components/post/PostBody';
 import { parsePostDetail, RESUME_PATH } from '@/utils/posts';
 import { Metadata } from 'next';
+import { Fade } from 'react-awesome-reveal';
 
 export const metadata: Metadata = {
     title: '소개',
@@ -22,17 +23,19 @@ export const metadata: Metadata = {
 export default async function Resume() {
     const post = await parsePostDetail(RESUME_PATH);
     return (
-        <div className="mdx">
-            <PostBody
-                post={{
-                    ...post,
-                    url: '',
-                    slug: '',
-                    categoryPath: '',
-                    seriesPath: '',
-                    seriesPublicName: '',
-                }}
-            />
-        </div>
+        <Fade cascade duration={300} triggerOnce>
+            <div className="mdx">
+                <PostBody
+                    post={{
+                        ...post,
+                        url: '',
+                        slug: '',
+                        categoryPath: '',
+                        seriesPath: '',
+                        seriesPublicName: '',
+                    }}
+                />
+            </div>
+        </Fade>
     );
 }
