@@ -1,7 +1,7 @@
-export default async function getLastArticle(): Promise<string> {
-    const owner = 'ZETA-A';
-    const repo = 'byeolha.me';
-
+export default async function getLastArticle(
+    owner: string,
+    repo: string
+): Promise<string> {
     const res = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/commits`
     );

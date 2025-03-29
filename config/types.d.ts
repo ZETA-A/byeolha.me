@@ -27,7 +27,10 @@ export interface Post extends PostMatter {
 
 export interface ProjectItems {
     title: string;
-    lastUpdate: string;
     status: 'online' | 'maintenance' | 'offline';
     href: string;
+    git: {
+        owner: string;
+        repo: string;
+    };
 }
