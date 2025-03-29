@@ -1,3 +1,11 @@
+declare global {
+    namespace NodeJS {
+        export interface ProcessEnv {
+            GA_ID: string;
+            NAVER_SITE_VERIFICATION: string;
+        }
+    }
+}
 export interface PostMatter {
     title: string;
     date: Date;
