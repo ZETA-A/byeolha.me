@@ -29,7 +29,7 @@ const LanguageMenu = () => {
             onChange: () => toggleLanguage('korean'),
         },
         {
-            title: 'English',
+            title: 'English(development)',
             href: '#',
             select: language === 'english',
             disabled: true,
