@@ -11,6 +11,7 @@ import {
 } from '@/utils/posts';
 import removeMD from '@/utils/removeMD';
 import { Metadata } from 'next';
+import { Fade } from 'react-awesome-reveal';
 
 type Props = {
     params: Promise<{ category: string; series: string; slug: string }>;
@@ -68,11 +69,13 @@ const PostDetail = async ({ params }: Props) => {
     return (
         <article>
             <PostHeader post={post} />
-            <div className="max-w-none mdx">
-                <PostBody post={post} />
-            </div>
-            <PostFooter post={sortedPost} thisPostUrl={post.url} />
-            <Giscus />
+            <Fade cascade duration={300} triggerOnce>
+                <div className="max-w-none mdx">
+                    <PostBody post={post} />
+                </div>
+                <PostFooter post={sortedPost} thisPostUrl={post.url} />
+                <Giscus />
+            </Fade>
         </article>
     );
 };
