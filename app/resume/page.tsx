@@ -1,5 +1,5 @@
 import PostBody from '@/components/post/PostBody';
-import { parsePost, POSTS_PATH } from '@/utils/posts';
+import { parsePostDetail, RESUME_PATH } from '@/utils/posts';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -20,12 +20,19 @@ export const metadata: Metadata = {
 };
 
 export default async function Resume() {
-    const post = await parsePost(
-        `${POSTS_PATH}/other/resume/resume/content.mdx`
-    );
+    const post = await parsePostDetail(RESUME_PATH);
     return (
         <div className="mdx">
-            <PostBody post={post} />
+            <PostBody
+                post={{
+                    ...post,
+                    url: '',
+                    slug: '',
+                    categoryPath: '',
+                    seriesPath: '',
+                    seriesPublicName: '',
+                }}
+            />
         </div>
     );
 }
