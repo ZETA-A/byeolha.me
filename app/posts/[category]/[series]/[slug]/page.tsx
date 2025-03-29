@@ -9,6 +9,7 @@ import {
     getSortedPostList,
     parsePostAbstract,
 } from '@/utils/posts';
+import removeMD from '@/utils/removeMD';
 import { Metadata } from 'next';
 
 type Props = {
@@ -20,28 +21,30 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
-    const thumbnail =
-        post.thumbnail || `${siteConfig.url}${siteConfig.defaultThumbnail}`;
+    const thumbnail = post.thumbnail || `${siteConfig.defaultThumbnail}`;
+    const description = post.description || removeMD(post.content, 100);
     return {
         title: post.title,
-        description: post.description,
+        description: description,
         openGraph: {
             title: post.title,
-            description: post.description,
+            description: description,
             url: post.url,
             images: [
                 {
-                    url: `${siteConfig.url}${thumbnail}`,
+                    url: thumbnail,
                     width: 800,
                     height: 600,
                 },
             ],
+            type: 'article',
+            publishedTime: post.dateString,
+            authors: siteConfig.author.name,
         },
         twitter: {
-            card: 'summary_large_image',
             title: post.title,
-            description: post.description,
-            images: [`${siteConfig.url}${thumbnail}`],
+            description: description,
+            images: [thumbnail],
         },
     };
 }
