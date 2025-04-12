@@ -24,10 +24,12 @@ export default function Home() {
     return (
         <div>
             <Fade cascade duration={500} triggerOnce>
-                <div className="flex space-x-2 mb-6">
-                    <h1>김승현</h1>
-                    <h1>·</h1>
-                    <h1>byeolha</h1>
+                <div className="mb-6">
+                    <h2 className="flex space-x-2 font-bold">
+                        <span>김승현</span>
+                        <span>·</span>
+                        <span>byeolha</span>
+                    </h2>
                 </div>
                 <div className="text-second flex flex-col gap-4">
                     <div>
