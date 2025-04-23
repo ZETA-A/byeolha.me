@@ -1,4 +1,3 @@
-import getLastArticle from '@/utils/getLastArticle';
 import { ProjectItems } from './types';
 
 export const siteConfig = {
