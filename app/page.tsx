@@ -13,11 +13,20 @@ export const metadata: Metadata = {
         title: siteConfig.title,
         description:
             '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+        images: [
+            {
+                url: `${siteConfig.defaultThumbnail}`,
+                width: 800,
+                height: 600,
+            },
+        ],
     },
     twitter: {
         title: siteConfig.title,
         description:
             '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+        images: [`${siteConfig.defaultThumbnail}`],
+        card: 'summary_large_image',
     },
 };
 export default function Home() {

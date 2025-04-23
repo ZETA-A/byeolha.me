@@ -17,20 +17,10 @@ export const metadata: Metadata = {
         siteName: siteConfig.title,
         description: '세상을 바꾸기 위해 개발합니다',
         url: '/',
-        images: [
-            {
-                url: `${siteConfig.defaultThumbnail}`,
-                width: 800,
-                height: 600,
-            },
-        ],
-        type: 'website',
     },
     twitter: {
-        card: 'summary_large_image',
         title: { template: '%s', absolute: siteConfig.title },
         description: '세상을 바꾸기 위해 개발합니다.',
-        images: [`${siteConfig.defaultThumbnail}`],
     },
     verification: {
         other: {

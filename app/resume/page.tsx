@@ -7,11 +7,11 @@ import { Fade } from 'react-awesome-reveal';
 export const metadata: Metadata = {
     title: '소개',
     description:
-        '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
+        '현실의 문제를 해결하기위해, 컴퓨터라는 도구를 사용하는 김승현 입니다.',
     openGraph: {
         title: '소개',
         description:
-            '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
+            '현실의 문제를 해결하기위해, 컴퓨터라는 도구를 사용하는 김승현 입니다.',
         url: '/resume',
         images: [
             {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     twitter: {
         title: '소개',
         description:
-            '제 인생의 가장 소중한 일부분을 간략하게 엿볼 수 있는 곳 입니다.',
+            '현실의 문제를 해결하기위해, 컴퓨터라는 도구를 사용하는 김승현 입니다.',
         card: 'summary_large_image',
         images: [`${siteConfig.defaultThumbnail}`],
     },
