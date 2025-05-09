@@ -50,7 +50,7 @@ export const getProjectItems: ProjectItems[] = [
     },
     {
         title: 'Monument Browser',
-        status: 'maintenance',
+        status: 'offline',
         href: 'https://zeta-a.github.io/Monument-Browser/',
         git: {
             owner: 'ZETA-A',

@@ -7,6 +7,9 @@ import { Fade } from 'react-awesome-reveal';
 export const metadata: Metadata = {
     title: '노트',
     description: '함께 배우고 기록하는 공간으로 초대합니다.',
+    alternates: {
+        canonical: `${siteConfig.url}/note`,
+    },
     openGraph: {
         title: '노트',
         description: '함께 배우고 기록하는 공간으로 초대합니다.',

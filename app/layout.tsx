@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     metadataBase: new URL(siteConfig.url),
     title: { template: '%s', absolute: siteConfig.title },
     description: '세상을 바꾸기 위해 개발합니다',
+    authors: [siteConfig.author],
     openGraph: {
         title: { template: '%s', absolute: siteConfig.title },
         siteName: siteConfig.title,

@@ -3,6 +3,7 @@ import PostBody from '@/components/post/PostBody';
 import PostFooter from '@/components/post/PostFooter';
 import PostHeader from '@/components/post/PostHeader';
 import { siteConfig } from '@/config/config';
+import extractKeywords from '@/utils/extractKeywords';
 import {
     getPostDetail,
     getPostPath,
@@ -23,10 +24,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
     const thumbnail = post.thumbnail || `${siteConfig.defaultThumbnail}`;
-    const description = post.description || removeMD(post.content, 100);
+    const description = post.description || removeMD(post.content, 200);
     return {
         title: post.title,
         description: description,
+        alternates: {
+            canonical: `${siteConfig.url}/posts/${category}/${series}/${slug}`,
+        },
+        keywords: extractKeywords(post.content),
         openGraph: {
             title: post.title,
             description: description,
