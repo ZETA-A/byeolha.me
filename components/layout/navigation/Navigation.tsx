@@ -19,7 +19,7 @@ export default function Navigation() {
                     onClick={() => setPopupMenuState(PopupMenuState.None)}
                 >
                     <div className="flex space-x-1">
-                        <h1>byeolha.me</h1>
+                        <span className='font-bold'>byeolha.me</span>
                     </div>
                 </Link>
                 {/* 네비게이션 버튼 */}

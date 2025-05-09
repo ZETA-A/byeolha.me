@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     title: '소개',
     description:
         '현실의 문제를 해결하기위해, 컴퓨터라는 도구를 사용하는 김승현 입니다.',
+    alternates: {
+        canonical: `${siteConfig.url}/resume`,
+    },
     openGraph: {
         title: '소개',
         description:
