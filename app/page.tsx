@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description:
         '이곳은 모든 이야기의 첫 페이지, 잔잔하게 시작되는 여정입니다.',
+    alternates: {
+        canonical: `${siteConfig.url}`,
+    },
+    keywords: siteConfig.keywords,
     openGraph: {
         title: siteConfig.title,
         description:
