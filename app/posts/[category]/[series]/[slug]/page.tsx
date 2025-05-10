@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
     const thumbnail = post.thumbnail || `${siteConfig.defaultThumbnail}`;
-    const description = post.description || removeMD(post.content, 200);
+    const description = post.description || removeMD(post.content, 140);
     return {
         title: post.title,
         description: description,
