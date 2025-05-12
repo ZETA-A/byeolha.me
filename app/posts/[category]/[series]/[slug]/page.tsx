@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         alternates: {
             canonical: `${siteConfig.url}/posts/${category}/${series}/${slug}`,
         },
-        keywords: extractKeywords(post.content),
+        keywords: post.generatedKeywords,
         openGraph: {
             title: post.title,
             description: description,
