@@ -6,6 +6,7 @@ import { Post, PostMatter } from '@/config/types';
 import readingTime from 'reading-time';
 import dayjs from 'dayjs';
 import { siteConfig } from '@/config/config';
+import extractKeywords from './extractKeywords';
 
 export const BASE_PATH = 'posts';
 export const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
@@ -43,9 +44,22 @@ export async function parsePostDetail(postPath: string) {
     const file = fs.readFileSync(postPath, 'utf8');
     const { data, content } = matter(file);
     const grayMatter = data as PostMatter;
+    const generatedKeywords = getPostKeywords(grayMatter, content);
     const readingMinutes = Math.ceil(readingTime(content).minutes);
-    const dateString = dayjs(grayMatter.date).format('MMM DD, YYYY');
-    return { ...grayMatter, readingMinutes, content, dateString };
+    const createDateString = dayjs(grayMatter.createDate).format(
+        'MMM DD, YYYY'
+    );
+    const modifiedDateString = dayjs(grayMatter.modifiedDate).format(
+        'MMM DD, YYYY'
+    );
+    return {
+        ...grayMatter,
+        readingMinutes,
+        content,
+        createDateString,
+        modifiedDateString,
+        generatedKeywords,
+    };
 }
 
 // category folder name을 public name으로 변경 : dir_name -> Dir Name
@@ -58,7 +72,7 @@ export function getSeriesPublicName(dirPath: string) {
 
 // post를 날짜 최신 순으로 정렬
 function sortPostList(PostList: Post[]) {
-    return PostList.sort((a, b) => (a.date > b.date ? -1 : 1));
+    return PostList.sort((a, b) => (a.createDate > b.createDate ? -1 : 1));
 }
 
 // 모든 포스트 목록 조회
@@ -85,7 +99,7 @@ export async function getSortedPostListByYear(category?: string) {
     // 연도별로 그룹화
     const result = Object.entries(
         sortList.reduce((acc, post) => {
-            const year = post.date.getFullYear().toString();
+            const year = post.createDate.getFullYear().toString();
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
@@ -115,12 +129,20 @@ export const getPostDetail = async (
     return detail;
 };
 
+const getPostKeywords = (grayMatter: PostMatter, content: string) => {
+    if (grayMatter.keywords === null || grayMatter.keywords === undefined) {
+        return extractKeywords(content, 10);
+    } else {
+        return grayMatter.keywords.split(', ');
+    }
+};
+
 // 사이트맵
 export const getSitemapPostList = async () => {
     const postList = await getPostList();
     const baseUrl = siteConfig.url;
-    const sitemapPostList = postList.map(({ url, dateString }) => ({
-        lastModified: new Date(dateString),
+    const sitemapPostList = postList.map(({ url, modifiedDateString }) => ({
+        lastModified: new Date(modifiedDateString),
         url: `${baseUrl}${url}`,
         changeFrequency: 'daily' as 'daily',
     }));

@@ -44,7 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 },
             ],
             type: 'article',
-            publishedTime: post.dateString,
+            publishedTime: post.createDateString,
+            modifiedTime: post.modifiedDateString,
             authors: siteConfig.author.name,
         },
         twitter: {
