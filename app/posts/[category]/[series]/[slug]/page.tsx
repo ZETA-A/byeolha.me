@@ -3,7 +3,6 @@ import PostBody from '@/components/post/PostBody';
 import PostFooter from '@/components/post/PostFooter';
 import PostHeader from '@/components/post/PostHeader';
 import { siteConfig } from '@/config/config';
-import extractKeywords from '@/utils/extractKeywords';
 import {
     getPostDetail,
     getPostPath,
