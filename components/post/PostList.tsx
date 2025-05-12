@@ -29,9 +29,9 @@ export default async function PostList({ category }: { category: string }) {
                                                     {post.title}
                                                 </p>
                                                 <p className="p-1 text-xs text-second md:text-sm tabular-nums rounded-md md:self-end md:mt-0 self-start mt-[4px] group-hover/item:bg-selection">
-                                                    {dayjs(post.date).format(
-                                                        'MM.DD.'
-                                                    )}
+                                                    {dayjs(
+                                                        post.createDate
+                                                    ).format('MM.DD.')}
                                                 </p>
                                             </div>
                                         </Link>
