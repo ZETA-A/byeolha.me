@@ -131,7 +131,7 @@ export const getPostDetail = async (
 
 const getPostKeywords = (grayMatter: PostMatter, content: string) => {
     if (grayMatter.keywords === null || grayMatter.keywords === undefined) {
-        return extractKeywords(content, 3);
+        return extractKeywords(content, 5);
     } else {
         return grayMatter.keywords.split(', ');
     }
