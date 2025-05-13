@@ -8,7 +8,6 @@ export default function PostHeader({ post }: { post: Post }) {
                 {post.createDateString} · {post.readingMinutes}min
             </p>
             <p className="text-sm text-second">
-                {post.seriesPublicName} 시리즈 ·{' '}
                 {post.generatedKeywords.map((keyword, idx) => {
                     return (
                         <span className="mr-1" key={`keywords-${idx}`}>
