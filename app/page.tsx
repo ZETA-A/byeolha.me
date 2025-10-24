@@ -1,7 +1,6 @@
 import LinkButton from '@/components/ui/LinkButton';
 import { siteConfig } from '@/config/config';
 import { Github, Instagram, MailBox } from 'flowbite-react-icons/solid';
-import Link from 'next/link';
 import { Metadata } from 'next';
 import { Fade } from 'react-awesome-reveal';
 
