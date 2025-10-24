@@ -60,14 +60,8 @@ export default function Home() {
                     <Fade cascade delay={500} damping={0.3} triggerOnce>
                         <div>
                             <p>
-                                현재 대한민국 국군으로서{' '}
-                                <Link
-                                    className="link external-link"
-                                    href="https://www.mnd.go.kr/"
-                                >
-                                    <b>현역</b>
-                                </Link>
-                                으로 복무 중입니다.
+                                현재 세상을 변화시키기 위해, <b>학생</b>으로서
+                                노력하고 있습니다.
                             </p>
                         </div>
                         <div className="flex gap-1">
