@@ -1,0 +1,106 @@
+---
+title: (CS) Queue
+createDate: 2026-03-12 11:00:00
+modifiedDate: 2026-03-12
+keywords: Queue, 자료구조, 기초
+description:
+thumbnail:
+---
+
+> 큐(Queue)란, 기다린 시간 순서대로 앞으로 나아가는 구조.
+>
+> \- Unknown
+
+## 큐(Queue)란?
+
+큐는 FIFO(First In, First Out) 구조로, 가장 먼저 추가된 요소가 가장 먼저 제거되는 자료구조이다.
+큐는 작업 스케줄링, 너비 우선 탐색, 프린터 대기열 등에서 사용된다.
+
+### 큐의 주요 연산
+
+- **enqueue**: 큐의 뒤에 요소를 추가하는 연산.
+- **dequeue**: 큐의 앞에 있는 요소를 제거하고 반환하는 연산.
+- **front**: 큐의 앞에 있는 요소를 제거하지 않고 반환하는 연산.
+- **isEmpty**: 큐가 비어 있는지 확인하는 연산.
+- **size**: 큐에 있는 요소의 개수를 반환하는 연산.
+
+### 예제문제(백준 18258 큐2)
+
+```typescript
+import fs from 'fs';
+
+const filePath = process.platform === 'linux' ? '/dev/stdin' : './18258.txt';
+const data = fs.readFileSync(filePath).toString().split('\n');
+
+class Queue {
+    private queue: number[] = [];
+
+    push(x: number) {
+        this.queue.push(x);
+    }
+
+    pop(): number {
+        if (this.empty()) {
+            return -1;
+        }
+        return this.queue.shift()!;
+    }
+
+    size(): number {
+        return this.queue.length;
+    }
+
+    empty(): number {
+        return this.queue.length === 0 ? 1 : 0;
+    }
+
+    front(): number {
+        if (this.empty()) {
+            return -1;
+        }
+        return this.queue[0]!;
+    }
+
+    back(): number {
+        if (this.empty()) {
+            return -1;
+        }
+        return this.queue[this.queue.length - 1]!;
+    }
+}
+
+function main() {
+    const n = parseInt(data[0]!);
+    const queue = new Queue();
+    const output: number[] = [];
+
+    for (let i = 1; i <= n; i++) {
+        const [command, value] = data[i]!.split(' ');
+
+        switch (command) {
+            case 'push':
+                queue.push(parseInt(value!));
+                break;
+            case 'pop':
+                output.push(queue.pop());
+                break;
+            case 'size':
+                output.push(queue.size());
+                break;
+            case 'empty':
+                output.push(queue.empty());
+                break;
+            case 'front':
+                output.push(queue.front());
+                break;
+            case 'back':
+                output.push(queue.back());
+                break;
+        }
+    }
+
+    console.log(output.join('\n'));
+}
+
+main();
+```

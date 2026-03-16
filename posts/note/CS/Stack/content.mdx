@@ -1,0 +1,99 @@
+---
+title: (CS) Stack
+createDate: 2026-03-16 11:00:00
+modifiedDate: 2026-03-16
+keywords: Stack, 자료구조, 기초
+description:
+thumbnail:
+---
+
+> 스택(Stack)이란, 가장 최근의 기억부터 꺼내는 기억의 더미.
+>
+> \- Unknown
+
+## 스택(Stack)이란?
+
+스택은 LIFO(Last In, First Out) 구조로, 가장 최근에 추가된 요소가 가장 먼저 제거되는 자료구조이다.
+스택은 함수 호출, 괄호 검사, 되돌리기 기능 등 다양한 상황에서 사용된다.
+
+### 스택(Stack)의 주요 연산
+
+- push: 스택의 맨 위에 요소를 추가하는 연산.
+- pop: 스택의 맨 위에 있는 요소를 제거하고 반환하는 연산.
+- top(peek): 스택의 맨 위에 있는 요소를 제거하지 않고 반환하는 연산.
+- isEmpty: 스택이 비어 있는지 확인하는 연산.
+
+### 예제문제(백준 28278 스택2)
+
+```typescript
+import fs from 'fs';
+
+const filePath = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
+const data = fs.readFileSync(filePath).toString().split('\n');
+
+const kMaxStackSize = 1000000;
+
+class Stack {
+    private data: number[];
+    private top: number;
+
+    constructor() {
+        this.data = new Array(kMaxStackSize);
+        this.top = -1;
+    }
+
+    push(x: number) {
+        this.data[++this.top] = x;
+    }
+
+    pop(): number {
+        if (this.top === -1) return -1;
+        return this.data[this.top--]!;
+    }
+
+    size(): number {
+        return this.top + 1;
+    }
+
+    isEmpty(): number {
+        return this.top === -1 ? 1 : 0;
+    }
+
+    topElement(): number {
+        if (this.top === -1) return -1;
+        return this.data[this.top]!;
+    }
+}
+
+function main(input: string[]) {
+    const stack = new Stack();
+    const output: string[] = [];
+    const n = parseInt(input[0]!);
+    for (let i = 1; i <= n; i++) {
+        const line = input[i];
+        if (!line) continue;
+
+        const [command, arg] = line.split(' ');
+        switch (command) {
+            case '1':
+                stack.push(parseInt(arg!));
+                break;
+            case '2':
+                output.push(stack.pop().toString());
+                break;
+            case '3':
+                output.push(stack.size().toString());
+                break;
+            case '4':
+                output.push(stack.isEmpty().toString());
+                break;
+            case '5':
+                output.push(stack.topElement().toString());
+                break;
+        }
+    }
+    console.log(output.join('\n'));
+}
+
+main(data);
+```
