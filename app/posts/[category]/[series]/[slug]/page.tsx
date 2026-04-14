@@ -11,7 +11,6 @@ import {
 } from '@/utils/posts';
 import removeMD from '@/utils/removeMD';
 import { Metadata } from 'next';
-import { Fade } from 'react-awesome-reveal';
 
 type Props = {
     params: Promise<{ category: string; series: string; slug: string }>;
@@ -43,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 },
             ],
             type: 'article',
-            publishedTime: post.createDateString,
-            modifiedTime: post.modifiedDateString,
+            publishedTime: post.createdAt.toISOString(),
+            modifiedTime: post.modifiedAt.toISOString(),
             authors: siteConfig.author.name,
         },
         twitter: {
@@ -74,13 +73,11 @@ const PostDetail = async ({ params }: Props) => {
     return (
         <article>
             <PostHeader post={post} />
-            <Fade cascade duration={300} triggerOnce>
-                <div className="max-w-none mdx">
-                    <PostBody post={post} />
-                </div>
-                <PostFooter post={sortedPost} thisPostUrl={post.url} />
-                <Giscus />
-            </Fade>
+            <div className="max-w-none mdx">
+                <PostBody post={post} />
+            </div>
+            <PostFooter post={sortedPost} thisPostUrl={post.url} />
+            <Giscus />
         </article>
     );
 };

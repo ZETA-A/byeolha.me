@@ -1,10 +1,9 @@
 import { getProjectItems } from '@/config/config';
 import { ProjectItems } from '@/config/types';
-import getLastArticle from '@/utils/getLastArticle';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-export default async function ProjectList() {
+export default function ProjectList() {
     const serviceStat = (props: ProjectItems) => {
         if (props.status === 'online')
             return { span: '서비스 중', color: 'bg-pastel-green' };
@@ -15,12 +14,8 @@ export default async function ProjectList() {
     };
     return (
         <div className="mt-8 group flex flex-col gap-3">
-            {getProjectItems.map(async (props: ProjectItems, index) => {
-                const githubAPIDate = await getLastArticle(
-                    props.git.owner,
-                    props.git.repo
-                );
-                const date = dayjs(githubAPIDate);
+            {getProjectItems.map((props: ProjectItems, index) => {
+                const date = props.updatedAt ? dayjs(props.updatedAt) : null;
                 return (
                     <Link
                         href={props.href}
@@ -32,9 +27,11 @@ export default async function ProjectList() {
                                 <h2 className="font-normal text-base">
                                     {props.title}
                                 </h2>
-                                <p className="font-light text-xs">
-                                    Up to date: {date.format('MMMM DD, YYYY')}
-                                </p>
+                                {date?.isValid() ? (
+                                    <p className="font-light text-xs">
+                                        Updated: {date.format('MMMM DD, YYYY')}
+                                    </p>
+                                ) : null}
                             </div>
                             <div className="flex items-center gap-2 w-[100px]">
                                 <div

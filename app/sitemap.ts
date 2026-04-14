@@ -6,26 +6,27 @@ import { getSitemapPostList } from '@/utils/posts';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const postList = await getSitemapPostList();
     const baseUrl = siteConfig.url;
+    const staticLastModified = new Date(`${siteConfig.since}-01-01T00:00:00.000Z`);
     return [
         {
             url: baseUrl,
-            lastModified: new Date(),
+            lastModified: staticLastModified,
         },
         {
             url: `${baseUrl}/diary`,
-            lastModified: new Date(),
+            lastModified: staticLastModified,
         },
         {
             url: `${baseUrl}/note`,
-            lastModified: new Date(),
+            lastModified: staticLastModified,
         },
         {
             url: `${baseUrl}/project`,
-            lastModified: new Date(),
+            lastModified: staticLastModified,
         },
         {
             url: `${baseUrl}/resume`,
-            lastModified: new Date(),
+            lastModified: staticLastModified,
         },
         ...postList,
     ];
