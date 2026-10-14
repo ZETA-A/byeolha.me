@@ -18,7 +18,7 @@ export default function Navigation() {
                     href="/"
                     onClick={() => setPopupMenuState(PopupMenuState.None)}
                 >
-                    <div className="flex space-x-1">
+                    <div className="flex gap-x-1">
                         <span className='font-bold'>byeolha.me</span>
                     </div>
                 </Link>
@@ -28,7 +28,7 @@ export default function Navigation() {
                 />
 
                 {/* 언어 및 테마 설정 */}
-                <div className="flex space-x-1">
+                <div className="flex gap-x-1">
                     <LanguageMenu />
                     <ThemeMenu />
                     <button

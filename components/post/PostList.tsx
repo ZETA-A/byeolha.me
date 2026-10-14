@@ -22,7 +22,7 @@ export default async function PostList({ category }: { category: string }) {
                                     <li key={`post-${postIndex}`}>
                                         <Link
                                             href={post.url}
-                                            className="w-full group/item transition-opacity hover:!opacity-100 group-hover:opacity-40"
+                                            className="w-full group/item transition-opacity hover:opacity-100! group-hover:opacity-40"
                                         >
                                             <div className="mx-1 justify-between w-full flex rounded-md px-1">
                                                 <p className="p-1 text-sm md:text-base tabular-nums self-end rounded-md peer group-hover/item:bg-selection">

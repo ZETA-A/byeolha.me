@@ -8,7 +8,7 @@ export default function NavLinks({ isMenuOpen }: { isMenuOpen: boolean }) {
     return (
         <div className="font-semibold">
             {/* 데스크탑 메뉴 */}
-            <div className="hidden md:flex space-x-6">
+            <div className="hidden md:flex gap-x-6">
                 {navItems.map(({ label, href }) => (
                     <Link
                         key={href}

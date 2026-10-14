@@ -20,7 +20,7 @@ export default function ProjectList() {
                     <Link
                         href={props.href}
                         key={`project-${index}`}
-                        className={`transition hover:!opacity-100 group-hover:opacity-40 group-hover:bg-selection rounded-xl`}
+                        className={`transition hover:opacity-100! group-hover:opacity-40 group-hover:bg-selection rounded-xl`}
                     >
                         <div className="w-full p-4 flex flex-col md:flex-row gap-2 md:gap-0 justify-between">
                             <div>

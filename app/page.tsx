@@ -35,7 +35,7 @@ export default function Home() {
     return (
         <div>
             <div className="mb-6">
-                <h2 className="flex space-x-2 font-bold">
+                <h2 className="flex gap-x-2 font-bold">
                     <span>김승현</span>
                     <span>·</span>
                     <span>byeolha</span>
