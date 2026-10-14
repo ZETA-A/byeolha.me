@@ -1,0 +1,48 @@
+---
+title: (AI) Scalar, Vector, Tensor
+createDate: 2026-10-12 11:00:00
+modifiedDate: 2026-10-12
+keywords: Scalar, Vector, Tensor, Matrix
+description:
+thumbnail:
+---
+
+## Scalar(스칼라)
+
+> 크기(magnitude)만 있는 수량
+
+라틴어 'Scalar'는 '계단, 저울'라는 의미이다.
+방향없이 크기(숫자) 하나만으로 이루어진 **가장 단순한 형태의 데이터**를 말한다.
+
+## Vector(벡터)
+
+> 방향(direction)과 크기(magnitude)를 나타내는 기하적인 수량
+
+라틴어 'Vector'는 '운반하는 사람(carrier), 전달하는 사람'이라는 의미이다.
+따라서 V = [1, 1] 이라는 것은 원점 [0, 0]에서 [1, 1]만큼 **이동한 것**이라고 볼 수 있다.
+
+> 그럼 Basis Vector(기저 벡터)는?
+> "어떤 벡터을 이루는 기본 뼈대가 되는 최소한의 벡터집합"
+
+## Tensor(텐서)
+
+> 행렬이 여러 개 모인 다차원 덩어리. 3차원 배열 형태로 나타내면 tensor라고 한다.
+
+'Tensor'의 어원인 라틴어 'Tensus'는 '늘이다, 당기다'라는 의미이다.
+따라서 Tensor는 여러 개의 Vector를 **늘어놓은 것**이라고 볼 수 있다.
+
+딥러닝에서는 보통 Tensor를 기반으로 데이터의 shape을 정의한다.
+
+## Rank(랭크)
+
+Pytorch에서 Rank는 Tensor의 차원(Dimmension) 개수를 의미한다.
+즉, 쉽게 말해 "데이터에 접근하기 위해 몇 개의 인덱스가 필요한가"를 나타내는 수치다.
+
+여기서 말하는 Rank는 선형대수의 Rank와 다르다.
+
+## 정리
+
+- Scalar는 크기만 있고 방향이 없는 0차원 값이다.
+- Vector는 크가와 방향이 있는 1차원 배열이다.
+- Matrix는 숫자가 행과 열의 2차원 형태로 배열된 구조이다.
+- Tensor는 Scalar, Vector, Matrix를 포함한 3차원 이상의 다차원 배열이다.
