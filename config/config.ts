@@ -52,27 +52,18 @@ export const getProjectItems: ProjectItems[] = [
         title: 'byeolha.me',
         status: 'online',
         href: 'https://byeolha.me/',
-        git: {
-            owner: 'ZETA-A',
-            repo: 'byeolha.me',
-        },
+        updatedAt: '2026-04-14',
     },
     {
         title: 'Monument Browser',
         status: 'offline',
         href: 'https://zeta-a.github.io/Monument-Browser/',
-        git: {
-            owner: 'ZETA-A',
-            repo: 'Monument-Browser',
-        },
+        updatedAt: '2024-12-04',
     },
     {
         title: 'ZETA-A.github.io',
         status: 'offline',
         href: 'https://zeta-a.github.io/',
-        git: {
-            owner: 'ZETA-A',
-            repo: 'ZETA-A.github.io',
-        },
+        updatedAt: '2024-12-04',
     },
 ];

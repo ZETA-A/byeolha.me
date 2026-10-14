@@ -1,8 +1,71 @@
+@import 'tailwindcss';
 @import './mdx.css';
 @import './code.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@plugin '@tailwindcss/typography';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Resolve theme aliases on each element so light/dark variables stay dynamic. */
+@theme inline {
+    --color-gray-50: var(--gray-50);
+    --color-gray-75: var(--gray-75);
+    --color-gray-100: var(--gray-100);
+    --color-gray-200: var(--gray-200);
+    --color-gray-300: var(--gray-300);
+    --color-gray-400: var(--gray-400);
+    --color-gray-500: var(--gray-500);
+    --color-gray-600: var(--gray-600);
+    --color-gray-700: var(--gray-700);
+    --color-gray-800: var(--gray-800);
+    --color-gray-900: var(--gray-900);
+    --color-selection: var(--selection);
+    --color-border: var(--border);
+    --color-pastel-green: var(--pastel-green);
+    --color-pastel-orange: var(--pastel-orange);
+    --color-pastel-gray: var(--pastel-gray);
+    --color-heading: var(--heading);
+    --color-body: var(--text-body);
+    --color-second: var(--text-second);
+    --color-disabled: var(--text-disabled);
+    --color-page: var(--page-background);
+    --font-serif: var(--font-maruburi), serif;
+    --font-sans: var(--font-nanumHuman), sans-serif;
+    --font-monospace: var(--font-jetbrainsMono), monospace;
+    --container-page: var(--page-width);
+    --container-content: var(--content-width);
+    --spacing-page: var(--page-top);
+    --spacing-half-page: var(--page-half-top);
+}
+
+/* Width and spacing used separate namespaces in the previous theme. */
+@utility w-page {
+    width: var(--page-width);
+}
+
+@utility w-content {
+    width: var(--content-width);
+}
+
+/* Preserve the v3 preflight defaults used by the blog. */
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--gray-200);
+    }
+
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--gray-400);
+    }
+}
 
 /* 
 colors(by bepyan.me)
@@ -84,7 +147,7 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
         /* font-size: var(--font-base); */
     }
 
-    @media (max-width: var(--lg)) {
+    @media (max-width: 1024px) {
         :root {
             --page-top: 128px;
         }
@@ -129,7 +192,7 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
     }
 
     mark {
-        @apply rounded-sm bg-selection font-medium text-body;
+        @apply rounded-xs bg-selection font-medium text-body;
         padding: 3px 5px;
         margin: 0 2px;
         border-radius: 4px;
@@ -146,7 +209,7 @@ original: https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css
     .link::before,
     .external-link::before,
     .mdx a:not(.anchor)::before {
-        @apply absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors hover:bg-selection;
+        @apply absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded-sm transition-colors hover:bg-selection;
         content: '';
     }
 

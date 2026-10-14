@@ -13,18 +13,22 @@ export default function Giscus() {
     const { theme } = useTheme();
 
     useEffect(() => {
-        const setTheme =
-            theme === 'dark' ? giscusThemes.dark : giscusThemes.light;
-
         if (!ref.current) {
             return;
         }
 
+        if (ref.current.querySelector('script[data-giscus-script="true"]')) {
+            return;
+        }
+
         const script = document.createElement('script');
+        const initialTheme =
+            theme === 'dark' ? giscusThemes.dark : giscusThemes.light;
 
         script.src = 'https://giscus.app/client.js';
         script.async = true;
         script.crossOrigin = 'anonymous';
+        script.setAttribute('data-giscus-script', 'true');
 
         script.setAttribute('data-repo', 'ZETA-A/byeolha.me');
         script.setAttribute('data-repo-id', 'R_kgDON4-ZFg');
@@ -35,7 +39,7 @@ export default function Giscus() {
         script.setAttribute('data-reactions-enabled', '1');
         script.setAttribute('data-emit-metadata', '0');
         script.setAttribute('data-input-position', 'bottom');
-        script.setAttribute('data-theme', setTheme);
+        script.setAttribute('data-theme', initialTheme);
         script.setAttribute('data-lang', 'ko');
 
         ref.current.appendChild(script);
@@ -43,11 +47,13 @@ export default function Giscus() {
 
     // https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#isetconfigmessage
     useEffect(() => {
+        const nextTheme =
+            theme === 'dark' ? giscusThemes.dark : giscusThemes.light;
         const iframe = document.querySelector<HTMLIFrameElement>(
             'iframe.giscus-frame'
         );
         iframe?.contentWindow?.postMessage(
-            { giscus: { setConfig: { theme } } },
+            { giscus: { setConfig: { theme: nextTheme } } },
             'https://giscus.app'
         );
     }, [theme]);

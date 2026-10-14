@@ -44,22 +44,44 @@ export async function parsePostDetail(postPath: string) {
     const file = fs.readFileSync(postPath, 'utf8');
     const { data, content } = matter(file);
     const grayMatter = data as PostMatter;
+    const createdAt = parsePostDate(grayMatter.createDate, postPath, 'createDate');
+    const modifiedAt = parsePostDate(
+        grayMatter.modifiedDate,
+        postPath,
+        'modifiedDate'
+    );
     const generatedKeywords = getPostKeywords(grayMatter, content);
     const readingMinutes = Math.ceil(readingTime(content).minutes);
-    const createDateString = dayjs(grayMatter.createDate).format(
+    const createDateDisplay = dayjs(createdAt).format(
         'MMM DD, YYYY'
     );
-    const modifiedDateString = dayjs(grayMatter.modifiedDate).format(
+    const modifiedDateDisplay = dayjs(modifiedAt).format(
         'MMM DD, YYYY'
     );
     return {
         ...grayMatter,
         readingMinutes,
         content,
-        createDateString,
-        modifiedDateString,
+        createdAt,
+        modifiedAt,
+        createDateDisplay,
+        modifiedDateDisplay,
         generatedKeywords,
     };
+}
+
+function parsePostDate(
+    value: string,
+    postPath: string,
+    fieldName: 'createDate' | 'modifiedDate'
+) {
+    const parsed = dayjs(value);
+
+    if (!parsed.isValid()) {
+        throw new Error(`Invalid ${fieldName} in ${postPath}: ${value}`);
+    }
+
+    return parsed.toDate();
 }
 
 // category folder name을 public name으로 변경 : dir_name -> Dir Name
@@ -72,7 +94,7 @@ export function getSeriesPublicName(dirPath: string) {
 
 // post를 날짜 최신 순으로 정렬
 function sortPostList(PostList: Post[]) {
-    return PostList.sort((a, b) => (a.createDate > b.createDate ? -1 : 1));
+    return PostList.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 }
 
 // 모든 포스트 목록 조회
@@ -99,7 +121,7 @@ export async function getSortedPostListByYear(category?: string) {
     // 연도별로 그룹화
     const result = Object.entries(
         sortList.reduce((acc, post) => {
-            const year = post.createDate.getFullYear().toString();
+            const year = post.createdAt.getFullYear().toString();
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
@@ -130,7 +152,7 @@ export const getPostDetail = async (
 };
 
 const getPostKeywords = (grayMatter: PostMatter, content: string) => {
-    if (grayMatter.keywords === null || grayMatter.keywords === undefined) {
+    if (!grayMatter.keywords) {
         return extractKeywords(content, 5);
     } else {
         return grayMatter.keywords.split(', ');
@@ -141,8 +163,8 @@ const getPostKeywords = (grayMatter: PostMatter, content: string) => {
 export const getSitemapPostList = async () => {
     const postList = await getPostList();
     const baseUrl = siteConfig.url;
-    const sitemapPostList = postList.map(({ url, modifiedDateString }) => ({
-        lastModified: new Date(modifiedDateString),
+    const sitemapPostList = postList.map(({ url, modifiedAt }) => ({
+        lastModified: modifiedAt,
         url: `${baseUrl}${url}`,
         changeFrequency: 'daily' as 'daily',
     }));

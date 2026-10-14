@@ -9,13 +9,11 @@ declare global {
 
 export interface PostMatter {
     title: string;
-    createDate: Date;
-    createDateString: string;
-    modifiedDate: Date;
-    modifiedDateString: string;
-    keywords: string;
-    description: string;
-    thumbnail: string;
+    createDate: string;
+    modifiedDate: string;
+    keywords?: string;
+    description?: string;
+    thumbnail?: string;
 }
 
 export interface Post extends PostMatter {
@@ -27,14 +25,15 @@ export interface Post extends PostMatter {
     readingMinutes: number;
     seriesPublicName: string;
     generatedKeywords: string[];
+    createdAt: Date;
+    modifiedAt: Date;
+    createDateDisplay: string;
+    modifiedDateDisplay: string;
 }
 
 export interface ProjectItems {
     title: string;
     status: 'online' | 'maintenance' | 'offline';
     href: string;
-    git: {
-        owner: string;
-        repo: string;
-    };
+    updatedAt?: string;
 }

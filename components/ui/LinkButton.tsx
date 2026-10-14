@@ -11,7 +11,7 @@ export default function LinkButton({ icon, href, ariaLabel }: LinkButton) {
         <Link
             href={href}
             aria-label={ariaLabel}
-            className="rounded p-1 transition-colors hover:bg-selection hover:text-body"
+            className="rounded-sm p-1 transition-colors hover:bg-selection hover:text-body"
         >
             {icon}
         </Link>
