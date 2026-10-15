@@ -8,6 +8,7 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeFigure from '@microflash/rehype-figure';
 import rehypeImageSize from '../utils/rehypeImageSize.ts';
+import { imageSizes } from '../utils/imageSizes.ts';
 
 function image(src, title) {
     const img = { type: 'element', tagName: 'img', properties: { src, alt: '사진 설명', ...(title ? { title } : {}) }, children: [] };
@@ -64,4 +65,11 @@ test('EXIF-rotated photos use the browser-visible aspect ratio', async () => {
     } finally {
         await fs.rm(folder, { recursive: true, force: true });
     }
+});
+
+test('responsive sizes follow article padding, intrinsic width and title overrides', () => {
+    assert.equal(imageSizes(1536), '(max-width: 45rem) min(calc(100vw - 3rem), 1536px), min(42rem, 1536px)');
+    assert.equal(imageSizes(200), '(max-width: 45rem) min(calc(100vw - 3rem), 200px), min(42rem, 200px)');
+    assert.equal(imageSizes(1536, '400px'), '(max-width: 45rem) min(calc(100vw - 3rem), 400px), min(42rem, 400px)');
+    assert.equal(imageSizes(1536, '50%'), '(max-width: 45rem) calc(50vw - 1.5rem), 21rem');
 });

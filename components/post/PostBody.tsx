@@ -11,11 +11,13 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeFigure from '@microflash/rehype-figure';
 import rehypeImageSize from '@/utils/rehypeImageSize';
+import PostImage from './PostImage';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
         <MDXRemote
             source={post.content}
+            components={{ img: PostImage }}
             options={{
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],

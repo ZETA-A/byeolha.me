@@ -1,7 +1,9 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-    /* config options here */
+    images: {
+        formats: ['image/webp'],
+    },
     transpilePackages: ['next-mdx-remote'],
     env: {
         GA_ID: process.env.GA_ID,

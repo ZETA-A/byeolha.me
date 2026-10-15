@@ -210,7 +210,9 @@
 }
 
 .mdx img {
-    display: flex;
+    display: block;
+    max-width: 100%;
+    height: auto;
     overflow: hidden;
     border-radius: 6px;
 }
