@@ -44,6 +44,7 @@ thumbnail: /assets/image/defaultThumbnail.png
 - 날짜는 `YYYY-MM-DD` 또는 `YYYY-MM-DD HH:mm:ss`이며 모두 한국 시간(Asia/Seoul)입니다. 날짜만 적으면 자정으로 해석합니다.
 - 수정 시각은 작성 시각보다 앞설 수 없습니다. 날짜 누락, 존재하지 않는 날짜, 잘못된 필드 타입은 빌드를 실패시킵니다.
 - `keywords`, `description`, `thumbnail`은 생략하거나 비워 둘 수 있습니다.
+- `/`로 시작하는 로컬 본문 이미지는 빌드 시 `public/`의 원본 크기를 읽어 width·height를 자동 지정합니다. 파일이 없거나 크기를 읽을 수 없으면 빌드 오류가 발생합니다. 외부 이미지는 대상에서 제외하며 기존 `width=400`·`width=50%` 옵션은 유지합니다.
 - 키워드는 쉼표로 구분합니다. 미지정 시 본문에서 자동 추출하지만, 조사 제거는 간단한 규칙이므로 직접 지정하는 편이 정확합니다.
 - 소개 문서는 `app/resume/content.mdx`에서 관리하며 같은 frontmatter 규칙을 따릅니다.
 
