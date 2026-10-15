@@ -1,6 +1,6 @@
 import { getSortedPostListByYear } from '@/utils/posts';
 import Link from 'next/link';
-import dayjs from 'dayjs';
+
 
 export default async function PostList({ category }: { category: string }) {
     const postList = await getSortedPostListByYear(category);
@@ -29,9 +29,7 @@ export default async function PostList({ category }: { category: string }) {
                                                     {post.title}
                                                 </p>
                                                 <p className="p-1 text-xs text-second md:text-sm tabular-nums rounded-md md:self-end md:mt-0 self-start mt-[4px] group-hover/item:bg-selection">
-                                                    {dayjs(
-                                                        post.createdAt
-                                                    ).format('MM.DD.')}
+                                                    {new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' }).format(post.createdAt).replace('/', '.') + '.'}
                                                 </p>
                                             </div>
                                         </Link>

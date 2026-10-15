@@ -4,7 +4,8 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { Post, PostMatter } from '@/config/types';
 import readingTime from 'reading-time';
-import dayjs from 'dayjs';
+import { formatPostDate, normalizePostMatter, postYear } from './postMatter';
+import { load, JSON_SCHEMA } from 'js-yaml';
 import { siteConfig } from '@/config/config';
 import extractKeywords from './extractKeywords';
 
@@ -42,22 +43,13 @@ export function parsePostAbstract(postPath: string) {
 // MDX 파일의 상세내용 파싱
 export async function parsePostDetail(postPath: string) {
     const file = fs.readFileSync(postPath, 'utf8');
-    const { data, content } = matter(file);
-    const grayMatter = data as PostMatter;
-    const createdAt = parsePostDate(grayMatter.createDate, postPath, 'createDate');
-    const modifiedAt = parsePostDate(
-        grayMatter.modifiedDate,
-        postPath,
-        'modifiedDate'
-    );
+    const { data, content } = matter(file, { engines: { yaml: (source) => load(source, { schema: JSON_SCHEMA }) as Record<string, unknown> } });
+    const grayMatter = normalizePostMatter(data, postPath);
+    const { createdAt, modifiedAt } = grayMatter;
     const generatedKeywords = getPostKeywords(grayMatter, content);
     const readingMinutes = Math.ceil(readingTime(content).minutes);
-    const createDateDisplay = dayjs(createdAt).format(
-        'MMM DD, YYYY'
-    );
-    const modifiedDateDisplay = dayjs(modifiedAt).format(
-        'MMM DD, YYYY'
-    );
+    const createDateDisplay = formatPostDate(createdAt);
+    const modifiedDateDisplay = formatPostDate(modifiedAt);
     return {
         ...grayMatter,
         readingMinutes,
@@ -68,20 +60,6 @@ export async function parsePostDetail(postPath: string) {
         modifiedDateDisplay,
         generatedKeywords,
     };
-}
-
-function parsePostDate(
-    value: string,
-    postPath: string,
-    fieldName: 'createDate' | 'modifiedDate'
-) {
-    const parsed = dayjs(value);
-
-    if (!parsed.isValid()) {
-        throw new Error(`Invalid ${fieldName} in ${postPath}: ${value}`);
-    }
-
-    return parsed.toDate();
 }
 
 // category folder name을 public name으로 변경 : dir_name -> Dir Name
@@ -121,7 +99,7 @@ export async function getSortedPostListByYear(category?: string) {
     // 연도별로 그룹화
     const result = Object.entries(
         sortList.reduce((acc, post) => {
-            const year = post.createdAt.getFullYear().toString();
+            const year = postYear(post.createdAt);
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
@@ -155,7 +133,7 @@ const getPostKeywords = (grayMatter: PostMatter, content: string) => {
     if (!grayMatter.keywords) {
         return extractKeywords(content, 5);
     } else {
-        return grayMatter.keywords.split(', ');
+        return grayMatter.keywords.split(',').map(word => word.trim()).filter(Boolean);
     }
 };
 
@@ -166,7 +144,7 @@ export const getSitemapPostList = async () => {
     const sitemapPostList = postList.map(({ url, modifiedAt }) => ({
         lastModified: modifiedAt,
         url: `${baseUrl}${url}`,
-        changeFrequency: 'daily' as 'daily',
+        changeFrequency: 'daily' as const,
     }));
     return sitemapPostList;
 };
