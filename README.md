@@ -1,20 +1,64 @@
 # [byeolha.me](https://byeolha.me)
 
-### 세상과 나를 연결하는 매개체, 나만의 블로그, 나만의 공간
+세상과 나를 연결하는 매개체, 나만의 블로그, 나만의 공간.
 
-## 프로젝트소개
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4와 로컬 MDX로 만든 정적 블로그입니다. 테마는 next-themes, 댓글은 Giscus를 사용합니다.
 
-이 프로젝트는 Next.js 15.2.3과 Tailwind CSS를 이용해서 만들어진 블로그입니다.
+## 실행과 검증
 
-**여러분의 스타는 제게 큰 힘이 됩니다!**
+Node.js 24 이상과 npm을 사용합니다.
 
-## 추후 구현할 기능
+```bash
+npm ci
+npm run dev
+```
 
--   [ ] 글 목차(ToC) 기능
--   [ ] 검색 기능(raycast)
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm start
+```
+
+프로덕션 빌드는 `next build --webpack`을 사용합니다. GitHub Actions는 push와 pull request에서 lint, 타입 검사, 테스트, 빌드를 실행합니다.
+
+선택 환경 변수는 `GA_ID`(Google Analytics), `NAVER_SITE_VERIFICATION`(네이버 사이트 인증)입니다. 필요하면 로컬 `.env.local`에 설정합니다.
+
+## 글 작성
+
+글은 `posts/{category}/{series}/{slug}/content.mdx`, 이미지는 `public/posts/{category}/{series}/{slug}/`에 둡니다. 새 글 배포에는 다시 빌드해야 합니다.
+
+```yaml
+---
+title: 글 제목
+createDate: 2026-10-16 11:00:00
+modifiedDate: 2026-10-16 11:00:00
+keywords: React, Next.js, 자료구조
+description: 글을 소개하는 짧은 문장
+thumbnail: /assets/image/defaultThumbnail.png
+---
+```
+
+- `title`, `createDate`, `modifiedDate`는 필수입니다.
+- 날짜는 `YYYY-MM-DD` 또는 `YYYY-MM-DD HH:mm:ss`이며 모두 한국 시간(Asia/Seoul)입니다. 날짜만 적으면 자정으로 해석합니다.
+- 수정 시각은 작성 시각보다 앞설 수 없습니다. 날짜 누락, 존재하지 않는 날짜, 잘못된 필드 타입은 빌드를 실패시킵니다.
+- `keywords`, `description`, `thumbnail`은 생략하거나 비워 둘 수 있습니다.
+- 키워드는 쉼표로 구분합니다. 미지정 시 본문에서 자동 추출하지만, 조사 제거는 간단한 규칙이므로 직접 지정하는 편이 정확합니다.
+- 소개 문서는 `app/resume/content.mdx`에서 관리하며 같은 frontmatter 규칙을 따릅니다.
+
+## 사이트 설정
+
+사이트 정보와 작품 목록은 `config/config.ts`에서 관리합니다. 작품의 상태와 `updatedAt`은 수동 관리하며 빌드 중 외부 GitHub API를 호출하지 않습니다.
+
+공통 페이지 메타데이터는 `utils/metadata.ts`, 글 데이터 검증은 `utils/postMatter.ts`, 글 로딩은 `utils/posts.ts`에 있습니다. 사이트맵의 글 수정일은 frontmatter에서 가져오며, 정적 페이지에는 추정 수정일을 넣지 않습니다.
+
+## 앞으로 할 일
+
+이미지·폰트 최적화, 본문 설명문 추출 개선, 코드 블록 다크 테마, 시리즈 탐색·목차·검색을 검토하고 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
 
 ## 참고한 블로그
 
-로직 및 Next.js의 전반적인 설명: [김도형님의 개발 블로그](https://d5br5.dev/blog)
+로직과 Next.js 설명: [김도형님의 개발 블로그](https://d5br5.dev/blog)
 
 디자인 영감: [김평안님의 개발 블로그](https://bepyan.me)

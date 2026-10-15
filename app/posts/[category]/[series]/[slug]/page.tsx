@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: post.title,
         description: description,
         alternates: {
-            canonical: `${siteConfig.url}/posts/${category}/${series}/${slug}`,
+            canonical: post.url,
         },
         keywords: post.generatedKeywords,
         openGraph: {
@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             authors: siteConfig.author.name,
         },
         twitter: {
+            card: 'summary_large_image',
             title: post.title,
             description: description,
             images: [thumbnail],
