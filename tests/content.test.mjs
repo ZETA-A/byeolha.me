@@ -5,6 +5,7 @@ import { globSync } from 'node:fs';
 import matter from 'gray-matter';
 import { load, JSON_SCHEMA } from 'js-yaml';
 import { normalizePostMatter, parsePostDate, postYear, formatPostDate } from '../utils/postMatter.ts';
+import extractKeywords from '../utils/extractKeywords.ts';
 
 const valid = { title: '글', createDate: '2026-03-16 11:00:00', modifiedDate: '2026-03-16 11:00:00' };
 test('dates reject missing values, impossible calendar dates and times', () => {
@@ -33,4 +34,13 @@ test('all repository content passes the same frontmatter validation', () => {
         const { data } = matter(fs.readFileSync(file, 'utf8'), { engines: { yaml: source => load(source, { schema: JSON_SCHEMA }) } });
         normalizePostMatter(data, file);
     }
+});
+test('keywords retain standalone English and Korean terms, normalize case and remove particles', () => {
+    const words = extractKeywords('React react Hydration 자료구조 자료구조는 그리고 그리고', 10);
+    assert.ok(words.includes('React'));
+    assert.ok(words.includes('Hydration'));
+    assert.ok(words.includes('자료구조'));
+    assert.ok(!words.includes('그리고'));
+    assert.equal(words.filter(word => word.toLowerCase() === 'react').length, 1);
+    assert.deepEqual(extractKeywords('```js\nsecret secret\n```\n![photo](https://example.com/image.png) Visible'), ['Visible']);
 });
