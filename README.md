@@ -48,6 +48,7 @@ thumbnail: /assets/image/defaultThumbnail.png
 - 본문 이미지는 화면 너비에 맞춰 비율을 유지하며 지연 로딩합니다. 기존 `width=400`·`width=50%` 옵션과 캡션을 유지합니다.
 - 로컬 이미지는 Next.js Image의 `srcset`·`sizes`로 화면에 맞는 크기를 제공하며, 지원 브라우저에는 WebP로 전송합니다. 원본 파일은 보존합니다. 이미지 최적화는 Next.js 서버 또는 Vercel 이미지 최적화 기능을 사용합니다.
 - 외부 이미지는 크기를 추정하거나 빌드 중 다운로드하지 않고 일반 이미지로 표시합니다. 반응형·지연 로딩은 적용되지만 변환·압축은 외부 서버가 제공하는 원본을 따릅니다.
+- `description` 미지정 시 Markdown·MDX에서 문구를 보존해 최대 140자의 설명을 생성합니다. 링크 주소·이미지·코드 블록·실행 표현식은 제외하며 인라인 코드는 유지합니다.
 - 키워드는 쉼표로 구분합니다. 미지정 시 본문에서 자동 추출하지만, 조사 제거는 간단한 규칙이므로 직접 지정하는 편이 정확합니다.
 - 소개 문서는 `app/resume/content.mdx`에서 관리하며 같은 frontmatter 규칙을 따릅니다.
 
@@ -59,7 +60,7 @@ thumbnail: /assets/image/defaultThumbnail.png
 
 ## 앞으로 할 일
 
-폰트 최적화, 본문 설명문 추출 개선, 코드 블록 다크 테마, 시리즈 탐색·목차·검색을 검토하고 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
+폰트 최적화, 코드 블록 다크 테마, 시리즈 탐색·목차·검색을 검토하고 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
 
 ## 참고한 블로그
 
