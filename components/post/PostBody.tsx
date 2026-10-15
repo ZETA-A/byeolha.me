@@ -12,13 +12,14 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeFigure from '@microflash/rehype-figure';
 import rehypeImageSize from '@/utils/rehypeImageSize';
 import PostImage from './PostImage';
+import PostTable from './PostTable';
 import { codeThemeOptions } from '@/utils/codeTheme';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
         <MDXRemote
             source={post.content}
-            components={{ img: PostImage }}
+            components={{ img: PostImage, table: PostTable }}
             options={{
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
