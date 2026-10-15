@@ -12,6 +12,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeFigure from '@microflash/rehype-figure';
 import rehypeImageSize from '@/utils/rehypeImageSize';
 import PostImage from './PostImage';
+import { codeThemeOptions } from '@/utils/codeTheme';
 
 const PostBody = ({ post }: { post: Post }) => {
     return (
@@ -25,12 +26,7 @@ const PostBody = ({ post }: { post: Post }) => {
                         rehypeImageSize,
                         rehypeFigure,
                         rehypeCodeTitles,
-                        [
-                            rehypePrettyCode,
-                            {
-                                theme: 'material-theme-lighter',
-                            },
-                        ],
+                        [rehypePrettyCode, codeThemeOptions],
                         rehypeSlug,
                         [
                             rehypeExternalLinks,

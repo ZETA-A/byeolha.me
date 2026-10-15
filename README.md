@@ -52,6 +52,8 @@ thumbnail: /assets/image/defaultThumbnail.png
 - 키워드는 쉼표로 구분합니다. 미지정 시 본문에서 자동 추출하지만, 조사 제거는 간단한 규칙이므로 직접 지정하는 편이 정확합니다.
 - 소개 문서는 `app/resume/content.mdx`에서 관리하며 같은 frontmatter 규칙을 따릅니다.
 
+코드 블록은 `utils/codeTheme.ts`의 밝은·어두운 구문 테마를 함께 생성하며, 사이트 테마에 맞춰 색상과 배경을 전환합니다.
+
 ## 사이트 설정
 
 사이트 정보와 작품 목록은 `config/config.ts`에서 관리합니다. 작품의 상태와 `updatedAt`은 수동 관리하며 빌드 중 외부 GitHub API를 호출하지 않습니다.
@@ -60,7 +62,7 @@ thumbnail: /assets/image/defaultThumbnail.png
 
 ## 앞으로 할 일
 
-폰트 최적화, 코드 블록 다크 테마, 시리즈 탐색·목차·검색을 검토하고 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
+폰트 최적화, 시리즈 탐색·목차·검색을 검토하고 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
 
 ## 참고한 블로그
 
