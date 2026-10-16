@@ -8,13 +8,6 @@ const LanguageMenu = () => {
             title: '한국어',
             select: true,
         },
-        {
-            title: 'English(development)',
-            select: false,
-            disabled: true,
-            tooltip:
-                'Still crafting something special, just a little more time to make it perfect.',
-        },
     ];
 
     return (
