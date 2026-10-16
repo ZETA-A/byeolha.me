@@ -11,6 +11,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeFigure from '@microflash/rehype-figure';
 import rehypeImageSize from '@/utils/rehypeImageSize';
 import PostImage from './PostImage';
+import PostToc from './PostToc';
 import PostTable from './PostTable';
 import { codeThemeOptions } from '@/utils/codeTheme';
 
@@ -18,7 +19,7 @@ const PostBody = ({ content, showToc = false }: { content: string; showToc?: boo
     return (
         <MDXRemote
             source={content}
-            components={{ img: PostImage, table: PostTable }}
+            components={{ details: PostToc, img: PostImage, table: PostTable }}
             options={{
                 mdxOptions: {
                     remarkPlugins: [remarkGfm, remarkBreaks],
