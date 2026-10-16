@@ -1,5 +1,4 @@
 import path from 'path';
-import { sync } from 'glob';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { Post, PostMatter } from '@/config/types';
@@ -9,35 +8,15 @@ import { load, JSON_SCHEMA } from 'js-yaml';
 import { siteConfig } from '@/config/config';
 import extractKeywords from './extractKeywords';
 
-export const BASE_PATH = 'posts';
-export const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
-export const RESUME_PATH = path.join(process.cwd(), 'app/resume/content.mdx');
+import { getPostPath, parsePostAbstract, findPostPath } from './postPaths';
+export { BASE_PATH, POSTS_PATH, getPostPath, parsePostAbstract, getSeriesPublicName } from './postPaths';
 
-// 모든 MDX 파일 조회
-export function getPostPath(category?: string) {
-    const folder = category || '**';
-    const postPaths: string[] = sync(`${POSTS_PATH}/${folder}/**/*.mdx`);
-    return postPaths;
-}
+export const RESUME_PATH = path.join(process.cwd(), 'app/resume/content.mdx');
 
 export async function parsePost(postPath: string): Promise<Post> {
     const postAbstract = parsePostAbstract(postPath);
     const postDetail = await parsePostDetail(postPath);
     return { ...postAbstract, ...postDetail };
-}
-
-// MDX 파일의 개요 파싱
-export function parsePostAbstract(postPath: string) {
-    const filePath = postPath
-        .slice(postPath.indexOf(BASE_PATH))
-        .replace(`${BASE_PATH}/`, '')
-        .replace('.mdx', '');
-    const [categoryPath, seriesPath, slug] = filePath.split('/');
-    const decodedSeriesPath = decodeURIComponent(seriesPath);
-    const decodedSlug = decodeURIComponent(slug);
-    const url = `/posts/${categoryPath}/${decodedSeriesPath}/${decodedSlug}`;
-    const seriesPublicName = getSeriesPublicName(seriesPath);
-    return { url, categoryPath, seriesPath, seriesPublicName, slug };
 }
 
 // MDX 파일의 상세내용 파싱
@@ -60,14 +39,6 @@ export async function parsePostDetail(postPath: string) {
         modifiedDateDisplay,
         generatedKeywords,
     };
-}
-
-// category folder name을 public name으로 변경 : dir_name -> Dir Name
-export function getSeriesPublicName(dirPath: string) {
-    return dirPath
-        .split('_')
-        .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
-        .join(' ');
 }
 
 // post를 날짜 최신 순으로 정렬
@@ -122,9 +93,7 @@ export const getPostDetail = async (
     series: string,
     slug: string
 ) => {
-    const decodedSeries = decodeURIComponent(series);
-    const decodedSlug = decodeURIComponent(slug);
-    const filePath = `${POSTS_PATH}/${category}/${decodedSeries}/${decodedSlug}/content.mdx`;
+    const filePath = findPostPath(category, series, slug);
     const detail = await parsePost(filePath);
     return detail;
 };

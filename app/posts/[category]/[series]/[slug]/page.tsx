@@ -70,7 +70,7 @@ export function generateStaticParams() {
 const PostDetail = async ({ params }: Props) => {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
-    const sortedPost = await getSortedPostList(category);
+    const sortedPost = await getSortedPostList(post.categoryPath);
     return (
         <article>
             <PostHeader post={post} />
