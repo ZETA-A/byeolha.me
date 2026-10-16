@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { Search } from 'flowbite-react-icons/outline';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef } from 'react';
 import NavIcon from './NavIcon';
+import SearchModal from '@/components/post/SearchModal';
 import NavLinks from './NavLinks';
 import LanguageMenu from '@/components/ui/DropdownMenu/LanguageMenu';
 import ThemeMenu from '@/components/ui/DropdownMenu/ThemeMenu';
@@ -60,6 +62,17 @@ export default function Navigation() {
                     </Link>
                     <div ref={desktopRef}><NavLinks variant="desktop" /></div>
                     <div className="flex gap-x-1">
+                        <button
+                            type="button"
+                            aria-label="검색 열기"
+                            title="검색 (⌘K / Ctrl+K)"
+                            aria-haspopup="dialog"
+                            aria-expanded={popupMenuState === PopupMenuState.Search}
+                            onClick={() => setPopupMenuState(PopupMenuState.Search)}
+                            className="flex size-10 shrink-0 items-center justify-center hover:bg-selection rounded-lg transition focus-visible:outline-2"
+                        >
+                            <Search aria-hidden="true" className="size-5" />
+                        </button>
                         <LanguageMenu />
                         <ThemeMenu />
                         <button
@@ -107,6 +120,7 @@ export default function Navigation() {
                 </div>
                 <nav aria-label="모바일 주 메뉴"><NavLinks variant="mobile" onNavigate={close} /></nav>
             </dialog>
+            <SearchModal />
         </>
     );
 }

@@ -14,7 +14,6 @@ export default function NavLinks({
                 <Link
                     key={href}
                     href={href}
-                    prefetch={href === '/search' ? false : undefined}
                     onClick={onNavigate}
                     className={`rounded-md transition focus-visible:outline-2 focus-visible:outline-offset-4 ${variant === 'mobile' ? 'block px-3 py-3 hover:bg-selection' : 'hover:text-gray-600'}`}
                 >

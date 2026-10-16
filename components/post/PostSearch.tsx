@@ -1,51 +1,55 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { searchPosts, type SearchDocument } from '@/utils/search';
 
-export default function PostSearch({ index }: { index: SearchDocument[] }) {
+export default function PostSearch({ index, onNavigate }: { index: SearchDocument[]; onNavigate?: () => void }) {
     const [query, setQuery] = useState('');
-    const [category, setCategory] = useState('all');
     const queryId = useId();
-    const categoryId = useId();
-    const helpId = useId();
-    const results = searchPosts(index, query, category);
-    const hasQuery = Boolean(query.trim());
+    const resultsRef = useRef<HTMLUListElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const results = query.trim() ? searchPosts(index, query, 'all') : [];
+
     return (
-        <section className="mt-8 font-sans">
-            <form role="search" onSubmit={event => event.preventDefault()} className="flex flex-col gap-4">
-                <div>
-                    <label htmlFor={queryId} className="block text-sm mb-2">검색어</label>
-                    <input id={queryId} type="search" value={query} maxLength={200} aria-describedby={helpId}
-                        onChange={event => setQuery(event.target.value)} placeholder="예: Stack, Next.js, 자료구조"
-                        className="w-full min-w-0 rounded-md border bg-page p-3 text-body focus-visible:outline-2" />
-                    <p id={helpId} className="text-sm text-second mt-2">제목·시리즈·태그·짧은 설명에서 검색합니다. 여러 단어는 모두 포함된 글을 찾습니다.</p>
-                </div>
-                <div>
-                    <label htmlFor={categoryId} className="mr-3 text-sm">글 종류</label>
-                    <select id={categoryId} value={category} onChange={event => setCategory(event.target.value)} className="rounded-md border bg-page px-3 py-2 text-body focus-visible:outline-2">
-                        <option value="all">전체</option><option value="note">노트</option><option value="diary">일기</option>
-                    </select>
-                </div>
+        <section className="font-sans">
+            <form role="search" className="border-b" onSubmit={event => {
+                event.preventDefault();
+                resultsRef.current?.querySelector<HTMLAnchorElement>('a')?.click();
+            }}>
+                <label htmlFor={queryId} className="sr-only">검색어</label>
+                <input ref={inputRef} id={queryId} type="search" value={query} maxLength={200}
+                    onChange={event => setQuery(event.target.value)} placeholder="글 검색..."
+                    onKeyDown={event => {
+                        if (event.nativeEvent.isComposing) return;
+                        if (event.key === 'ArrowDown' && results.length) {
+                            event.preventDefault();
+                            resultsRef.current?.querySelector<HTMLAnchorElement>('a')?.focus();
+                        }
+                    }}
+                    className="block w-full min-w-0 border-0 bg-transparent px-6 py-5 text-lg text-body outline-none placeholder:text-second" />
             </form>
-            <p role="status" aria-live="polite" className="mt-6 text-sm text-second">
-                {!hasQuery ? '검색어를 입력하면 결과가 표시됩니다.' : results.length ? `${results.length}개의 글을 찾았습니다.` : '검색 결과가 없습니다. 다른 검색어나 글 종류를 선택해 보세요.'}
-            </p>
-            {hasQuery && results.length > 0 && (
-                <ul aria-label="검색 결과" className="mt-4 divide-y">
-                    {results.map(post => (
-                        <li key={post.url}>
-                            <Link href={post.url} className="block rounded-md py-4 hover:bg-selection focus-visible:outline-2">
-                                <h2 className="font-semibold [overflow-wrap:anywhere]">{post.title}</h2>
-                                <p className="text-xs text-second mt-1">{post.category === 'diary' ? '일기' : '노트'} · {post.date}</p>
-                                <p className="text-sm text-second mt-2 [overflow-wrap:anywhere]">{post.description}</p>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <noscript><p className="mt-4">검색을 사용하려면 JavaScript를 켜 주세요. <a href="/note">노트</a>와 <a href="/diary">일기</a> 목록에서도 글을 찾을 수 있습니다.</p></noscript>
+            <div className="h-[min(50dvh,24rem)] overflow-y-auto overscroll-contain p-2">
+                <p role="status" aria-live="polite" className={results.length ? 'sr-only' : 'px-4 py-10 text-center text-sm text-second'}>
+                    {!query.trim() ? '검색어를 입력해 주세요.' : results.length ? `${results.length}개의 글을 찾았습니다.` : '검색 결과가 없습니다.'}
+                </p>
+                {results.length > 0 && <ul ref={resultsRef} aria-label="검색 결과" onKeyDown={event => {
+                    if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return;
+                    const links = Array.from(event.currentTarget.querySelectorAll<HTMLAnchorElement>('a'));
+                    const current = links.indexOf(document.activeElement as HTMLAnchorElement);
+                    if (current < 0) return;
+                    event.preventDefault();
+                    if (event.key === 'ArrowUp' && current === 0) inputRef.current?.focus();
+                    else links[(current + (event.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length]?.focus();
+                }}>
+                    {results.map(post => <li key={post.url}>
+                        <Link onClick={onNavigate} href={post.url} className="block rounded-lg px-4 py-3 hover:bg-selection focus:bg-selection focus-visible:outline-2 focus-visible:-outline-offset-2">
+                            <span className="block font-medium [overflow-wrap:anywhere]">{post.title}</span>
+                            <span className="mt-1 block text-xs text-second">{post.category === 'diary' ? '일기' : '노트'} · {post.date}</span>
+                        </Link>
+                    </li>)}
+                </ul>}
+            </div>
         </section>
     );
 }

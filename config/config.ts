@@ -29,7 +29,6 @@ export const siteConfig = {
 };
 
 export const navItems = [
-    { label: '검색', href: '/search' },
     {
         label: '일기',
         href: '/diary',
