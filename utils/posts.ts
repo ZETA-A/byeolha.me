@@ -1,49 +1,46 @@
-import path from 'path';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { Post, PostMatter } from '@/config/types';
-import readingTime from 'reading-time';
-import { formatPostDate, normalizePostMatter, postYear } from './postMatter';
-import { load, JSON_SCHEMA } from 'js-yaml';
+import path from 'node:path';
+import fs from 'node:fs';
+import { cache } from 'react';
+import type { Post, PostSummary } from '@/config/types';
+import { postYear } from './postMatter';
+import { parsePostSource, summarizePost, enrichPost } from './postContent';
 import { siteConfig } from '@/config/config';
-import extractKeywords from './extractKeywords';
-
-import { getPostPath, parsePostAbstract, findPostPath } from './postPaths';
-export { BASE_PATH, POSTS_PATH, getPostPath, parsePostAbstract, getSeriesPublicName } from './postPaths';
+import { getPostPath as discoverPostPaths, parsePostAbstract, findPostPath, validatePostSegment } from './postPaths';
+export { BASE_PATH, POSTS_PATH, parsePostAbstract, getSeriesPublicName } from './postPaths';
 
 export const RESUME_PATH = path.join(process.cwd(), 'app/resume/content.mdx');
 
-export async function parsePost(postPath: string): Promise<Post> {
-    const postAbstract = parsePostAbstract(postPath);
-    const postDetail = await parsePostDetail(postPath);
-    return { ...postAbstract, ...postDetail };
-}
+// React cache reuses data within a Server Component render, not across requests.
+const getAllPostPaths = cache(() => discoverPostPaths());
+export const getPostPath = cache((category?: string) => {
+    if (category !== undefined) validatePostSegment(category, 'Category');
+    const paths = getAllPostPaths();
+    return category === undefined ? paths : paths.filter(file => parsePostAbstract(file).categoryPath === category);
+});
 
-// MDX 파일의 상세내용 파싱
-export async function parsePostDetail(postPath: string) {
-    const file = fs.readFileSync(postPath, 'utf8');
-    const { data, content } = matter(file, { engines: { yaml: (source) => load(source, { schema: JSON_SCHEMA }) as Record<string, unknown> } });
-    const grayMatter = normalizePostMatter(data, postPath);
-    const { createdAt, modifiedAt } = grayMatter;
-    const generatedKeywords = getPostKeywords(grayMatter, content);
-    const readingMinutes = Math.ceil(readingTime(content).minutes);
-    const createDateDisplay = formatPostDate(createdAt);
-    const modifiedDateDisplay = formatPostDate(modifiedAt);
-    return {
-        ...grayMatter,
-        readingMinutes,
-        content,
-        createdAt,
-        modifiedAt,
-        createDateDisplay,
-        modifiedDateDisplay,
-        generatedKeywords,
-    };
-}
+const readPostSource = cache((postPath: string) =>
+    parsePostSource(fs.readFileSync(postPath, 'utf8'), postPath)
+);
+
+export const parsePostDetail = cache(async (postPath: string) => enrichPost(readPostSource(postPath)));
+
+export const parsePost = cache(async (postPath: string): Promise<Post> => ({
+    ...parsePostAbstract(postPath),
+    ...await parsePostDetail(postPath),
+}));
+
+const parsePostSummary = cache(async (postPath: string): Promise<PostSummary> => ({
+    ...parsePostAbstract(postPath),
+    ...summarizePost(readPostSource(postPath)),
+}));
+
+export const getPostSummaryList = cache(async (category?: string): Promise<PostSummary[]> =>
+    Promise.all(getPostPath(category).map(parsePostSummary))
+);
 
 // post를 날짜 최신 순으로 정렬
-function sortPostList(PostList: Post[]) {
-    return PostList.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+function sortPostList(postList: PostSummary[]) {
+    return [...postList].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 }
 
 // 모든 포스트 목록 조회
@@ -57,14 +54,14 @@ export async function getPostList(category?: string): Promise<Post[]> {
 
 // 최신글 순서로 정렬
 export async function getSortedPostList(category?: string) {
-    const postList = await getPostList(category);
+    const postList = await getPostSummaryList(category);
     const sortList = sortPostList(postList);
     return sortList;
 }
 
 // 년도별로 그룹화 하여 최신글 순서로 정렬
 export async function getSortedPostListByYear(category?: string) {
-    const postList = await getPostList(category);
+    const postList = await getPostSummaryList(category);
     const sortList = sortPostList(postList);
 
     // 연도별로 그룹화
@@ -74,7 +71,7 @@ export async function getSortedPostListByYear(category?: string) {
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
-        }, {} as { [key: string]: Post[] })
+        }, {} as { [key: string]: PostSummary[] })
     );
 
     // 내림차순 정렬
@@ -88,27 +85,18 @@ export async function getSortedPostListByYear(category?: string) {
 }
 
 // post 상세 페이지 내용 조회
-export const getPostDetail = async (
+export const getPostDetail = cache(async (
     category: string,
     series: string,
     slug: string
 ) => {
-    const filePath = findPostPath(category, series, slug);
-    const detail = await parsePost(filePath);
-    return detail;
-};
-
-const getPostKeywords = (grayMatter: PostMatter, content: string) => {
-    if (!grayMatter.keywords) {
-        return extractKeywords(content, 5);
-    } else {
-        return grayMatter.keywords.split(',').map(word => word.trim()).filter(Boolean);
-    }
-};
+    const filePath = findPostPath(category, series, slug, undefined, getAllPostPaths());
+    return parsePost(filePath);
+});
 
 // 사이트맵
 export const getSitemapPostList = async () => {
-    const postList = await getPostList();
+    const postList = await getPostSummaryList();
     const baseUrl = siteConfig.url;
     const sitemapPostList = postList.map(({ url, modifiedAt }) => ({
         lastModified: modifiedAt,

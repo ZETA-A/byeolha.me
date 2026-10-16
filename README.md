@@ -61,6 +61,8 @@ thumbnail: /assets/image/defaultThumbnail.png
 
 사이트 정보와 작품 목록은 `config/config.ts`에서 관리합니다. 작품의 상태와 `updatedAt`은 수동 관리하며 빌드 중 외부 GitHub API를 호출하지 않습니다.
 
+글 원본 파싱과 상세 정보 계산은 `utils/postContent.ts`로 분리했습니다. 목록·사이트맵은 `PostSummary`를 사용해 읽는 시간·자동 키워드를 계산하지 않습니다. 서버 컴포넌트 렌더링 중에는 React cache로 같은 파일의 파싱 결과를 재사용하며, 요청 사이에 파일 내용을 영구 캐시하지 않습니다.
+
 공통 페이지 메타데이터는 `utils/metadata.ts`, 글 데이터 검증은 `utils/postMatter.ts`, 글 로딩은 `utils/posts.ts`에 있습니다. 사이트맵의 글 수정일은 frontmatter에서 가져오며, 정적 페이지에는 추정 수정일을 넣지 않습니다.
 
 ## 앞으로 할 일
