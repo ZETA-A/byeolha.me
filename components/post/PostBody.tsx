@@ -2,6 +2,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import rehypePostToc from '@/utils/rehypePostToc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -22,8 +25,9 @@ const PostBody = ({ content, showToc = false }: { content: string; showToc?: boo
             components={{ details: PostToc, img: PostImage, table: PostTable }}
             options={{
                 mdxOptions: {
-                    remarkPlugins: [remarkGfm, remarkBreaks],
+                    remarkPlugins: [remarkGfm, remarkBreaks, remarkMath],
                     rehypePlugins: [
+                        rehypeKatex,
                         rehypeImageSize,
                         rehypeFigure,
                         rehypeCodeTitles,

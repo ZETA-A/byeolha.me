@@ -2,9 +2,10 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkMdx from 'remark-mdx';
+import remarkMath from 'remark-math';
 import type { Root, RootContent } from 'mdast';
 
-const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMdx);
+const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMath).use(remarkMdx);
 const excluded = new Set(['code', 'image', 'imageReference', 'definition', 'footnoteDefinition', 'footnoteReference', 'mdxjsEsm', 'mdxTextExpression', 'mdxFlowExpression']);
 const inlineContainers = new Set(['paragraph', 'heading', 'emphasis', 'strong', 'delete', 'link', 'linkReference', 'mdxJsxTextElement']);
 
