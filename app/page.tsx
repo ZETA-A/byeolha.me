@@ -16,11 +16,11 @@ export default function Home() {
     return (
         <div>
             <div className="mb-6">
-                <h2 className="flex gap-x-2 font-bold">
+                <h1 className="flex gap-x-2 font-bold">
                     <span>김승현</span>
                     <span>·</span>
                     <span>byeolha</span>
-                </h2>
+                </h1>
             </div>
             <div className="text-second flex flex-col gap-4">
                 <div>

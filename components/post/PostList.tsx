@@ -12,9 +12,9 @@ export default async function PostList({ category }: { category: string }) {
                         key={`year-${listIndex}`}
                         className={`relative flex gap-3 sm:gap-8 justify-between group/year border-t last-of-type:border-b`}
                     >
-                        <h3 className="tabular-nums text-xs text-second md:text-sm p-1 mt-4 self-start shrink-0 transition rounded-md group-hover/year:bg-selection">
+                        <h2 className="tabular-nums text-xs text-second md:text-sm p-1 mt-4 self-start shrink-0 transition rounded-md group-hover/year:bg-selection">
                             {item.year}
-                        </h3>
+                        </h2>
                         <ul className="flex flex-col flex-1 min-w-0 max-w-[520px] py-4 gap-1">
                             {item.post.map((post, postIndex) => {
                                 return (
