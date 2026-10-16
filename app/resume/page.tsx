@@ -15,16 +15,7 @@ export default async function Resume() {
     const post = await parsePostDetail(RESUME_PATH);
     return (
         <div className="mdx">
-            <PostBody
-                post={{
-                    ...post,
-                    url: '',
-                    slug: '',
-                    categoryPath: '',
-                    seriesPath: '',
-                    seriesPublicName: '',
-                }}
-            />
+            <PostBody content={post.content} />
         </div>
     );
 }

@@ -1,4 +1,3 @@
-import { Post } from '@/config/types';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import remarkGfm from 'remark-gfm';
@@ -15,10 +14,10 @@ import PostImage from './PostImage';
 import PostTable from './PostTable';
 import { codeThemeOptions } from '@/utils/codeTheme';
 
-const PostBody = ({ post }: { post: Post }) => {
+const PostBody = ({ content }: { content: string }) => {
     return (
         <MDXRemote
-            source={post.content}
+            source={content}
             components={{ img: PostImage, table: PostTable }}
             options={{
                 mdxOptions: {

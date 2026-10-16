@@ -75,7 +75,7 @@ const PostDetail = async ({ params }: Props) => {
         <article>
             <PostHeader post={post} />
             <div className="max-w-none mdx">
-                <PostBody post={post} />
+                <PostBody content={post.content} />
             </div>
             <PostFooter post={sortedPost} thisPostUrl={post.url} />
             <Giscus />
