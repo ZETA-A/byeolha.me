@@ -30,7 +30,8 @@ test('summary and detailed metadata agree for every repository article', () => {
         const summary = summarizePost(source);
         const full = enrichPost(source);
         for (const [key, value] of Object.entries(summary)) assert.deepEqual(full[key], value, `${file}: ${key}`);
-        assert.ok(full.readingMinutes >= 1);
+        if (source.content.trim()) assert.ok(full.readingMinutes >= 1);
+        else assert.equal(full.readingMinutes, 0);
         assert.ok(Array.isArray(full.generatedKeywords));
     }
 });
