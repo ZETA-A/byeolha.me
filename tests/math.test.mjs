@@ -43,3 +43,10 @@ $$
 
 마지막 문장.`, 140), '앞 문장 뒤 문장. 마지막 문장.');
 });
+
+test('KaTeX stylesheet and rehype renderer use the same version', async () => {
+    const { createRequire } = await import('node:module');
+    const require = createRequire(import.meta.url);
+    const rendererRequire = createRequire(require.resolve('rehype-katex'));
+    assert.equal(require('katex/package.json').version, rendererRequire('katex/package.json').version);
+});
