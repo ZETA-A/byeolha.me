@@ -2,7 +2,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
-import remarkToc from 'remark-toc';
+import rehypePostToc from '@/utils/rehypePostToc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
@@ -14,20 +14,21 @@ import PostImage from './PostImage';
 import PostTable from './PostTable';
 import { codeThemeOptions } from '@/utils/codeTheme';
 
-const PostBody = ({ content }: { content: string }) => {
+const PostBody = ({ content, showToc = false }: { content: string; showToc?: boolean }) => {
     return (
         <MDXRemote
             source={content}
             components={{ img: PostImage, table: PostTable }}
             options={{
                 mdxOptions: {
-                    remarkPlugins: [remarkGfm, remarkBreaks, remarkToc],
+                    remarkPlugins: [remarkGfm, remarkBreaks],
                     rehypePlugins: [
                         rehypeImageSize,
                         rehypeFigure,
                         rehypeCodeTitles,
                         [rehypePrettyCode, codeThemeOptions],
                         rehypeSlug,
+                        [rehypePostToc, { enabled: showToc }],
                         [
                             rehypeExternalLinks,
                             {

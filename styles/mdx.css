@@ -245,3 +245,40 @@
     line-height: 20px;
     color: var(--astro-code-token-comment);
 }
+
+/* Native details keeps the table of contents usable without client JavaScript. */
+.mdx .post-toc {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.mdx .post-toc summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-body);
+}
+
+.mdx .post-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mdx .post-toc .toc-subheading {
+    margin-left: 1rem;
+}
+
+.mdx .post-toc a {
+    overflow-wrap: anywhere;
+}
+
+.mdx .post-toc a:focus-visible {
+    outline: 2px solid var(--text-second);
+    outline-offset: 2px;
+}
