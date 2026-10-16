@@ -1,10 +1,12 @@
+import { groupSeries } from '@/utils/series';
 import { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/config';
 
-import { getSitemapPostList } from '@/utils/posts';
+import { getPostSummaryList, getSitemapPostList } from '@/utils/posts';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const postList = await getSitemapPostList();
+    const series = groupSeries(await getPostSummaryList());
     const baseUrl = siteConfig.url;
     return [
         {
@@ -23,5 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             url: `${baseUrl}/resume`,
         },
         ...postList,
+        ...series.map(item => ({ url: `${baseUrl}${item.url}`, lastModified: item.modifiedAt })),
     ];
 }

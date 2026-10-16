@@ -1,8 +1,8 @@
 import { getSortedPostListByYear } from '@/utils/posts';
 import Link from 'next/link';
 
-export default async function PostList({ category }: { category: string }) {
-    const postList = await getSortedPostListByYear(category);
+export default async function PostList({ category, series }: { category: string; series?: string }) {
+    const postList = await getSortedPostListByYear(category, series);
 
     return (
         <section className="group mt-12 select-none font-normal">

@@ -70,13 +70,15 @@ export async function getSortedPostList(category?: string) {
 }
 
 // 년도별로 그룹화 하여 최신글 순서로 정렬
-export async function getSortedPostListByYear(category?: string) {
+export async function getSortedPostListByYear(category?: string, series?: string) {
     const postList = await getPostSummaryList(category);
     const sortList = sortPostList(postList);
 
+    const filteredList = series === undefined ? sortList : sortList.filter(post => post.seriesPath === series);
+
     // 연도별로 그룹화
     const result = Object.entries(
-        sortList.reduce((acc, post) => {
+        filteredList.reduce((acc, post) => {
             const year = postYear(post.createdAt);
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
