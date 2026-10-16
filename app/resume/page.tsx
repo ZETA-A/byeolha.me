@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function Resume() {
     const post = await parsePostDetail(RESUME_PATH);
     return (
-        <div className="mdx">
+        <div className="mdx resume">
             <PostBody content={post.content} />
         </div>
     );

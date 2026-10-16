@@ -91,6 +91,15 @@
     margin-top: 0px;
 }
 
+.mdx.resume > h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.mdx.resume > h1 + h2 {
+    margin-top: 2.5rem;
+}
+
 .mdx b,
 .mdx strong {
     font-weight: 500;
