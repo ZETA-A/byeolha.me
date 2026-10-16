@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         {
             url: `${baseUrl}/resume`,
         },
+        { url: `${baseUrl}/search` },
         ...postList,
         ...series.map(item => ({ url: `${baseUrl}${item.url}`, lastModified: item.modifiedAt })),
     ];
