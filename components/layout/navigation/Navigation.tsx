@@ -56,12 +56,12 @@ export default function Navigation() {
     return (
         <>
             <nav aria-label="주 메뉴" className="w-full select-none flex h-16 items-center justify-center">
-                <div className="flex w-full justify-between items-center">
-                    <Link href="/" onClick={close} className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4">
+                <div className="flex w-full justify-between items-center md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+                    <Link href="/" onClick={close} className="justify-self-start rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4">
                         <span className="font-bold">byeolha.me</span>
                     </Link>
-                    <div ref={desktopRef}><NavLinks variant="desktop" /></div>
-                    <div className="flex gap-x-1">
+                    <div ref={desktopRef} className="hidden md:block"><NavLinks variant="desktop" /></div>
+                    <div className="flex gap-x-1 justify-self-end">
                         <button
                             type="button"
                             aria-label="검색 열기"
