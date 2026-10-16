@@ -33,3 +33,9 @@ export function enrichPost(source: ReturnType<typeof parsePostSource>) {
             : extractKeywords(source.content, 5),
     };
 }
+
+export function formatPostTitle(title: string, seriesPublicName: string) {
+    const prefix = `(${seriesPublicName})`;
+    // Keep older articles readable while authors migrate their frontmatter.
+    return title === prefix || title.startsWith(`${prefix} `) ? title : `${prefix} ${title}`;
+}

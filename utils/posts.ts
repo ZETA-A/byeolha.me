@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { cache } from 'react';
 import type { Post, PostSummary } from '@/config/types';
 import { postYear } from './postMatter';
-import { parsePostSource, summarizePost, enrichPost } from './postContent';
+import { parsePostSource, summarizePost, enrichPost, formatPostTitle } from './postContent';
 import { siteConfig } from '@/config/config';
 import { getPostPath as discoverPostPaths, parsePostAbstract, findPostPath, validatePostSegment } from './postPaths';
 export { BASE_PATH, POSTS_PATH, parsePostAbstract, getSeriesPublicName } from './postPaths';
@@ -24,15 +24,25 @@ const readPostSource = cache((postPath: string) =>
 
 export const parsePostDetail = cache(async (postPath: string) => enrichPost(readPostSource(postPath)));
 
-export const parsePost = cache(async (postPath: string): Promise<Post> => ({
-    ...parsePostAbstract(postPath),
-    ...await parsePostDetail(postPath),
-}));
+export const parsePost = cache(async (postPath: string): Promise<Post> => {
+    const abstract = parsePostAbstract(postPath);
+    const detail = await parsePostDetail(postPath);
+    return {
+        ...abstract,
+        ...detail,
+        title: formatPostTitle(detail.title, abstract.seriesPublicName),
+    };
+});
 
-const parsePostSummary = cache(async (postPath: string): Promise<PostSummary> => ({
-    ...parsePostAbstract(postPath),
-    ...summarizePost(readPostSource(postPath)),
-}));
+const parsePostSummary = cache(async (postPath: string): Promise<PostSummary> => {
+    const abstract = parsePostAbstract(postPath);
+    const summary = summarizePost(readPostSource(postPath));
+    return {
+        ...abstract,
+        ...summary,
+        title: formatPostTitle(summary.title, abstract.seriesPublicName),
+    };
+});
 
 export const getPostSummaryList = cache(async (category?: string): Promise<PostSummary[]> =>
     Promise.all(getPostPath(category).map(parsePostSummary))
