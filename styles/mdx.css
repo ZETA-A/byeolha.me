@@ -187,7 +187,22 @@
     content: '* * *';
 }
 
+.mdx .mdx-table-scroll {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+.mdx .mdx-table-scroll:focus-visible {
+    outline: 2px solid var(--text-second);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 .mdx table {
+    width: 100%;
     empty-cells: hide;
     @apply md:text-sm;
 }
@@ -200,7 +215,8 @@
     @apply border px-4 py-2 text-left align-text-top [&[align=center]]:text-center [&[align=right]]:text-right;
 }
 
-.mdx td:first-child {
+.mdx th,
+.mdx td {
     word-break: keep-all;
 }
 
@@ -210,7 +226,9 @@
 }
 
 .mdx img {
-    display: flex;
+    display: block;
+    max-width: 100%;
+    height: auto;
     overflow: hidden;
     border-radius: 6px;
 }
@@ -220,10 +238,135 @@
 .mdx figcaption {
     display: inline-block;
     margin-top: 8px;
-    font-family: var(--font-sans);
+    font-family: var(--font-nanumHuman), sans-serif;
     font-size: 0.9rem;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
     color: var(--astro-code-token-comment);
+}
+
+/* Native details keeps the table of contents usable without client JavaScript. */
+.mdx .post-toc {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.mdx .post-toc summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-body);
+}
+
+.mdx .post-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mdx .post-toc .toc-subheading {
+    margin-left: 1rem;
+}
+
+.mdx .post-toc a {
+    overflow-wrap: anywhere;
+}
+
+.mdx .post-toc a:focus-visible {
+    outline: 2px solid var(--text-second);
+    outline-offset: 2px;
+}
+
+.mdx .post-toc .toc-rail { display: none; }
+.mdx .post-toc a[aria-current="location"] { color: var(--text-body); font-weight: 600; }
+
+@media (min-width: 1200px) {
+    .mdx .post-toc {
+        position: fixed;
+        top: 20vh;
+        right: 24px;
+        width: 40px;
+        z-index: 20;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        font-family: var(--font-nanumHuman), sans-serif;
+    }
+    .mdx .post-toc summary { display: none; }
+    .mdx .post-toc .toc-rail {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        width: 40px;
+        max-height: 60vh;
+        overflow: hidden;
+        padding: 12px 8px;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        cursor: pointer;
+    }
+    .mdx .post-toc .toc-rail:focus-visible { outline: 2px solid var(--text-second); }
+    .mdx .post-toc .toc-marker {
+        display: block;
+        flex-shrink: 0;
+        width: 20px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--text-body);
+        opacity: 0.18;
+        transition: opacity 120ms ease;
+    }
+    .mdx .post-toc .toc-marker-sub { width: 12px; }
+    .mdx .post-toc .toc-marker.is-current { opacity: 0.85; }
+    .mdx .post-toc nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 260px;
+        max-height: 65vh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 6px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--page-background);
+        box-shadow: 0 4px 18px rgb(0 0 0 / 10%);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(4px);
+        transition: opacity 120ms ease, transform 120ms ease, visibility 120ms;
+    }
+    .mdx .post-toc:hover nav,
+    .mdx .post-toc:focus-within nav {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+    .mdx .post-toc ul { margin: 0; gap: 0; }
+    .mdx .post-toc .toc-subheading { margin-left: 0; }
+    .mdx .post-toc a {
+        display: block;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--text-second);
+        text-decoration: none;
+    }
+    .mdx .post-toc .toc-subheading a { padding-left: 24px; }
+    .mdx .post-toc a:hover,
+    .mdx .post-toc a:focus-visible { background: var(--selection); color: var(--text-body); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mdx .post-toc nav,
+    .mdx .post-toc .toc-marker { transition: none; }
 }

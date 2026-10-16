@@ -1,100 +1,56 @@
-import path from 'path';
-import { sync } from 'glob';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { Post, PostMatter } from '@/config/types';
-import readingTime from 'reading-time';
-import dayjs from 'dayjs';
+import path from 'node:path';
+import fs from 'node:fs';
+import { cache } from 'react';
+import type { Post, PostSummary } from '@/config/types';
+import { postYear } from './postMatter';
+import { parsePostSource, summarizePost, enrichPost, formatPostTitle } from './postContent';
 import { siteConfig } from '@/config/config';
-import extractKeywords from './extractKeywords';
+import { getPostPath as discoverPostPaths, parsePostAbstract, findPostPath, validatePostSegment } from './postPaths';
+export { BASE_PATH, POSTS_PATH, parsePostAbstract, getSeriesPublicName } from './postPaths';
 
-export const BASE_PATH = 'posts';
-export const POSTS_PATH = path.join(process.cwd(), BASE_PATH);
 export const RESUME_PATH = path.join(process.cwd(), 'app/resume/content.mdx');
 
-// 모든 MDX 파일 조회
-export function getPostPath(category?: string) {
-    const folder = category || '**';
-    const postPaths: string[] = sync(`${POSTS_PATH}/${folder}/**/*.mdx`);
-    return postPaths;
-}
+// React cache reuses data within a Server Component render, not across requests.
+const getAllPostPaths = cache(() => discoverPostPaths());
+export const getPostPath = cache((category?: string) => {
+    if (category !== undefined) validatePostSegment(category, 'Category');
+    const paths = getAllPostPaths();
+    return category === undefined ? paths : paths.filter(file => parsePostAbstract(file).categoryPath === category);
+});
 
-export async function parsePost(postPath: string): Promise<Post> {
-    const postAbstract = parsePostAbstract(postPath);
-    const postDetail = await parsePostDetail(postPath);
-    return { ...postAbstract, ...postDetail };
-}
+const readPostSource = cache((postPath: string) =>
+    parsePostSource(fs.readFileSync(postPath, 'utf8'), postPath)
+);
 
-// MDX 파일의 개요 파싱
-export function parsePostAbstract(postPath: string) {
-    const filePath = postPath
-        .slice(postPath.indexOf(BASE_PATH))
-        .replace(`${BASE_PATH}/`, '')
-        .replace('.mdx', '');
-    const [categoryPath, seriesPath, slug] = filePath.split('/');
-    const decodedSeriesPath = decodeURIComponent(seriesPath);
-    const decodedSlug = decodeURIComponent(slug);
-    const url = `/posts/${categoryPath}/${decodedSeriesPath}/${decodedSlug}`;
-    const seriesPublicName = getSeriesPublicName(seriesPath);
-    return { url, categoryPath, seriesPath, seriesPublicName, slug };
-}
+export const parsePostDetail = cache(async (postPath: string) => enrichPost(readPostSource(postPath)));
 
-// MDX 파일의 상세내용 파싱
-export async function parsePostDetail(postPath: string) {
-    const file = fs.readFileSync(postPath, 'utf8');
-    const { data, content } = matter(file);
-    const grayMatter = data as PostMatter;
-    const createdAt = parsePostDate(grayMatter.createDate, postPath, 'createDate');
-    const modifiedAt = parsePostDate(
-        grayMatter.modifiedDate,
-        postPath,
-        'modifiedDate'
-    );
-    const generatedKeywords = getPostKeywords(grayMatter, content);
-    const readingMinutes = Math.ceil(readingTime(content).minutes);
-    const createDateDisplay = dayjs(createdAt).format(
-        'MMM DD, YYYY'
-    );
-    const modifiedDateDisplay = dayjs(modifiedAt).format(
-        'MMM DD, YYYY'
-    );
+export const parsePost = cache(async (postPath: string): Promise<Post> => {
+    const abstract = parsePostAbstract(postPath);
+    const detail = await parsePostDetail(postPath);
     return {
-        ...grayMatter,
-        readingMinutes,
-        content,
-        createdAt,
-        modifiedAt,
-        createDateDisplay,
-        modifiedDateDisplay,
-        generatedKeywords,
+        ...abstract,
+        ...detail,
+        title: formatPostTitle(detail.title, abstract.seriesPublicName),
     };
-}
+});
 
-function parsePostDate(
-    value: string,
-    postPath: string,
-    fieldName: 'createDate' | 'modifiedDate'
-) {
-    const parsed = dayjs(value);
+const parsePostSummary = cache(async (postPath: string): Promise<PostSummary> => {
+    const abstract = parsePostAbstract(postPath);
+    const summary = summarizePost(readPostSource(postPath));
+    return {
+        ...abstract,
+        ...summary,
+        title: formatPostTitle(summary.title, abstract.seriesPublicName),
+    };
+});
 
-    if (!parsed.isValid()) {
-        throw new Error(`Invalid ${fieldName} in ${postPath}: ${value}`);
-    }
-
-    return parsed.toDate();
-}
-
-// category folder name을 public name으로 변경 : dir_name -> Dir Name
-export function getSeriesPublicName(dirPath: string) {
-    return dirPath
-        .split('_')
-        .map((token) => token[0].toUpperCase() + token.slice(1, token.length))
-        .join(' ');
-}
+export const getPostSummaryList = cache(async (category?: string): Promise<PostSummary[]> =>
+    Promise.all(getPostPath(category).map(parsePostSummary))
+);
 
 // post를 날짜 최신 순으로 정렬
-function sortPostList(PostList: Post[]) {
-    return PostList.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+function sortPostList(postList: PostSummary[]) {
+    return [...postList].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 }
 
 // 모든 포스트 목록 조회
@@ -108,24 +64,26 @@ export async function getPostList(category?: string): Promise<Post[]> {
 
 // 최신글 순서로 정렬
 export async function getSortedPostList(category?: string) {
-    const postList = await getPostList(category);
+    const postList = await getPostSummaryList(category);
     const sortList = sortPostList(postList);
     return sortList;
 }
 
 // 년도별로 그룹화 하여 최신글 순서로 정렬
-export async function getSortedPostListByYear(category?: string) {
-    const postList = await getPostList(category);
+export async function getSortedPostListByYear(category?: string, series?: string) {
+    const postList = await getPostSummaryList(category);
     const sortList = sortPostList(postList);
+
+    const filteredList = series === undefined ? sortList : sortList.filter(post => post.seriesPath === series);
 
     // 연도별로 그룹화
     const result = Object.entries(
-        sortList.reduce((acc, post) => {
-            const year = post.createdAt.getFullYear().toString();
+        filteredList.reduce((acc, post) => {
+            const year = postYear(post.createdAt);
             if (!acc[year]) acc[year] = [];
             acc[year].push(post);
             return acc;
-        }, {} as { [key: string]: Post[] })
+        }, {} as { [key: string]: PostSummary[] })
     );
 
     // 내림차순 정렬
@@ -139,34 +97,23 @@ export async function getSortedPostListByYear(category?: string) {
 }
 
 // post 상세 페이지 내용 조회
-export const getPostDetail = async (
+export const getPostDetail = cache(async (
     category: string,
     series: string,
     slug: string
 ) => {
-    const decodedSeries = decodeURIComponent(series);
-    const decodedSlug = decodeURIComponent(slug);
-    const filePath = `${POSTS_PATH}/${category}/${decodedSeries}/${decodedSlug}/content.mdx`;
-    const detail = await parsePost(filePath);
-    return detail;
-};
-
-const getPostKeywords = (grayMatter: PostMatter, content: string) => {
-    if (!grayMatter.keywords) {
-        return extractKeywords(content, 5);
-    } else {
-        return grayMatter.keywords.split(', ');
-    }
-};
+    const filePath = findPostPath(category, series, slug, undefined, getAllPostPaths());
+    return parsePost(filePath);
+});
 
 // 사이트맵
 export const getSitemapPostList = async () => {
-    const postList = await getPostList();
+    const postList = await getPostSummaryList();
     const baseUrl = siteConfig.url;
     const sitemapPostList = postList.map(({ url, modifiedAt }) => ({
         lastModified: modifiedAt,
         url: `${baseUrl}${url}`,
-        changeFrequency: 'daily' as 'daily',
+        changeFrequency: 'daily' as const,
     }));
     return sitemapPostList;
 };

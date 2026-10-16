@@ -2,17 +2,15 @@ import { Sun, Moon, MobilePhone } from 'flowbite-react-icons/outline';
 import DropdownMenu from './DropdownMenu';
 import { useTheme } from 'next-themes';
 import { PopupMenuState } from '@/hooks/popupMenuStore';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+const subscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 const ThemeMenu = () => {
     const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, [mounted]);
-
-    if (!mounted) return null;
+    const mounted = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
 
     const setLabel = (theme: string) => {
         if (theme === 'light') return <Sun />;
@@ -24,22 +22,19 @@ const ThemeMenu = () => {
         {
             title: '주간 모드',
             tooltip: '밝은 테마로 변경합니다',
-            href: '#',
-            select: theme === 'light',
+            select: mounted && theme === 'light',
             onChange: () => setTheme('light'),
         },
         {
             title: '야간 모드',
             tooltip: '어두운 테마로 변경합니다',
-            href: '#',
-            select: theme === 'dark',
+            select: mounted && theme === 'dark',
             onChange: () => setTheme('dark'),
         },
         {
             title: '기기 설정',
             tooltip: '사용 중인 기기의 설정을 따라갑니다',
-            href: '#',
-            select: theme === 'system',
+            select: mounted && theme === 'system',
             onChange: () => setTheme('system'),
         },
     ];
@@ -47,7 +42,7 @@ const ThemeMenu = () => {
     return (
         <DropdownMenu
             group={PopupMenuState.Theme}
-            label={setLabel(theme as string)}
+            label={mounted ? setLabel(theme ?? 'system') : <MobilePhone />}
             items={items}
             areaLabel="Select Theme"
         />

@@ -5,7 +5,7 @@ export const PostFooter = ({
     post,
     thisPostUrl,
 }: {
-    post: Post[];
+    post: Pick<Post, 'url' | 'title'>[];
     thisPostUrl: string;
 }) => {
     const thisPost = post.findIndex((post) => post.url === thisPostUrl);
