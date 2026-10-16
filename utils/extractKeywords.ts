@@ -1,54 +1,26 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
-/**
- * 불용어 txt 파일을 읽어서 Set으로 반환
- */
-function loadStopWords(filePath: string): Set<string> {
-    const fullPath = path.resolve(filePath);
-    const data = fs.readFileSync(fullPath, 'utf-8');
-    const words = data
-        .split('\n')
-        .map((word) => word.trim())
-        .filter(Boolean);
-    return new Set(words);
-}
+const stopWords = new Set(fs.readFileSync(path.join(process.cwd(), 'config/stopwords.txt'), 'utf8').split(/\r?\n/).map(word => word.trim()).filter(Boolean));
+// Only grammatical particles belong here; ordinary stop words are never suffixes.
+const particles = ['으로부터', '에게서', '에서는', '으로는', '으로', '에서', '에게', '까지', '부터', '처럼', '보다', '은', '는', '이', '가', '을', '를', '의', '에', '와', '과', '도', '로'];
 
-/**
- * 텍스트에서 키워드 추출
- */
 export default function extractKeywords(text: string, topN = 10): string[] {
-    const stopWords = loadStopWords(
-        path.join(process.cwd(), 'config/stopwords.txt')
-    );
-    const wordFreq: Record<string, number> = {};
-    const words = text
-        .replace(/[^\uAC00-\uD7A3a-zA-Z0-9\s]/g, '') // 특수문자 제거
-        .split(/\s+/); // 공백 기준 분리
-
-    for (const word of words) {
-        for (const suffix of stopWords) {
-            if (word.endsWith(suffix)) {
-                // 조사 발견
-                const root = word.slice(0, word.length - suffix.length);
-                // 처리 로직...
-                if (root.length > 1) {
-                    wordFreq[root] = (wordFreq[root] || 0) + 1;
-                }
-            }
+    const plain = text.replace(/```[\s\S]*?```|~~~[\s\S]*?~~~/g, ' ')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+        .replace(/<[^>]*>|https?:\/\/\S+/g, ' ');
+    const counts = new Map<string, { label: string; count: number }>();
+    for (let word of plain.match(/[가-힣]+|[a-zA-Z][a-zA-Z0-9]*(?:[.+#][a-zA-Z0-9]+)*/g) ?? []) {
+        if (stopWords.has(word)) continue;
+        if (/^[가-힣]+$/.test(word)) {
+            const particle = particles.find(suffix => word.endsWith(suffix) && word.length - suffix.length >= 2);
+            if (particle) word = word.slice(0, -particle.length);
         }
+        if (word.length < 2 || stopWords.has(word)) continue;
+        const key = word.toLowerCase();
+        const previous = counts.get(key);
+        counts.set(key, { label: previous?.label ?? word, count: (previous?.count ?? 0) + 1 });
     }
-
-    for (const key in wordFreq) {
-        if (wordFreq[key] <= 1) {
-            delete wordFreq[key];
-        }
-    }
-
-    const sorted = Object.entries(wordFreq)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, topN)
-        .map(([word]) => word);
-
-    return sorted;
+    return [...counts.values()].sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, 'ko')).slice(0, Math.max(0, topN)).map(entry => entry.label);
 }

@@ -1,35 +1,15 @@
+import SeriesList from '@/components/post/SeriesList';
+import { pageMetadata } from '@/utils/metadata';
 import PageHeader from '@/components/layout/PageHeader';
 import PostList from '@/components/post/PostList';
-import { siteConfig } from '@/config/config';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: '일기',
-    description:
+    ...pageMetadata(
+        '일기',
         '매일의 소중한 순간들이 모여 하루를 특별한 이야기로 완성합니다.',
-    alternates: {
-        canonical: `${siteConfig.url}/diary`,
-    },
-    openGraph: {
-        title: '일기',
-        description:
-            '매일의 소중한 순간들이 모여 하루를 특별한 이야기로 완성합니다.',
-        url: '/diary',
-        images: [
-            {
-                url: `${siteConfig.defaultThumbnail}`,
-                width: 800,
-                height: 600,
-            },
-        ],
-    },
-    twitter: {
-        title: '일기',
-        description:
-            '매일의 소중한 순간들이 모여 하루를 특별한 이야기로 완성합니다.',
-        card: 'summary_large_image',
-        images: [`${siteConfig.defaultThumbnail}`],
-    },
+        '/diary'
+    ),
 };
 
 export default function Diary() {
@@ -39,6 +19,7 @@ export default function Diary() {
                 title="일기"
                 catchphrase="매일의 소중한 순간들이 모여 하루를 특별한 이야기로 완성합니다."
             />
+            <SeriesList category="diary" />
             <PostList category="diary" />
         </div>
     );

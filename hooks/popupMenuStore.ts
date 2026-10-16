@@ -4,6 +4,7 @@ export enum PopupMenuState {
     Language = 'language',
     Theme = 'theme',
     Navigation = 'navigation',
+    Search = 'search',
     None = 'none',
 }
 

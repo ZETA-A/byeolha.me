@@ -1,13 +1,27 @@
-export default function removeMD(content: string, slice: number): string {
-    const result = content.replace(
-        /^\s+|\*\*([^*]+)\*\*|__([^_]+)__|\*([^*]+)\*|_([^_]+)_|\[[^\]]+\]\([^\)]+\)|!\[[^\]]*\]\([^\)]+\)|`[^`]+`|```[\s\S]*?```|^([*-]|\d+\.)\s[^\n]*|^#+\s[^\n]*|[\r\n]+/gm,
-        (match, p1, p2, p3, p4) => {
-            // 볼드 텍스트는 마크업만 제거하고 텍스트는 그대로 유지
-            if (p1 || p2) {
-                return p1 || p2; // 볼드 마크업 내 텍스트만 반환
-            }
-            return ''; // 나머지 마크다운 문법은 삭제
-        }
-    );
-    return result.slice(0, slice).concat('...');
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
+import type { Root, RootContent } from 'mdast';
+
+const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMdx);
+const excluded = new Set(['code', 'image', 'imageReference', 'definition', 'footnoteDefinition', 'footnoteReference', 'mdxjsEsm', 'mdxTextExpression', 'mdxFlowExpression']);
+const inlineContainers = new Set(['paragraph', 'heading', 'emphasis', 'strong', 'delete', 'link', 'linkReference', 'mdxJsxTextElement']);
+
+function plainText(node: Root | RootContent): string {
+    if (excluded.has(node.type)) return '';
+    if (node.type === 'text' || node.type === 'inlineCode') return node.value;
+    if (node.type === 'break') return ' ';
+    if ('children' in node) {
+        return node.children.map(plainText).join(inlineContainers.has(node.type) ? '' : ' ');
+    }
+    return '';
+}
+
+export default function removeMD(content: string, limit: number): string {
+    const text = plainText(parser.parse(content)).replace(/\s+/g, ' ').trim();
+    const characters = Array.from(text);
+    const length = Math.max(0, Math.floor(limit));
+    if (!length) return '';
+    return characters.length > length ? characters.slice(0, length).join('').trimEnd() + '...' : text;
 }

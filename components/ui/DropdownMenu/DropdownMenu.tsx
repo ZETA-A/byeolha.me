@@ -1,103 +1,71 @@
+'use client';
+
 import usePopupMenuStore, { PopupMenuState } from '@/hooks/popupMenuStore';
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 interface DropdownProps {
-    group: PopupMenuState; // Dropdown의 그룹
-    label: React.ReactNode; // 버튼
-    items: DropdownItems[]; // 아이템
-    areaLabel: string; // 스크린리더
+    group: PopupMenuState;
+    label: React.ReactNode;
+    items: { title: string; tooltip?: string; disabled?: boolean; select?: boolean; onClick?: () => void; onChange?: () => void }[];
+    areaLabel: string;
 }
 
-interface DropdownItems {
-    title: string;
-    tooltip?: string;
-    disabled?: boolean;
-    href: string;
-    select?: boolean;
-    onClick?: () => void;
-    onChange?: () => void;
-}
-
-const DropdownMenu: React.FC<DropdownProps> = ({
-    group,
-    label,
-    items,
-    areaLabel,
-}) => {
+export default function DropdownMenu({ group, label, items, areaLabel }: DropdownProps) {
     const { popupMenuState, setPopupMenuState } = usePopupMenuStore();
-    const popoverRef = useRef<HTMLDivElement | null>(null);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const panelRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const panelId = useId();
+    const open = popupMenuState === group;
 
-    // 클릭 시 Dropdown 닫기
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                popupMenuState === group &&
-                popoverRef.current &&
-                buttonRef.current &&
-                !popoverRef.current.contains(event.target as Node) &&
-                !buttonRef.current.contains(event.target as Node)
-            ) {
-                setPopupMenuState(group);
-            }
+        if (!open) return;
+        const selected = panelRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]:not(:disabled)');
+        const first = panelRef.current?.querySelector<HTMLButtonElement>('button:not(:disabled)');
+        (selected ?? first)?.focus();
+        const outside = (event: PointerEvent) => {
+            if (!rootRef.current?.contains(event.target as Node)) setPopupMenuState(PopupMenuState.None);
         };
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('pointerdown', outside);
+        return () => document.removeEventListener('pointerdown', outside);
+    }, [open, setPopupMenuState]);
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [popupMenuState, popoverRef, buttonRef, group, setPopupMenuState]);
-
-    const togglePopup = () => {
-        setPopupMenuState(group);
+    const close = () => {
+        setPopupMenuState(PopupMenuState.None);
+        buttonRef.current?.focus();
     };
 
     return (
-        <div
-            className={`relative rounded-lg size-[40px] ${
-                popupMenuState === group ? 'bg-selection' : ''
-            }`}
-        >
-            {/* Dropdown을 여는 버튼 */}
-            <button
-                ref={buttonRef}
-                aria-label={areaLabel}
-                onClick={() => togglePopup()}
-                className="hover:bg-selection box-content p-2 rounded-lg transition"
-            >
+        <div ref={rootRef} className={`relative rounded-lg size-[40px] ${open ? 'bg-selection' : ''}`}
+            onBlur={(event) => {
+                if (open && !event.currentTarget.contains(event.relatedTarget)) setPopupMenuState(PopupMenuState.None);
+            }}
+            onKeyDown={(event) => {
+                if (open && event.key === 'Escape') { event.preventDefault(); close(); }
+                if (open && ['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+                    event.preventDefault();
+                    const buttons = Array.from(panelRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
+                    const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+                    const index = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (current + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+                    buttons[index]?.focus();
+                }
+            }}>
+            <button type="button" ref={buttonRef} aria-label={areaLabel} aria-expanded={open} aria-controls={open ? panelId : undefined}
+                onClick={() => setPopupMenuState(group)} className="hover:bg-selection box-content p-2 rounded-lg transition focus-visible:outline-2">
                 {label}
             </button>
-
-            {popupMenuState === group && (
-                <div
-                    ref={popoverRef}
-                    className="z-50 absolute mt-2 right-0 min-w-[120px] w-fit bg-gray-50 dark:bg-gray-75 border border-gray-25 dark:border-gray-25 shadow-xs rounded-lg p-2 flex flex-col"
-                >
-                    <div className="flex flex-col gap-y-1 p-1">
-                        {items.map((item, index) => (
-                            <label
-                                className="cursor-pointer"
-                                key={`${group}-${index}`}
-                                title={item.tooltip}
-                            >
-                                <input
-                                    type="radio"
-                                    checked={item.select}
-                                    onClick={item.onClick}
-                                    onChange={item.onChange}
-                                    className="peer hidden"
-                                    disabled={item.disabled}
-                                />
-                                <span className="w-full h-full p-1 rounded-md flex items-center justify-center text-center peer-checked:bg-selection dark:peer-checked:bg-selection hover:bg-selection peer-checked:rounded-md transition">
-                                    {item.title}
-                                </span>
-                            </label>
-                        ))}
-                    </div>
+            {open && (
+                <div id={panelId} ref={panelRef} role="group" aria-label={areaLabel}
+                    className="z-50 absolute mt-2 right-0 min-w-[120px] w-fit bg-gray-50 dark:bg-gray-75 border shadow-xs rounded-lg p-2 flex flex-col gap-1">
+                    {items.map(item => (
+                        <button type="button" key={item.title} title={item.tooltip} disabled={item.disabled} aria-pressed={Boolean(item.select)}
+                            className={`p-1 rounded-md text-center hover:bg-selection focus-visible:outline-2 disabled:opacity-40 disabled:cursor-not-allowed ${item.select ? 'bg-selection' : ''}`}
+                            onClick={() => { item.onClick?.(); item.onChange?.(); close(); }}>
+                            {item.title}
+                        </button>
+                    ))}
                 </div>
             )}
         </div>
     );
-};
-
-export default DropdownMenu;
+}

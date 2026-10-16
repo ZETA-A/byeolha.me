@@ -10,10 +10,10 @@ const giscusThemes = {
 
 export default function Giscus() {
     const ref = useRef<HTMLDivElement>(null);
-    const { theme } = useTheme();
+    const { resolvedTheme } = useTheme();
 
     useEffect(() => {
-        if (!ref.current) {
+        if (!ref.current || !resolvedTheme) {
             return;
         }
 
@@ -23,7 +23,7 @@ export default function Giscus() {
 
         const script = document.createElement('script');
         const initialTheme =
-            theme === 'dark' ? giscusThemes.dark : giscusThemes.light;
+            resolvedTheme === 'dark' ? giscusThemes.dark : giscusThemes.light;
 
         script.src = 'https://giscus.app/client.js';
         script.async = true;
@@ -43,20 +43,31 @@ export default function Giscus() {
         script.setAttribute('data-lang', 'ko');
 
         ref.current.appendChild(script);
-    }, [theme]);
+    }, [resolvedTheme]);
 
     // https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#isetconfigmessage
     useEffect(() => {
         const nextTheme =
-            theme === 'dark' ? giscusThemes.dark : giscusThemes.light;
-        const iframe = document.querySelector<HTMLIFrameElement>(
-            'iframe.giscus-frame'
-        );
-        iframe?.contentWindow?.postMessage(
-            { giscus: { setConfig: { theme: nextTheme } } },
-            'https://giscus.app'
-        );
-    }, [theme]);
+            resolvedTheme === 'dark' ? giscusThemes.dark : giscusThemes.light;
+        const container = ref.current;
+        if (!container) return;
+        const updateTheme = () => {
+            const iframe = container.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+            iframe?.contentWindow?.postMessage(
+                { giscus: { setConfig: { theme: nextTheme } } },
+                'https://giscus.app'
+            );
+        };
+        // Reapply after the asynchronously inserted iframe finishes loading.
+        container.addEventListener('load', updateTheme, true);
+        const observer = new MutationObserver(updateTheme);
+        observer.observe(container, { childList: true, subtree: true });
+        updateTheme();
+        return () => {
+            container.removeEventListener('load', updateTheme, true);
+            observer.disconnect();
+        };
+    }, [resolvedTheme]);
 
     return <section ref={ref} />;
 }

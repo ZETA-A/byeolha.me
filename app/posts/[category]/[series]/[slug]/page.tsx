@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: post.title,
         description: description,
         alternates: {
-            canonical: `${siteConfig.url}/posts/${category}/${series}/${slug}`,
+            canonical: post.url,
         },
         keywords: post.generatedKeywords,
         openGraph: {
@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             authors: siteConfig.author.name,
         },
         twitter: {
+            card: 'summary_large_image',
             title: post.title,
             description: description,
             images: [thumbnail],
@@ -69,12 +70,12 @@ export function generateStaticParams() {
 const PostDetail = async ({ params }: Props) => {
     const { category, series, slug } = await params;
     const post = await getPostDetail(category, series, slug);
-    const sortedPost = await getSortedPostList(category);
+    const sortedPost = await getSortedPostList(post.categoryPath);
     return (
         <article>
             <PostHeader post={post} />
             <div className="max-w-none mdx">
-                <PostBody post={post} />
+                <PostBody content={post.content} showToc />
             </div>
             <PostFooter post={sortedPost} thisPostUrl={post.url} />
             <Giscus />

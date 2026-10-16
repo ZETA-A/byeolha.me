@@ -1,32 +1,15 @@
+import SeriesList from '@/components/post/SeriesList';
+import { pageMetadata } from '@/utils/metadata';
 import PageHeader from '@/components/layout/PageHeader';
 import PostList from '@/components/post/PostList';
-import { siteConfig } from '@/config/config';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: '노트',
-    description: '함께 배우고 기록하는 공간으로 초대합니다.',
-    alternates: {
-        canonical: `${siteConfig.url}/note`,
-    },
-    openGraph: {
-        title: '노트',
-        description: '함께 배우고 기록하는 공간으로 초대합니다.',
-        url: '/note',
-        images: [
-            {
-                url: `${siteConfig.defaultThumbnail}`,
-                width: 800,
-                height: 600,
-            },
-        ],
-    },
-    twitter: {
-        title: '노트',
-        description: '함께 배우고 기록하는 공간으로 초대합니다.',
-        card: 'summary_large_image',
-        images: [`${siteConfig.defaultThumbnail}`],
-    },
+    ...pageMetadata(
+        '노트',
+        '함께 배우고 기록하는 공간으로 초대합니다.',
+        '/note'
+    ),
 };
 export default function Note() {
     return (
@@ -35,6 +18,7 @@ export default function Note() {
                 title="노트"
                 catchphrase="함께 배우고 기록하는 공간으로 초대합니다."
             />
+            <SeriesList category="note" />
             <PostList category="note" />
         </div>
     );

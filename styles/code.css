@@ -77,6 +77,25 @@ pre {
     border-radius: 8px;
 }
 
+/* Shiki emits both palettes at build time; next-themes switches the class. */
+.mdx pre[data-theme] {
+    color: var(--shiki-light, var(--astro-code-color-text)) !important;
+    background-color: var(--shiki-light-bg, var(--astro-code-color-background)) !important;
+}
+
+.mdx pre[data-theme] span {
+    color: var(--shiki-light, inherit);
+}
+
+.dark .mdx pre[data-theme] {
+    color: var(--shiki-dark, var(--astro-code-color-text)) !important;
+    background-color: var(--shiki-dark-bg, var(--astro-code-color-background)) !important;
+}
+
+.dark .mdx pre[data-theme] span {
+    color: var(--shiki-dark, inherit);
+}
+
 pre code {
     @apply font-monospace;
     position: relative;

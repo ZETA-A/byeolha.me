@@ -16,19 +16,22 @@ export interface PostMatter {
     thumbnail?: string;
 }
 
-export interface Post extends PostMatter {
+export interface PostSummary extends PostMatter {
     url: string;
     slug: string;
     categoryPath: string;
     seriesPath: string;
-    content: string;
-    readingMinutes: number;
     seriesPublicName: string;
-    generatedKeywords: string[];
     createdAt: Date;
     modifiedAt: Date;
     createDateDisplay: string;
     modifiedDateDisplay: string;
+}
+
+export interface Post extends PostSummary {
+    content: string;
+    readingMinutes: number;
+    generatedKeywords: string[];
 }
 
 export interface ProjectItems {
