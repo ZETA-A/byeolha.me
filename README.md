@@ -65,6 +65,8 @@ thumbnail: /assets/image/defaultThumbnail.png
 
 공통 페이지 메타데이터는 `utils/metadata.ts`, 글 데이터 검증은 `utils/postMatter.ts`, 글 로딩은 `utils/posts.ts`에 있습니다. 사이트맵의 글 수정일은 frontmatter에서 가져오며, 정적 페이지에는 추정 수정일을 넣지 않습니다.
 
+모바일 메뉴는 Tab·Shift+Tab으로 내부를 순환하고 Escape로 닫을 수 있습니다. 닫으면 열기 버튼으로 포커스가 돌아오며, 메뉴가 열린 동안 배경 스크롤을 막습니다. 현재 메뉴 강조 표시는 사용하지 않습니다.
+
 ## 앞으로 할 일
 
 폰트 최적화, 시리즈 탐색·목차·검색을 검토하고 있습니다. 글 목록의 긴 제목과 날짜는 모바일에서도 분리해 표시하며, 넓은 본문 표는 표 안에서 가로 스크롤할 수 있습니다. 점검 내역은 [PROJECT_ISSUES.md](PROJECT_ISSUES.md)에 기록합니다.
