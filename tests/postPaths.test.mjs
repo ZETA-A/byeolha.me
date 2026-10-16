@@ -19,6 +19,7 @@ test('Korean, spaces, percent signs and URL delimiters round trip without double
         ['note', '100%_완료', '%2F'],
         ['note', 'A#B?C', '글%20이름'],
         ['note', 'Next__js', 'a.mdx.name'],
+        ['note', 'AI', 'Scalar,_Vector,_Tensor'],
     ]) {
         const file = path.join(root, ...names, 'content.mdx');
         const post = parsePostAbstract(file, root);
@@ -39,7 +40,12 @@ test('existing article URLs remain the same after normal URL encoding', () => {
         // Existing URLs used plain Korean/ASCII folder names. Reserved URL
         // characters were previously broken and now intentionally get encoded.
         if (![category, series, slug].some(name => /[%#?]/.test(name))) {
-            assert.equal(new URL(post.url, 'https://example.com').href, new URL(previousUrl, 'https://example.com').href);
+            // Literal commas and %2C identify the same folder. Compare decoded
+            // path segments while retaining the routing boundaries.
+            assert.deepEqual(
+                new URL(post.url, 'https://example.com').pathname.split('/').map(decodeURIComponent),
+                new URL(previousUrl, 'https://example.com').pathname.split('/').map(decodeURIComponent),
+            );
         }
         assert.equal(resolvePostPath(category, series, slug), file);
     }
