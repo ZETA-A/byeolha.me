@@ -91,6 +91,15 @@
     margin-top: 0px;
 }
 
+.mdx.resume > h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.mdx.resume > h1 + h2 {
+    margin-top: 2.5rem;
+}
+
 .mdx b,
 .mdx strong {
     font-weight: 500;
@@ -289,7 +298,8 @@
 @media (min-width: 1200px) {
     .mdx .post-toc {
         position: fixed;
-        top: 20vh;
+        top: 50%;
+        transform: translateY(-50%);
         right: 24px;
         width: 40px;
         z-index: 20;
@@ -329,7 +339,7 @@
     .mdx .post-toc .toc-marker.is-current { opacity: 0.85; }
     .mdx .post-toc nav {
         position: absolute;
-        top: 0;
+        top: 50%;
         right: 0;
         width: 260px;
         max-height: 65vh;
@@ -342,14 +352,14 @@
         box-shadow: 0 4px 18px rgb(0 0 0 / 10%);
         opacity: 0;
         visibility: hidden;
-        transform: translateX(4px);
+        transform: translate(4px, -50%);
         transition: opacity 120ms ease, transform 120ms ease, visibility 120ms;
     }
     .mdx .post-toc:hover nav,
     .mdx .post-toc:focus-within nav {
         opacity: 1;
         visibility: visible;
-        transform: translateX(0);
+        transform: translate(0, -50%);
     }
     .mdx .post-toc ul { margin: 0; gap: 0; }
     .mdx .post-toc .toc-subheading { margin-left: 0; }

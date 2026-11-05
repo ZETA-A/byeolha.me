@@ -25,7 +25,7 @@ export default function rehypePostToc({ enabled = true }: { enabled?: boolean } 
         walk(tree);
         if (!headings.length) return;
         tree.children.unshift(element('details', { className: ['post-toc'] }, [
-            element('summary', { ariaLabel: '글 목차' }, [{ type: 'text', value: '☰' }]),
+            element('summary', { ariaLabel: '글 목차' }, [{ type: 'text', value: '목차' }]),
             element('button', { type: 'button', className: ['toc-rail'], ariaLabel: '글 목차 열기' }, headings.map(heading =>
                 element('span', { className: ['toc-marker', ...(heading.depth === 3 ? ['toc-marker-sub'] : [])], ariaHidden: 'true' }, [])
             )),
